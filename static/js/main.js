@@ -53,9 +53,6 @@ $(document).ready(function () {
         e.preventDefault();
         $("#nav_p").hide();
     })
-    $("#pop1").popover({
-        trigger: "hover"
-    });
     $("#pop2").popover({
         trigger: "hover"
     });
@@ -72,9 +69,6 @@ $(document).ready(function () {
         trigger: "hover"
     });
     $("#pop7").popover({
-        trigger: "hover"
-    });
-    $("#pop8").popover({
         trigger: "hover"
     });
 
