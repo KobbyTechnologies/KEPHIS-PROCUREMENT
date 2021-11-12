@@ -1,4 +1,3 @@
-[![codebeat badge](https://codebeat.co/badges/eff1c1cf-d5a9-47fe-be5f-0911cdc6481c)](https://codebeat.co/projects/github-com-enockabere-nepad-ui-master)
 #   KMPDC Portal
 ## Project Description
 KMPDC website UX design
@@ -8,7 +7,7 @@ KMPDC website UX design
 ![views](static/img/1.png)
 
 ### Live link
-Visit the application on https://enock-nepad.herokuapp.com/
+Visit the application on https://kmpdc.herokuapp.com/
 ### Setup & Run Instructions
 - Create and activate a virtual environment
 - Install the dependencies listed in the requirements.txt
