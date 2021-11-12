@@ -53,5 +53,35 @@ $(document).ready(function () {
         e.preventDefault();
         $("#nav_p").hide();
     })
+    $("#pop1").popover({
+        trigger: "hover"
+    });
+    $("#pop2").popover({
+        trigger: "hover"
+    });
+    $("#pop3").popover({
+        trigger: "hover"
+    });
+    $("#pop4").popover({
+        trigger: "hover"
+    });
+    $("#pop5").popover({
+        trigger: "hover"
+    });
+    $("#pop6").popover({
+        trigger: "hover"
+    });
+    $("#pop7").popover({
+        trigger: "hover"
+    });
+    $("#pop8").popover({
+        trigger: "hover"
+    });
+
 })
 // menu
+// popovers Initialization
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+})

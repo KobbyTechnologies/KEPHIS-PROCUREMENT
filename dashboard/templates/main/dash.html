@@ -21,7 +21,7 @@
                         <span class="nav_logo-name">KMPDC</span>
                     </a>
 
-                    <div class="nav_list">
+                    <div class="nav_list" id="big">
                         <a href="#" class="nav_link active">
                             <i class="las la-grip-horizontal nav_icon"></i>
                             <span class="nav_name">Dashboard</span><i class="las la-arrow-right" id="care"
@@ -141,11 +141,81 @@
                                 style="color: green;"></i>
                         </a>
                     </div>
+                    <!-- small screen -->
+                    <div class="nav_list" id="small">
+                        <li>
+                            <a tabindex="0" href="#" class="nav_link active" role="button" data-bs-toggle="popover"
+                                id="pop1" data-bs-trigger="hover"
+                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                <i class="las la-grip-horizontal nav_icon"></i>
+                                <span class="nav_name">Dashboard</span><i class="las la-arrow-right" id="care"
+                                    style="color: green;"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop2"
+                                data-bs-trigger="hover"
+                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                <i class="las la-users" style="font-size:22px"></i>
+                                <span class="nav_name">Human Resource</span><i class="las la-angle-down" id="care"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop3"
+                                data-bs-trigger="hover"
+                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                <i class="las la-wallet" style="font-size:22px"></i>
+                                <span class="nav_name">Finance</span><i class="las la-angle-down" id="care"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop4"
+                                data-bs-trigger="hover"
+                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                <i class="las la-store-alt" style="font-size:22px"></i>
+                                <span class="nav_name">Procurement</span><i class="las la-angle-down" id="care"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop5"
+                                data-bs-trigger="hover"
+                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                <i class="las la-user-check" style="font-size:22px"></i>
+                                <span class="nav_name">Approvals</span><i class="las la-angle-down" id="care"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop6"
+                                data-bs-trigger="hover"
+                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                <i class="la la-automobile" style="font-size:22px"></i>
+                                <span class="nav_name">Reports</span> <i class="las la-angle-down" id="care"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop7"
+                                data-bs-trigger="hover"
+                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                <i class="las la-user-check" style="font-size:22px"></i>
+                                <span class="nav_name">Case Management</span> <i class="las la-angle-down"
+                                    id="care"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="0" href="#" class="nav_link" data-bs-toggle="popover" id="pop8"
+                                data-bs-trigger="hover"
+                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                <i class="las la-sign-out-alt" style="font-size:22px"></i>
+                                <span class="nav_name">Logout</span><i class="las la-arrow-right" id="care"
+                                    style="color: green;"></i>
+                            </a>
+                        </li>
+                    </div>
                 </div>
                 <div class="nav_links mx-auto text-center">
                     <img src="../../../static/img/logo/fav.png" width="100px" class="img-fluid" alt="" srcset="">
                 </div>
-                <div class=" mx-auto text-center">
+                <div class=" mx-auto text-center" id="big">
                     <p style="color:#333;font-size:13px;"><small id="nav_p">Kenya Medical Practitioners and Dentists
                             Council</small></p>
                     <hr>
@@ -155,6 +225,9 @@
         </div>
         <div class="height-100 py-4">
             <h4>Main Components</h4>
+            <!-- <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-bs-toggle="popover" id="pop"
+                data-bs-trigger="hover" title="Dismissible popover"
+                data-bs-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a> -->
         </div>
 </section>
 
