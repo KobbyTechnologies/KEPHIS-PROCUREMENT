@@ -10,13 +10,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (toggle && nav && bodypd && headerpd) {
             toggle.addEventListener('click', () => {
                 // show navbar
-                nav.classList.toggle('show')
+                nav.classList.toggle('shows')
                 // change icon
                 toggle.classList.toggle('las-la')
                 // add padding to body
-                bodypd.classList.toggle('body-pd')
+                bodypd.classList.toggle('body-pds')
                 // add padding to header
-                headerpd.classList.toggle('body-pd')
+                headerpd.classList.toggle('body-pds')
             })
         }
     }
@@ -37,14 +37,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // Your code to run since DOM is loaded and ready
 });
 $(document).ready(function () {
-    $("#nav-bar").addClass('show');
-    $("#header").addClass('body-pd');
-    $("#body-pd").addClass('body-pd');
+    $("#nav-bar").addClass('shows');
+    $("#header").addClass('body-pds');
+    $("#body-pd").addClass('body-pds');
     $("#nav-bar").hover(function (e) {
         e.preventDefault();
-        $("#nav-bar").addClass('show');
-        $("#header").addClass('body-pd');
-        $("#body-pd").addClass('body-pd');
+        $("#nav-bar").addClass('shows');
+        $("#header").addClass('body-pds');
+        $("#body-pd").addClass('body-pds');
         $("#nav_p").show();
         $('.nav::-webkit-scrollbar').show(500)
 
@@ -81,19 +81,9 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 })
 // datatable Initializing
 $(document).ready(function () {
-    // $('#table_id').DataTable({
-    //     scrollY: 100
-    // });
-    new DataTable('#table1', {
-        scrollY: 100,
-        select: true,
-
-    })
-    $.extend($.fn.dataTable.defaults, {
-        scrollY: 100,
-        select: true,
-        "order": [
-            [3, "desc"]
-        ]
+    $('#example').DataTable({
+        scrollY: '50vh',
+        scrollCollapse: true,
+        paging: true
     });
 });

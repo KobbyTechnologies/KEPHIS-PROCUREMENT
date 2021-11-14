@@ -5,4 +5,4 @@ from cloudinary.models import CloudinaryField
 
 
 class Photo(models.Model):
-    image = models.ImageField(null=False, blank=False)
+    image = models.FileField(null=False, blank=False)

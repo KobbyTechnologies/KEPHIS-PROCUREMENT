@@ -12,11 +12,11 @@ def dashboard(request):
             photo = Photo.objects.create(
                 image=image,
             )
-    photo = Photo.objects.all()
-    ctx = {"photo": photo}
-
-    return render(request, 'main/dash.html', ctx)
+        return redirect('main')
+    return render(request, 'main/dash.html')
 
 
 def main_request(request):
-    return render(request, 'main/main.html')
+    photo = Photo.objects.all()
+    ctx = {"photo": photo}
+    return render(request, 'main/main.html', ctx)

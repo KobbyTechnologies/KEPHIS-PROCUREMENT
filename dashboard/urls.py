@@ -5,8 +5,9 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
-    path('', views.dashboard, name="dash"),
     path('', views.main_request, name="main"),
+    path('boiler', views.dashboard, name="dash"),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

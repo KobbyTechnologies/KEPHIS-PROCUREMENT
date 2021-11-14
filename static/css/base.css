@@ -77,7 +77,6 @@ a {
     left: -30%;
     width: var(--nav-width);
     height: 100vh;
-    /* background-color: var(--white-color); */
     background: #E5E7E9;
     padding: .5rem 1rem 0 0;
     transition: .5s;
@@ -113,7 +112,6 @@ a {
 .nav_logo {
     margin-bottom: 2rem;
     position: -webkit-sticky;
-    /* Safari & IE */
     position: sticky;
     top: 0;
     z-index: 999;
@@ -149,11 +147,11 @@ a {
     font-size: 1.25rem
 }
 
-.show {
+.shows {
     left: 0
 }
 
-.body-pd {
+.body-pds {
     padding-left: calc(var(--nav-width) + 1rem)
 }
 
@@ -204,11 +202,11 @@ a {
         min-height: 100vh;
     }
 
-    .show {
+    .shows {
         width: calc(var(--nav-width) + 223px)
     }
 
-    .body-pd {
+    .body-pds {
         padding-left: calc(var(--nav-width) + 240px)
     }
 }

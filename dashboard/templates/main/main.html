@@ -1,0 +1,224 @@
+{% extends 'main/dash.html' %}
+{% load bootstrap5 %}
+{% load static %}
+{% block main %}
+<section class="dash1">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col md-12">
+                <div class="d-head">
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1">
+                            <div class="d-icon mx-auto text-center">
+                                <img src="../../../static/img/logo/fav.png" width="100px" class="img-fluid" alt=""
+                                    srcset="">
+                                <!-- <i class="las la-grip-horizontal" style="color: #e51e25;font-size: 55px"></i> -->
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="d-text">
+                                <h4>
+                                    Dashboard
+                                </h4>
+                                <p>
+                                    Kenya Medical Practitioners and Dentists Council
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-items">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle dropBtn" type="button" id="dropdownMenu2"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="las la-briefcase"></i> Drop Btn
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    </ul>
+                                    <button type="button" class="btn normBtn">
+                                        Notifications <span class="badge bg-secondary">4</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="dash2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="c-inner">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card" id="d-card">
+                                <div class="card-title">
+                                    <h6>Revenue</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="money">
+                                        <h4>
+                                            36,000
+                                        </h4>
+                                        <small><i class="las la-arrow-up"></i> 100%</small>
+                                        <p>since last year</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card" id="d-card">
+                                <div class="card-title">
+                                    <h6>Revenue</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="money">
+                                        <h4>
+                                            36,000
+                                        </h4>
+                                        <small><i class="las la-arrow-up"></i> 100%</small>
+                                        <p>since last year</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="card" id="d-card">
+                                <div class="card-title">
+                                    <h6>Revenue</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="money">
+                                        <h4>
+                                            36,000
+                                        </h4>
+                                        <small><i class="las la-arrow-up"></i> 100%</small>
+                                        <p>since last year</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card" id="d-card">
+                                <div class="card-title">
+                                    <h6>Revenue</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="money">
+                                        <h4>
+                                            36,000
+                                        </h4>
+                                        <small><i class="las la-arrow-up"></i> 100%</small>
+                                        <p>since last year</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="card" id="d-card">
+                    <div class="card-title">
+                        <h6>Recent Activity</h6>
+                    </div>
+                    <div class="card-body" id="recents">
+                        <div class="my_activity mb-2">
+                            <div class="activity">
+                                <i class="las la-retweet"></i>
+                            </div>
+                            <div class="a-head"> Enock Sent a Message</div>
+                            <div class="a-texts">
+                                <p>
+                                    This app has been built using Bootstrap, css, django, javascript and material
+                                    design.
+                                </p>
+                                <small style="color: #D1D1D1 ; font-size:small">30 minutes ago</small>
+                            </div>
+                        </div>
+                        <div class="my_activity mb-2">
+                            <div class="activity">
+                                <i class="las la-exchange-alt"></i>
+                            </div>
+                            <div class="a-head"> Enock Sent a Message</div>
+                            <div class="a-texts">
+                                <p>
+                                    This app has been built using Bootstrap, css, django, javascript and material
+                                    design.
+                                </p>
+                                <small style="color: #D1D1D1 ; font-size:small">30 minutes ago</small>
+                            </div>
+                        </div>
+                        <div class="my_activity mb-2">
+                            <div class="activity">
+                                <i class="las la-history"></i>
+                            </div>
+                            <div class="a-head"> Enock Sent a Message</div>
+                            <div class="a-texts">
+                                <p>
+                                    This app has been built using Bootstrap, css, django, javascript and material
+                                    design.
+                                </p>
+                                <small style="color: #D1D1D1 ; font-size:small">30 minutes ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="dash2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" id="d-card">
+                    <div class="card-title">
+                        <h6>Multiple File Uploads</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <form method="POST" , action="{% url 'dash' %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="formFileMultiple" class="form-label">Multiple Image Upload</label>
+                                        <input class="form-control" name="images" multiple type="file">
+                                    </div>
+                                    <button type="submit" class="btn normBtn">Submit <i
+                                            class="las la-file-upload"></i></button>
+                                </form>
+                            </div>
+                            {% for urls in photo %}
+                            <div class="col-md-4">
+                                <div class="card uplod">
+                                    <div class="card-title mx-auto text-center">
+                                        <h6 style="color:white">
+                                            Django Uploaded Files
+                                        </h6>
+                                    </div>
+                                    <div class="card-body mx-auto text-center">
+                                        <img src="{{urls.image.url}}" alt="" height="100" width="100" srcset="">
+                                        <div>
+                                            <button class="btn noBtn">Know More <i
+                                                    class="las la-arrow-right"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

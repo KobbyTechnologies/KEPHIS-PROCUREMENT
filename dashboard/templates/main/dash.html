@@ -208,19 +208,21 @@
                         </li>
                     </div>
                 </div>
-                <div class="nav_links mx-auto text-center">
+                <!-- <div class="nav_links mx-auto text-center">
                     <img src="../../../static/img/logo/fav.png" width="100px" class="img-fluid" alt="" srcset="">
                 </div>
                 <div class=" mx-auto text-center" id="big">
                     <p style="color:#333;font-size:13px;"><small id="nav_p">Kenya Medical Practitioners and Dentists
                             Council</small></p>
                     <hr>
-                </div>
+                </div> -->
 
             </nav>
         </div>
         <div class="height-100 py-4">
-            <section class="part1">
+            {% block main %}
+            {% endblock %}
+            <!-- <section class="part1">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
@@ -255,21 +257,14 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <form method="POST" , action="{% url 'dash' %}" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    <label for="formFileMultiple" class="form-label">Multiple Image Upload</label>
-                                    <input class="form-control" name="images" multiple type="file">
-                                </div>
-                                <button type="submit" class="btn btn-success">Submit</button>
-                            </form>
+                            
                             {% for urls in photo %}
                             <img src="{{urls.image.url}}" alt="" height="100" width="100" srcset="">
                             {% endfor %}
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
 
         </div>
 </section>
