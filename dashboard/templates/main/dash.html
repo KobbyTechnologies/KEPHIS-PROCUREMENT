@@ -220,10 +220,57 @@
             </nav>
         </div>
         <div class="height-100 py-4">
-            <h4>Main Components</h4>
-            <!-- <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-bs-toggle="popover" id="pop"
-                data-bs-trigger="hover" title="Dismissible popover"
-                data-bs-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a> -->
+            <section class="part1">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-title">
+                                    <h4>Table Style 1</h4>
+                                </div>
+                                <div class="card-body">
+                                    <table id="table1" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>Column 1</th>
+                                                <th>Column 2</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Row 1 Data 1</td>
+                                                <td>Row 1 Data 2</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Row 2 Data 1</td>
+                                                <td>Row 2 Data 2</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Row 2 Data 1</td>
+                                                <td>Row 2 Data 2</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <form method="POST" , action="{% url 'dash' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="formFileMultiple" class="form-label">Multiple Image Upload</label>
+                                    <input class="form-control" name="images" multiple type="file">
+                                </div>
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </form>
+                            {% for urls in photo %}
+                            <img src="{{urls.image.url}}" alt="" height="100" width="100" srcset="">
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div>
 </section>
 

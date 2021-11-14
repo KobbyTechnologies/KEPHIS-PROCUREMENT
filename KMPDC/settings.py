@@ -15,6 +15,9 @@ import os
 import django_heroku
 import dj_database_url
 from decouple import config, Csv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -69,8 +72,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dashboard',
     'bootstrap5',
+    'cloudinary',
 ]
-
+cloudinary.config(
+    cloud_name="enock",
+    api_key="131559831386722",
+    api_secret="fDQuLwrK6ExBtidSqxme_ZzHaxY"
+)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -102,7 +110,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'KMPDC.wsgi.application'
 
-
+FILE_UPLOAD_HANDLERS = ["django.core.files.uploadhandler.MemoryFileUploadHandler",
+                        "django.core.files.uploadhandler.TemporaryFileUploadHandler"]
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 

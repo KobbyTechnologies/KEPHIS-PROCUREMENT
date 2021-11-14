@@ -79,3 +79,21 @@ var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)
 })
+// datatable Initializing
+$(document).ready(function () {
+    // $('#table_id').DataTable({
+    //     scrollY: 100
+    // });
+    new DataTable('#table1', {
+        scrollY: 100,
+        select: true,
+
+    })
+    $.extend($.fn.dataTable.defaults, {
+        scrollY: 100,
+        select: true,
+        "order": [
+            [3, "desc"]
+        ]
+    });
+});
