@@ -81,9 +81,12 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 })
 // datatable Initializing
 $(document).ready(function () {
-    $('#example').DataTable({
+    var table = $('#example').DataTable({
+        responsive: true,
         scrollY: '50vh',
         scrollCollapse: true,
-        paging: true
+        paging: false
     });
+
+    new $.fn.dataTable.FixedHeader(table);
 });

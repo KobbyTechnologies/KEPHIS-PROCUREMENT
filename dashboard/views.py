@@ -5,7 +5,6 @@ from . models import Photo
 
 
 def dashboard(request):
-
     if request.method == 'POST':
         images = request.FILES.getlist('images')
         for image in images:
