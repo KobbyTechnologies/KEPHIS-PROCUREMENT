@@ -1,0 +1,34 @@
+.footer {
+    background: #A3BCB6;
+    height: 60px;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    position: absolute;
+}
+
+.foots {
+    padding-left: 340px;
+    color: #fff;
+    margin-top: 24px;
+    font-size: 14px;
+}
+
+.f1 {
+    display: inline-block;
+    font-size: 14px;
+}
+
+.f2 {
+    display: inline-block;
+    float: right;
+    margin-right: 40px;
+}
+
+.br {
+    color: black;
+}
+
+.br:hover {
+    color: #e51e25;
+}

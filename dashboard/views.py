@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from . models import Photo
+from datetime import date
 
 # Create your views here.
 
@@ -16,6 +17,9 @@ def dashboard(request):
 
 
 def main_request(request):
+
+    # creating date object
+    todays_date = date.today().year
     photo = Photo.objects.all()
-    ctx = {"photo": photo}
+    ctx = {"photo": photo, "today": todays_date}
     return render(request, 'main/main.html', ctx)

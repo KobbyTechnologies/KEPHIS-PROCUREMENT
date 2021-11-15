@@ -2,53 +2,7 @@
 {% load bootstrap5 %}
 {% load static %}
 {% block main %}
-<section class="dash1">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12 col md-12">
-                <div class="d-head">
-                    <div class="row">
-                        <div class="col-sm-1 col-md-1">
-                            <div class="d-icon mx-auto text-center">
-                                <img src="../../../static/img/logo/fav.png" width="100px" class="img-fluid" alt=""
-                                    srcset="">
-                                <!-- <i class="las la-grip-horizontal" style="color: #e51e25;font-size: 55px"></i> -->
-                            </div>
-                        </div>
-                        <div class="col-md-7">
-                            <div class="d-text">
-                                <h4>
-                                    Dashboard
-                                </h4>
-                                <p>
-                                    Kenya Medical Practitioners and Dentists Council
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="d-items">
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle dropBtn" type="button" id="dropdownMenu2"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="las la-briefcase"></i> Drop Btn
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="#">Action</a></li>
-                                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    </ul>
-                                    <button type="button" class="btn normBtn">
-                                        Notifications <span class="badge bg-secondary">4</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+{% include 'top.html' %}
 <section class="dash2">
     <div class="container-fluid">
         <div class="row">
@@ -411,6 +365,19 @@
                                     <td>Nairobi</td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Company Email</th>
+                                    <th>Vendor No</th>
+                                    <th>Phone No</th>
+                                    <th>Category</th>
+                                    <th>Kra Pin</th>
+                                    <th>Registration No</th>
+                                    <th>Postal Address</th>
+                                    <th>Physical Address</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -418,7 +385,7 @@
         </div>
     </div>
 </section>
-<section class="dash2">
+<section class="dash2 mb-4">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -464,7 +431,5 @@
         </div>
     </div>
 </section>
-<section class="footer">
-
-</section>
+{% include 'footer.html' %}
 {% endblock %}
