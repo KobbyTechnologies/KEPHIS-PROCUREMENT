@@ -72,13 +72,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dashboard',
     'bootstrap5',
-    'cloudinary',
 ]
-cloudinary.config(
-    cloud_name="enock",
-    api_key="131559831386722",
-    api_secret="fDQuLwrK6ExBtidSqxme_ZzHaxY"
-)
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
