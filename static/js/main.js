@@ -71,6 +71,11 @@ $(document).ready(function () {
     $("#pop7").popover({
         trigger: "hover"
     });
+    $("#res_card").removeClass('t-card')
+
+    $("#filebtn").click(function () {
+        $("#file_up").toggle(500)
+    })
 
 })
 // menu
@@ -79,14 +84,14 @@ var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)
 })
-// datatable Initializing
+
 $(document).ready(function () {
     var table = $('#example').DataTable({
-        responsive: true,
+        select: true,
+        paging: false,
+        scrollX: false,
         scrollY: '50vh',
         scrollCollapse: true,
-        paging: false
     });
-
     new $.fn.dataTable.FixedHeader(table);
 });

@@ -8,6 +8,10 @@
         <header class="header" id="header">
             <div class="header_toggle">
                 <i class='las la-bars' id="header-toggle"></i>
+                <h5 class="titles">
+                    <i class="lab la-buromobelexperte ml-3" style="color:green"></i>
+                    <span class="brs">E-Procurement </span> Portal
+                </h5>
             </div>
             <div class="header_img">
                 <img src="../../../static/img/logo/pp.jpeg" class="img-fluid" alt="">
@@ -17,123 +21,77 @@
             <nav class="nav">
                 <div>
                     <a href="#" class="nav_logo">
-                        <i class='lab la-medrt' style="font-size:22px"></i>
+                        <i class='las la-industry' style="font-size:22px"></i>
                         <span class="nav_logo-name">KMPDC</span>
                     </a>
 
                     <div class="nav_list" id="big">
-                        <a href="#" class="nav_link active">
-                            <i class="las la-grip-horizontal nav_icon"></i>
-                            <span class="nav_name">Dashboard</span><i class="las la-arrow-right" id="care"
-                                style="color: green;"></i>
-                        </a>
                         <li>
-                            <a href="#menu" data-toggle="collapse" aria-expanded="false" class="nav_link" type="button">
-                                <i class="las la-users" style="font-size:22px"></i>
-                                <span class="nav_name">Human Resource</span><i class="las la-angle-down" id="care"></i>
+                            <a href="{% url 'main' %}" class="nav_link active">
+                                <i class="las la-grip-horizontal nav_icon"></i>
+                                <span class="nav_name">Dashboard</span><i class="las la-arrow-right" id="care"
+                                    style="color: green;"></i>
                             </a>
-                            <ul class="collapse list-unstyled smalls" id="menu">
-                                <li>
-                                    <a class="nav_link" href="#">Leave Requests</a>
-                                </li>
-                                <li>
-                                    <a class="nav_link" href="#">Training Requests</a>
-                                </li>
-                                <li>
-                                    <a class="nav_link" href="#">Loans</a>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a href="#menu2" data-toggle="collapse" aria-expanded="false" class="nav_link" type="button"
                                 data-bs-parent="menu2">
-                                <i class="las la-wallet" style="font-size:22px"></i>
-                                <span class="nav_name">Finance</span><i class="las la-angle-down" id="care"></i>
+                                <i class="las la-briefcase" style="font-size:22px"></i>
+                                <span class="nav_name">Tenders</span><i class="las la-angle-down" id="care"></i>
                             </a>
                             <ul class="collapse list-unstyled smalls" id="menu2">
                                 <li>
-                                    <a class="nav_link" href="#">Page 1</a>
+                                    <a class="nav_link" href="#">Open Tenders</a>
                                 </li>
                                 <li>
-                                    <a class="nav_link" href="#">Page 2</a>
+                                    <a class="nav_link" href="#">Restricted Tenders</a>
                                 </li>
                                 <li>
-                                    <a class="nav_link" href="#">Page 3</a>
+                                    <a class="nav_link" href="#">Closed Tenders</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="#menu3" data-toggle="collapse" aria-expanded="false" class="nav_link" type="button"
-                                data-bs-parent="menu">
-                                <i class="las la-store-alt" style="font-size:22px"></i>
-                                <span class="nav_name">Procurement</span><i class="las la-angle-down" id="care"></i>
+                            <a href="#" class="nav_link">
+                                <i class="las la-file-alt nav_icon"></i>
+                                <span class="nav_name">Request For Quotation</span><i class="las la-arrow-right"
+                                    id="care" style="color: green;"></i>
                             </a>
-                            <ul class="collapse list-unstyled smalls" id="menu3">
-                                <li>
-                                    <a class="" href="#">Page 1</a>
-                                </li>
-                                <li>
-                                    <a class="" href="#">Page 2</a>
-                                </li>
-                                <li>
-                                    <a class="" href="#">Page 3</a>
-                                </li>
-                            </ul>
                         </li>
                         <li>
-                            <a href="#menu4" data-toggle="collapse" aria-expanded="false" class="nav_link" type="button"
-                                data-bs-parent="menu4">
-                                <i class="las la-user-check" style="font-size:22px"></i>
-                                <span class="nav_name">Approvals</span><i class="las la-angle-down" id="care"></i>
+                            <a href="#" class="nav_link">
+                                <i class="las la-check-circle nav_icon"></i>
+                                <span class="nav_name">Expression of Interest</span><i class="las la-arrow-right"
+                                    id="care" style="color: green;"></i>
                             </a>
-                            <ul class="collapse list-unstyled smalls" id="menu4">
-                                <li>
-                                    <a class="nav_link" href="#">Page 1</a>
-                                </li>
-                                <li>
-                                    <a class="nav_link" href="#">Page 2</a>
-                                </li>
-                                <li>
-                                    <a class="nav_link" href="#">Page 3</a>
-                                </li>
-                            </ul>
                         </li>
                         <li>
-                            <a href="#menu5" data-toggle="collapse" aria-expanded="false" class="nav_link" type="button"
-                                data-bs-parent="menu">
-                                <i class="la la-automobile" style="font-size:22px"></i>
-                                <span class="nav_name">Reports</span> <i class="las la-angle-down" id="care"></i>
-                            </a>
-                            <ul class="collapse list-unstyled smalls" id="menu5">
-                                <li>
-                                    <a class="nav_link" href="#">Page 1</a>
-                                </li>
-                                <li>
-                                    <a class="nav_link" href="#">Page 2</a>
-                                </li>
-                                <li>
-                                    <a class="nav_link" href="#">Page 3</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#menu6" data-toggle="collapse" aria-expanded="false" class="nav_link"
-                                type="button">
-                                <i class="las la-user-check" style="font-size:22px"></i>
-                                <span class="nav_name">Case Management</span> <i class="las la-angle-down"
+                            <a href="#menu" data-toggle="collapse" aria-expanded="false" class="nav_link" type="button">
+                                <i class="las la-check-double" style="font-size:22px"></i>
+                                <span class="nav_name">Submitted Applications</span><i class="las la-angle-down"
                                     id="care"></i>
                             </a>
-                            <ul class="collapse list-unstyled smalls" id="menu6">
+                            <ul class="collapse list-unstyled smalls" id="menu">
                                 <li>
-                                    <a class="nav_link" href="#">Page 1</a>
+                                    <a class="nav_link" href="#">Open Tenders</a>
                                 </li>
                                 <li>
-                                    <a class="nav_link" href="#">Page 2</a>
+                                    <a class="nav_link" href="#">Restricted Tenders</a>
                                 </li>
                                 <li>
-                                    <a class="nav_link" href="#">Page 3</a>
+                                    <a class="nav_link" href="#">Request For Quotation</a>
+                                </li>
+                                <li>
+                                    <a class="nav_link" href="#">Expression of Interest</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="nav_link">
+                                <i class="las la-user-circle nav_icon"></i>
+                                <span class="nav_name">Profile</span><i class="las la-arrow-right" id="care"
+                                    style="color: green;"></i>
+                            </a>
                         </li>
                         <a href="#" class="nav_link">
                             <i class="las la-sign-out-alt" style="font-size:22px"></i>
@@ -144,7 +102,7 @@
                     <!-- small screen -->
                     <div class="nav_list" id="small">
                         <li>
-                            <a href="#" class="nav_link active">
+                            <a href="{% url 'main' %}" class="nav_link active">
                                 <i class="las la-grip-horizontal nav_icon"></i>
                                 <span class="nav_name">Dashboard</span><i class="las la-arrow-right" id="care"
                                     style="color: green;"></i>
@@ -152,51 +110,38 @@
                         </li>
                         <li>
                             <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop2"
-                                data-bs-trigger="hover"
-                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                data-bs-trigger="hover" data-bs-content="Will Add Some Links">
                                 <i class="las la-users" style="font-size:22px"></i>
-                                <span class="nav_name">Human Resource</span><i class="las la-angle-down" id="care"></i>
                             </a>
                         </li>
                         <li>
                             <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop3"
-                                data-bs-trigger="hover"
-                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                data-bs-trigger="hover" data-bs-content="Will Add Some Links">
                                 <i class="las la-wallet" style="font-size:22px"></i>
-                                <span class="nav_name">Finance</span><i class="las la-angle-down" id="care"></i>
                             </a>
                         </li>
                         <li>
                             <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop4"
-                                data-bs-trigger="hover"
-                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                data-bs-trigger="hover" data-bs-content="Will Add Some Links">
                                 <i class="las la-store-alt" style="font-size:22px"></i>
-                                <span class="nav_name">Procurement</span><i class="las la-angle-down" id="care"></i>
                             </a>
                         </li>
                         <li>
                             <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop5"
-                                data-bs-trigger="hover"
-                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                data-bs-trigger="hover" data-bs-content="Will Add Some Links">
                                 <i class="las la-user-check" style="font-size:22px"></i>
-                                <span class="nav_name">Approvals</span><i class="las la-angle-down" id="care"></i>
                             </a>
                         </li>
                         <li>
                             <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop6"
-                                data-bs-trigger="hover"
-                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                data-bs-trigger="hover" data-bs-content="Will Add Some Links">
                                 <i class="la la-automobile" style="font-size:22px"></i>
-                                <span class="nav_name">Reports</span> <i class="las la-angle-down" id="care"></i>
                             </a>
                         </li>
                         <li>
                             <a tabindex="0" href="#" class="nav_link" role="button" data-bs-toggle="popover" id="pop7"
-                                data-bs-trigger="hover"
-                                data-bs-content="And here's some amazing content. It's very engaging. Right?">
+                                data-bs-trigger="hover" data-bs-content="Will Add Some Links">
                                 <i class="las la-user-check" style="font-size:22px"></i>
-                                <span class="nav_name">Case Management</span> <i class="las la-angle-down"
-                                    id="care"></i>
                             </a>
                         </li>
                         <li>
@@ -208,64 +153,11 @@
                         </li>
                     </div>
                 </div>
-                <!-- <div class="nav_links mx-auto text-center">
-                    <img src="../../../static/img/logo/fav.png" width="100px" class="img-fluid" alt="" srcset="">
-                </div>
-                <div class=" mx-auto text-center" id="big">
-                    <p style="color:#333;font-size:13px;"><small id="nav_p">Kenya Medical Practitioners and Dentists
-                            Council</small></p>
-                    <hr>
-                </div> -->
-
             </nav>
         </div>
         <div class="height-100 py-4">
             {% block main %}
             {% endblock %}
-            <!-- <section class="part1">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-title">
-                                    <h4>Table Style 1</h4>
-                                </div>
-                                <div class="card-body">
-                                    <table id="table1" class="display">
-                                        <thead>
-                                            <tr>
-                                                <th>Column 1</th>
-                                                <th>Column 2</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Row 1 Data 1</td>
-                                                <td>Row 1 Data 2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Row 2 Data 1</td>
-                                                <td>Row 2 Data 2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Row 2 Data 1</td>
-                                                <td>Row 2 Data 2</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            
-                            {% for urls in photo %}
-                            <img src="{{urls.image.url}}" alt="" height="100" width="100" srcset="">
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </section> -->
-
         </div>
 </section>
 

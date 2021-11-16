@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&family=Tajawal:wght@300&display=swap');
+
+/* btns */
+.dropBtn {
+    background-color: var(--first-color);
+    font-family: var(--body-font);
+    border: 1px solid var(--first-color);
+    color: var(--white-color)
+}
+
+.dropBtn:hover {
+    background-color: var(--first-color);
+    border: 1px solid var(--first-color);
+    color: var(--white-color)
+}
+
+.normBtn {
+    background-color: var(--green-color);
+    font-family: var(--body-font);
+    border: 1px solid var(--green-color);
+    color: var(--white-color)
+}
+
+.normBtn:hover {
+    background-color: var(--sand-tan);
+    border: 1px solid var(--sand-tan);
+    color: var(--dark-color)
+}
+
+/* end */
+/* main dashboard  */
+.dash2 {
+    background: whitesmoke;
+    margin-top: 1.7rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.dash1 {
+    background: var(--olive);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 6px;
+}
+
+/* end */
+td {
+    color: black;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 400
+}
+
+#res_card {
+    max-width: 990px;
+    padding-right: 20px;
+}
+
+.table {
+    background: rgb(243, 6, 6);
+    border: 1px solid white;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead,
+tr {
+    background: green;
+    width: 100%;
+}
+
+.brs {
+    color: #e1b382;
+}
