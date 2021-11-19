@@ -9,3 +9,7 @@ def submittedOpenTenders(request):
 
 def submittedResTenders(request):
     return render(request, 'SubResTender.html')
+
+
+def submittedRFQ(request):
+    return render(request, 'Sub-RFQ.html')
