@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'dashboard',
     'bootstrap5',
     'tenders',
+    'quotation',
 ]
 
 MIDDLEWARE = [
