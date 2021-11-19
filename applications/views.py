@@ -13,3 +13,7 @@ def submittedResTenders(request):
 
 def submittedRFQ(request):
     return render(request, 'Sub-RFQ.html')
+
+
+def submittedInterest(request):
+    return render(request, 'SubInterest.html')
