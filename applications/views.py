@@ -5,3 +5,7 @@ from django.shortcuts import render
 
 def submittedOpenTenders(request):
     return render(request, 'SubOpenTender.html')
+
+
+def submittedResTenders(request):
+    return render(request, 'SubResTender.html')

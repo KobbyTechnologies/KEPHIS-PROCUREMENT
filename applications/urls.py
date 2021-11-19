@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('SubOpenTenders', views.submittedOpenTenders, name="sub_open"),
+    path('SubResTenders', views.submittedResTenders, name="sub_res"),
 ]
