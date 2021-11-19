@@ -9,7 +9,7 @@
             <div class="header_toggle">
                 <i class='las la-bars' id="header-toggle"></i>
                 <h5 class="titles">
-                    <i class="lab la-buromobelexperte ml-3" style="color:green"></i>
+                    <!-- <i class="lab la-buromobelexperte ml-3" style="color:green"></i> -->
                     <span class="brs">E-Procurement </span> Portal
                 </h5>
             </div>
@@ -27,7 +27,7 @@
 
                     <div class="nav_list" id="big">
                         <li>
-                            <a href="{% url 'main' %}" class="nav_link active">
+                            <a href="{% url 'dashboard' %}" class="nav_link active">
                                 <i class="las la-grip-horizontal nav_icon"></i>
                                 <span class="nav_name">Dashboard</span><i class="las la-arrow-right" id="care"
                                     style="color: green;"></i>
@@ -41,7 +41,7 @@
                             </a>
                             <ul class="collapse list-unstyled smalls" id="menu2">
                                 <li>
-                                    <a class="nav_link" href="#">Open Tenders</a>
+                                    <a class="nav_link" href="{% url 'open' %}">Open Tenders</a>
                                 </li>
                                 <li>
                                     <a class="nav_link" href="#">Restricted Tenders</a>
@@ -102,7 +102,7 @@
                     <!-- small screen -->
                     <div class="nav_list" id="small">
                         <li>
-                            <a href="{% url 'main' %}" class="nav_link active">
+                            <a href="{% url 'dashboard' %}" class="nav_link active">
                                 <i class="las la-grip-horizontal nav_icon"></i>
                                 <span class="nav_name">Dashboard</span><i class="las la-arrow-right" id="care"
                                     style="color: green;"></i>

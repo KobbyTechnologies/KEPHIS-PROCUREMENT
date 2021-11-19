@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dashboard',
     'bootstrap5',
+    'tenders',
 ]
 
 MIDDLEWARE = [

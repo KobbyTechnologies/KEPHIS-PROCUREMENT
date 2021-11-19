@@ -5,7 +5,7 @@ from datetime import date
 # Create your views here.
 
 
-def dashboard(request):
+def canvas(request):
     if request.method == 'POST':
         images = request.FILES.getlist('images')
         for image in images:
@@ -13,13 +13,13 @@ def dashboard(request):
                 image=image,
             )
         return redirect('main')
-    return render(request, 'main/dash.html')
+    return render(request, 'offcanvas.html')
 
 
-def main_request(request):
+def dashboard(request):
 
     # creating date object
     todays_date = date.today().year
     photo = Photo.objects.all()
     ctx = {"photo": photo, "today": todays_date}
-    return render(request, 'main/main.html', ctx)
+    return render(request, 'main/dashboard.html', ctx)

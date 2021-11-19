@@ -1,4 +1,4 @@
-{% extends 'main/dash.html' %}
+{% extends 'offcanvas.html' %}
 {% load bootstrap5 %}
 {% load static %}
 {% block main %}
@@ -278,7 +278,7 @@
                                             </ul>
                                         </div>
                                         <div class="card my-3 p-3" id="file_up">
-                                            <form method="POST" , action="{% url 'dash' %}"
+                                            <form method="POST" , action="{% url 'canvas' %}"
                                                 enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <div class="mb-3">
