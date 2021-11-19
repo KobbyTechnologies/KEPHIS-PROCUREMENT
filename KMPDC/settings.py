@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'bootstrap5',
     'tenders',
     'quotation',
+    'interest',
 ]
 
 MIDDLEWARE = [

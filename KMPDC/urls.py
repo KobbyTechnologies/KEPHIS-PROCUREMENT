@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('dashboard.urls')),
     path('', include('tenders.urls')),
     path('', include('quotation.urls')),
+    path('', include('interest.urls')),
 ]
