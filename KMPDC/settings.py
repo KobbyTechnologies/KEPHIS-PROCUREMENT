@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'tenders',
     'quotation',
     'interest',
+    'applications',
 ]
 
 MIDDLEWARE = [
