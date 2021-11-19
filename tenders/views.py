@@ -9,3 +9,7 @@ def open_tenders(request):
 
 def closed_tenders(request):
     return render(request, 'closedTenders.html')
+
+
+def Restricted_tenders(request):
+    return render(request, 'restrictedTenders.html')
