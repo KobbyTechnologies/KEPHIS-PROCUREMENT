@@ -1,4 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&family=Tajawal:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gelasio&family=Hind:wght@300&family=Titillium+Web:wght@200&display=swap');
+
+:root {
+    --first-color: #144a85;
+    --first-color-light: #6c8aaf;
+    --green-color: #25CC88;
+    --red-color: #e51e25;
+    --sand-tan: #e1b382;
+    --dark-color: #444a4a;
+    --olive: #A3BCB6;
+    --white-color: #F7F6FB;
+    --primary-font: 'Gelasio', serif;
+    --normal-font: 'Titillium Web', sans-serif;
+    --third-font: 'Hind', sans-serif;
+
+}
+
+.d-text h4 {
+    color: var(--white-color);
+    font-family: var(--primary-font);
+}
+
+.d-text p {
+    font-family: var(--third-font);
+}
 
 .d-icon {
     background: none;
@@ -15,30 +39,33 @@ ul.breadcrumb {
 ul.breadcrumb li {
     display: inline;
     font-size: 15px;
+    color: #555;
 }
 
 ul.breadcrumb li+li:before {
-    padding: 8px;
-    color: black;
+    padding: 4px;
+    color: var(--first-color);
     content: ">\00a0";
 }
 
 ul.breadcrumb li a {
-    color: white;
+    color: #fff;
+    font-family: var(--third-font);
     text-decoration: none;
 }
 
 ul.breadcrumb li a:hover {
-    color: #01447e;
-    text-decoration: underline;
+    color: var(--first-color);
+    text-decoration: none;
 }
 
 .titles {
     display: inline-block;
     margin-left: 6px;
     color: black;
-    font-family: 'Tajawal', sans-serif;
     font-weight: 600;
     vertical-align: middle;
-    margin-top: 7px
+    margin-top: 7px;
+    text-transform: uppercase;
+    font-family: var(--primary-font);
 }

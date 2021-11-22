@@ -1,5 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Gelasio&family=Hind:wght@300&family=Titillium+Web:wght@200&display=swap');
+
+
+:root {
+    --first-color: #144a85;
+    --first-color-light: #6c8aaf;
+    --green-color: #25CC88;
+    --red-color: #e51e25;
+    --sand-tan: #e1b382;
+    --dark-color: #444a4a;
+    --olive: #A3BCB6;
+    --white-color: #F7F6FB;
+    --primary-font: 'Gelasio', serif;
+    --normal-font: 'Titillium Web', sans-serif;
+    --third-font: 'Hind', sans-serif;
+
+}
+
 .footer {
-    background: #A3BCB6;
+    background: var(--green-color);
     height: 60px;
     bottom: 0;
     right: 0;
@@ -9,9 +27,10 @@
 
 .foots {
     padding-left: 340px;
-    color: #fff;
     margin-top: 24px;
     font-size: 14px;
+    color: #fff;
+    font-family: var(--third-font);
 }
 
 .f1 {
@@ -30,5 +49,5 @@
 }
 
 .br:hover {
-    color: #e51e25;
+    color: var(--first-color);
 }

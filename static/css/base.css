@@ -1,20 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Gelasio&family=Titillium+Web:wght@200&display=swap');
 
 :root {
     --header-height: 3rem;
     --nav-width: 76px;
     --first-color: #144a85;
     --first-color-light: #6c8aaf;
-    --green-color: #134326;
+    --green-color: #25CC88;
     --red-color: #e51e25;
     --sand-tan: #e1b382;
     --dark-color: #444a4a;
     --olive: #A3BCB6;
     --white-color: #F7F6FB;
-    --body-font: 'Dosis', sans-serif;
     --normal-font-size: 1rem;
-    --z-fixed: 100
+    --z-fixed: 100;
+    --primary-font: 'Gelasio', serif;
+    --normal-font: 'Titillium Web', sans-serif;
 }
 
 *,
@@ -52,7 +52,7 @@ a {
 }
 
 .header_toggle {
-    color: var(--first-color);
+    color: var(--green-color);
     font-size: 1.5rem;
     cursor: pointer
 }
@@ -134,6 +134,7 @@ a {
     transition: .3s;
     margin-right: 1.3rem;
     white-space: nowrap;
+    font-family: var(--primary-font)
 }
 
 .nav_link:hover {
