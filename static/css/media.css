@@ -1,8 +1,4 @@
 @media screen and (max-width:767px) {
-    #big {
-        display: none;
-    }
-
     .d-text {
         margin-top: 2rem;
     }
@@ -11,7 +7,7 @@
         font-size: 2rem;
     }
 
-    ul.breadcrumb {
+    .d-items {
         float: left;
     }
 
@@ -28,11 +24,6 @@
 
 }
 
-@media screen and (min-width:768px) {
-    #small {
-        display: none;
-    }
-}
 
 @media screen and (max-width:320px) {
     #dropdown1 {
@@ -64,6 +55,17 @@
         margin-top: 5px;
         display: none;
     }
+
+    #res_card {
+        margin: 2rem;
+        max-width: 990px;
+
+    }
+
+    .text_filter {
+        width: 5%;
+    }
+
 }
 
 @media screen and (max-width:375px) {
@@ -91,6 +93,8 @@
         margin-top: 5px;
         display: none;
     }
+
+
 }
 
 @media screen and (max-width:425px) {
@@ -117,5 +121,9 @@
         margin-right: 10px;
         font-size: 10px;
         margin-top: 5px;
+    }
+
+    .titles {
+        font-size: 12px;
     }
 }
