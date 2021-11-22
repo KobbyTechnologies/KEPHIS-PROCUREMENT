@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     'quotation',
     'interest',
     'applications',
+    'accounts',
 ]
 
 MIDDLEWARE = [

@@ -71,3 +71,21 @@ tr {
 .brs {
     color: #e1b382;
 }
+
+.n-login {
+    height: 100vh;
+    width: 100%;
+}
+
+#n-left {
+    background-color: #0b3868;
+}
+
+#n-right1 {
+    background-color: whitesmoke;
+}
+
+#n-right2 {
+    background-color: whitesmoke;
+    display: none;
+}

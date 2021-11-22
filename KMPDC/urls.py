@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('quotation.urls')),
     path('', include('interest.urls')),
     path('', include('applications.urls')),
+    path('', include('accounts.urls')),
 ]
