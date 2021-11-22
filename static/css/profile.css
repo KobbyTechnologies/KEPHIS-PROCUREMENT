@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Gelasio&family=Titillium+Web:wght@200&display=swap');
+
+:root {
+    --primary-color: #0b3868;
+    --secondery-color: #25CC88;
+    --shadow-color: #9d9fb3;
+    --primary-font: 'Gelasio', serif;
+    --normal-font: 'Titillium Web', sans-serif;
+
+}
+
 .card-title img {
     width: 100px;
     height: 100px;
@@ -28,12 +39,6 @@
 
 /* material */
 
-
-:root {
-    --primary-color: #0b3868;
-    --secondery-color: #25CC88;
-    --shadow-color: #9d9fb3
-}
 
 .form__container {
     margin-top: 1rem;
@@ -434,20 +439,21 @@
 }
 
 .brand {
-    margin-top: 40px;
+    margin-top: 10px;
 }
 
 .brand h2 {
-    color: #fff;
-    font-size: 1.8rem;
+    color: rgb(238, 236, 236);
+    font-size: 1.6rem;
     font-weight: 300;
     font-style: normal;
     line-height: 50px;
-    font-family: 'Titillium Web', sans-serif;
+    font-family: var(--primary-font)
 }
 
 .br-brand {
     font-weight: bold;
+    color: #a9abac
 }
 
 .l-text {
@@ -464,7 +470,8 @@
 }
 
 .l-image img {
-    max-width: 300px;
+    max-width: 250px;
+    height: 250px;
 }
 
 @media screen and (min-width: 1400px) {
@@ -626,6 +633,7 @@ label {
     background: #6c8aaf;
     color: white;
     border-radius: 4px;
+    font-family: var(--normal-font);
 }
 
 .auth1:hover {
@@ -636,6 +644,7 @@ label {
     background: #444a4a;
     color: white;
     border-radius: 4px;
+    font-family: var(--normal-font);
 }
 
 .auth2:hover {
@@ -643,11 +652,24 @@ label {
 }
 
 .f-text {
-    padding: 5px;
+    width: auto;
+    bottom: 0;
+    padding: 10px
 }
 
 .f-text p {
     font-size: 14px;
     color: white;
     display: inline-block;
+    font-family: var(--normal-font);
+}
+
+#kobby {
+    float: right;
+}
+
+@media screen and (max-width:768px) {
+    #kobby {
+        float: left;
+    }
 }

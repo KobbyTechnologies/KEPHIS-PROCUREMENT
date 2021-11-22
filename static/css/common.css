@@ -74,11 +74,12 @@ tr {
 
 .n-login {
     height: 100vh;
-    width: 100%;
+    overflow-x: hidden;
 }
 
 #n-left {
     background-color: #0b3868;
+    min-height: 100vh;
 }
 
 #n-right1 {
