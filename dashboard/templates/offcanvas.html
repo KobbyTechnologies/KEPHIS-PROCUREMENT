@@ -33,7 +33,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#menu2" data-toggle="collapse" aria-expanded="false" class="nav_link" type="button"
+                            <a href="#menu2" data-toggle="collapse" aria-expanded="True" class="nav_link" type="button"
                                 data-bs-parent="menu2">
                                 <i class="las la-briefcase" style="font-size:22px"></i>
                                 <span class="nav_name">Tenders</span><i class="las la-angle-down" id="care"></i>
@@ -92,11 +92,13 @@
                                     style="color: green;"></i>
                             </a>
                         </li>
-                        <a href="{% url 'auth' %}" class="nav_link">
-                            <i class="las la-sign-out-alt" style="font-size:22px"></i>
-                            <span class="nav_name">Logout</span><i class="las la-arrow-right" id="care"
-                                style="color: green;"></i>
-                        </a>
+                        <li>
+                            <a href="{% url 'auth' %}" class="nav_link">
+                                <i class="las la-sign-out-alt" style="font-size:22px"></i>
+                                <span class="nav_name">Logout</span><i class="las la-arrow-right" id="care"
+                                    style="color: green;"></i>
+                            </a>
+                        </li>
                     </div>
                 </div>
             </nav>

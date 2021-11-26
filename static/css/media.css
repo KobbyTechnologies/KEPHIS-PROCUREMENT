@@ -62,10 +62,6 @@
 
     }
 
-    .text_filter {
-        width: 5%;
-    }
-
 }
 
 @media screen and (max-width:375px) {

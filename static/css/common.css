@@ -64,7 +64,21 @@
 
 #res_card {
     margin: 2rem;
-    max-width: 990px;
+    max-width: 1000px;
+    box-shadow: 5px 8px 9px 5px rgba(112, 111, 111, 0.14), 0 3px 1px -2px rgba(107, 106, 106, 0.2), 0 1px 5px 0 rgba(139, 139, 139, 0.12);
+}
+
+@media screen and (max-width:1400px) {
+    #res_card {
+        margin: 2rem;
+        max-width: 920px;
+        box-shadow: 5px 8px 9px 5px rgba(112, 111, 111, 0.14), 0 3px 1px -2px rgba(107, 106, 106, 0.2), 0 1px 5px 0 rgba(139, 139, 139, 0.12);
+    }
+}
+
+.card_exp {
+    margin: 2rem;
+    max-width: auto;
     box-shadow: 5px 8px 9px 5px rgba(112, 111, 111, 0.14), 0 3px 1px -2px rgba(107, 106, 106, 0.2), 0 1px 5px 0 rgba(139, 139, 139, 0.12);
 }
 
