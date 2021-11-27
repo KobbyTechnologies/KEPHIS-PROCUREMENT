@@ -15,25 +15,26 @@ def profile_request(request):
     session.auth = HttpNtlmAuth('domain\\fke-admin', 'Administrator#2021!')
     response = session.get(
         "http://102.37.117.22:1448/ADMINBC/ODataV4/Company('FKETEST')/UpcomingEvents").json()
+    res = response['value']
 
-    print(response)
-    return render(request, 'profile.html')
+    ctx = {"res": res}
+    return render(request, 'profile.html', ctx)
 
 
 def login_request(request):
     '''
     In order to catch exception well, make sure to know what every attribute contains
     '''
-    customerNo = '01-00334545'
-    eventNo = 'ev00030344'
-    RegNo = 'null'
-    try:
-        if customerNo != '' and eventNo != '':
-            result = config.CLIENT.service.RegisterEvent(
-                customerNo, eventNo, RegNo)
-            print(result)
-        else:
-            raise ValueError('Incorrect input!')
-    except Exception:
-        return HttpResponse("You have already registered for this event! View the details under the My Events Section.")
+    # customerNo = '01-00334545'
+    # eventNo = 'ev00030344'
+    # RegNo = 'null'
+    # try:
+    #     if customerNo != '' and eventNo != '':
+    #         result = config.CLIENT.service.RegisterEvent(
+    #             customerNo, eventNo, RegNo)
+    #         print(result)
+    #     else:
+    #         raise ValueError('Incorrect input!')
+    # except Exception:
+    #     return HttpResponse("You have already registered for this event! View the details under the My Events Section.")
     return render(request, 'auth.html')
