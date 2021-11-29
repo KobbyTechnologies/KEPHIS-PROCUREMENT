@@ -122,3 +122,25 @@ td {
     background-color: whitesmoke;
     display: none;
 }
+
+.alert-success {
+    background: var(--green-color);
+    border-color: var(--green-color);
+    color: white;
+}
+
+.alert-warn {
+    background: var(--red-color);
+    border-color: var(--red-color);
+    color: white;
+}
+
+.a-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.a-icon i {
+    font-size: 2rem;
+}

@@ -167,10 +167,13 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
-session = Session()
+AUTHS = Session()
+
 WEB_SERVICE_PWD = config('WEB_SERVICE_PWD')
 BASE_URL = config('BASE_URL')
-O_DATA = "http: // 102.37.117.22: 1448/ADMINBC/ODataV4/Company('FKETEST')/{}"
-session.auth = HttpNtlmAuth('domain\\fke-admin', WEB_SERVICE_PWD)
-CLIENT = Client(BASE_URL, transport=Transport(session=session))
+O_DATA = "http://102.37.117.22:1448/ADMINBC/ODataV4/Company('FKETEST'){}"
+
+AUTHS.auth = HttpNtlmAuth('domain\\fke-admin', WEB_SERVICE_PWD)
+
+CLIENT = Client(BASE_URL, transport=Transport(session=AUTHS))
 AUTHS = HttpNtlmAuth('domain\\fke-admin', WEB_SERVICE_PWD)
