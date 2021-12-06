@@ -169,8 +169,8 @@ django_heroku.settings(locals())
 
 AUTHS = Session()
 
-WEB_SERVICE_PWD = config('WEB_SERVICE_PWD')
-BASE_URL = config('BASE_URL')
+WEB_SERVICE_PWD = 'Administrator#2021!'
+BASE_URL = 'domain\\fke-admin'
 O_DATA = "http://102.37.117.22:1448/ADMINBC/ODataV4/Company('FKETEST'){}"
 
 AUTHS.auth = HttpNtlmAuth('domain\\fke-admin', WEB_SERVICE_PWD)
