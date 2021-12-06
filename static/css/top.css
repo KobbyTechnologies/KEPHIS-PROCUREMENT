@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Gelasio&family=Hind:wght@300&family=Titillium+Web:wght@200&display=swap');
-
 :root {
     --first-color: #144a85;
     --first-color-light: #6c8aaf;
@@ -9,10 +7,12 @@
     --dark-color: #444a4a;
     --olive: #A3BCB6;
     --white-color: #F7F6FB;
-    --primary-font: 'Gelasio', serif;
-    --normal-font: 'Titillium Web', sans-serif;
-    --third-font: 'Hind', sans-serif;
 
+}
+
+#drops {
+    margin-left: auto;
+    margin-right: 0;
 }
 
 .d-text h4 {

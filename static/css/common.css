@@ -16,6 +16,16 @@
 
 }
 
+@media screen and (max-width: 425px) {
+    #pr {
+        margin-bottom: 1rem;
+    }
+
+    #formContainer {
+        margin-top: 1rem;
+    }
+}
+
 /* btns */
 .dropBtn {
     background-color: var(--first-color);
@@ -45,12 +55,10 @@
 
 /* end */
 /* main dashboard  */
-.dash2 {
-    background: whitesmoke;
-    margin-top: 1.7rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
+/* .dash2 {
+    min-height: 100vh;
+    padding-bottom: 3rem;
+} */
 
 .dash1 {
     background: var(--green-color);
@@ -91,9 +99,43 @@
 
 thead,
 tr {
-    background: var(--green-color);
     width: 100%;
     font-family: var(--normal-font);
+}
+
+#tops {
+    background: var(--green-color)
+}
+
+.page-item.active .page-link {
+    background-color: var(--green-color) !important;
+    border: 1px solid var(--green-color);
+}
+
+.page-link {
+    color: var(--dark-color) !important;
+}
+
+.modal-header {
+    background: var(--green-color);
+    color: white;
+}
+
+.modal-content {
+    width: -moz-fit-content;
+    width: fit-content;
+    display: inline-block;
+    background: var(--olive);
+}
+
+.tables tr {
+    color: black;
+    padding: 15px;
+}
+
+#rap {
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 td {
@@ -143,4 +185,19 @@ td {
 
 .a-icon i {
     font-size: 2rem;
+}
+
+.body-pds+.header {
+    background: red;
+}
+
+div.dataTables_filter input {
+    border-color: var(--green-color);
+    display: none;
+}
+
+@media screen and (max-width:375px) {
+    div.dataTables_filter input {
+        border-color: var(--green-color);
+    }
 }

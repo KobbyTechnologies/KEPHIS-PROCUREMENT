@@ -2,44 +2,28 @@
 {% load bootstrap5 %}
 {% load static %}
 {% block main %}
-<section class="dash1">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12 col md-12">
-                <div class="d-head">
-                    <div class="row">
-                        <div class="col-sm-1 col-md-1">
-                            <div class="d-icon mx-auto text-center">
-                                <img src="../../../static/img/logo/fav.png" width="100px" class="img-fluid" alt=""
-                                    srcset="">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="d-text">
-                                <h4>
-                                    Dashboard
-                                </h4>
-                                <p>
-                                    Kenya Medical Practitioners and Dentists Council
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="d-items">
-                                <ul class="breadcrumb">
-                                    <li>Pages</li>
-                                    <li><a href="#">Dashboard</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+<section>
+    <div class="content-wrapper pb-2">
+        <div class="row" id="proBanner">
+            <div class="col-12">
+                <span class="d-flex align-items-center purchase-popup">
+                    <img src="../../../static/img/logo/fav.png" width="70px" class="img-fluid" alt="" srcset="">
+                    <a href="#" target="_blank" class="btn ml-auto download-button">Open Tenders</a>
+                    <a href="#" target="_blank" class="btn purchase-button">Expression of Interest</a>
+                </span>
+            </div>
+        </div>
+        <div class="d-xl-flex justify-content-between align-items-start">
+            <h2 class="text-dark font-weight-bold mb-2"> Overview dashboard </h2>
+            <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
+                <div class="dropdown ml-0 ml-md-4 mt-2 mt-lg-0">
+                    <button class="btn bg-white dropdown-toggle p-3 d-flex align-items-center" type="button"
+                        id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+                            class="mdi mdi-calendar mr-1"></i>{{today}}
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<section class="dash2">
-    <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-5">
                 <div class="c-inner">
@@ -162,11 +146,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<section class="dash2 mb-4">
-    <div class="container-fluid">
-        <div class="row mb-2">
+        <div class="row my-2">
             <div class="col-md-12">
                 <div class="card" id="d-card">
                     <div class="card-title">
@@ -174,36 +154,28 @@
                             Supplier's General Information
                         </h6>
                     </div>
-
-                    <div class="card-body res_card" id="res_card">
-                        <table id="example"
-                            class="table  table-striped table-bordered table-hover dt-responsive nowrap table-responsive">
+                    <div class="card-body">
+                        <table id="example" class="table table-striped table-bordered" style="width:100%">
                             <thead>
-                                <tr>
-                                    <th>Event No.</th>
+                                <tr id="tops">
+                                    <th>Event No</th>
                                     <th>Event Name</th>
-                                    <th>Description</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>Event Description</th>
                                     <th>Status</th>
                                     <th>Archived</th>
                                     <th>Entry No</th>
                                     <th>Invoicing Method</th>
                                     <th>Chargeable</th>
                                     <th>Amount</th>
-                                    <th>Event Type</th>
+                                    <th>Event_Type</th>
                                 </tr>
                             </thead>
-
-
                             <tbody>
                                 {% for res in res %}
                                 <tr>
                                     <td>{{res.Event_No}}</td>
-                                    <td>{{res.Event_Name}}</td>
-                                    <td>{{res.Event_Description}}</td>
-                                    <td>{{res.Event_Start_Date}}</td>
-                                    <td>{{res.Event_End_Date}}</td>
+                                    <td id="rap">{{res.Event_Name}}</td>
+                                    <td id="rap">{{res.Event_Description}}</td>
                                     <td>{{res.Status}}</td>
                                     <td>{{res.Archived}}</td>
                                     <td>{{res.Entry_No}}</td>
@@ -213,6 +185,7 @@
                                     <td>{{res.Event_Type}}</td>
                                 </tr>
                                 {% endfor %}
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -220,127 +193,5 @@
         </div>
     </div>
 </section>
-<section class="dash2 mb-4" style="display:none">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card" id="d-card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card h-100">
-                                    <div class="card-title">
-                                        <h6>Multiple File Uploads</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="dropdown">
-                                            <a class="btn normBtn dropdown-toggle" href="#" role="button" id="dropdown1"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="las la-plus"></i> Create New
-                                            </a>
 
-                                            <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                                                <li id="filebtn"><a class="dropdown-item" href="#"><i
-                                                            class="las la-file-upload"></i>
-                                                        File</a></li>
-                                                <li><a class="dropdown-item" href="#"> <i
-                                                            class="las la-file-upload"></i>
-                                                        Document</a></li>
-                                                <li><a class="dropdown-item" href="#"> <i class="las la-upload"></i>
-                                                        DropBox</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="card my-3 p-3" id="file_up">
-                                            <form method="POST" , action="{% url 'canvas' %}"
-                                                enctype="multipart/form-data">
-                                                {% csrf_token %}
-                                                <div class="mb-3">
-                                                    <label for="formFileMultiple" class="form-label">Multiple Image
-                                                        Upload</label>
-                                                    <input class="form-control" name="images" multiple type="file">
-                                                </div>
-                                                <button type="submit" class="btn dropBtn">Submit <i
-                                                        class="las la-file-upload"></i></button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="card h-100" id="card1">
-                                    <div class="card-title">
-                                        <h6>Uploaded Files</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="card h-100" id="p-card">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-md-5">
-                                                                <div class="previews mx-auto text-center">
-                                                                    <i class="las la-file-pdf"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-7">
-                                                                <div class="p-content">
-                                                                    <p>
-                                                                        Docs.pdf
-                                                                    </p>
-                                                                    <p style="font-size: 14px">400 KB</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <i class="las la-download"
-                                                                        style="color: green;font-size: 19px;"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% for urls in photo %}
-                                            <div class="col-lg-4">
-                                                <div class="card h-100 card2" id="p-card">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-md-5">
-                                                                <div class="previews mx-auto text-center">
-                                                                    <img src="{{urls.image.url}}" alt="" height="auto"
-                                                                        color="img-fluid" width="40" srcset="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-7">
-                                                                <div class="p-content">
-                                                                    <p>
-                                                                        Docs.pdf
-                                                                    </p>
-                                                                    <p style="font-size: 14px">400 KB</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <i class="las la-download"
-                                                                        style="color: green;font-size: 19px;"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-{% include 'footer.html' %}
 {% endblock %}

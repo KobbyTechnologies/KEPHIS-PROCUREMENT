@@ -123,3 +123,9 @@
         font-size: 12px;
     }
 }
+
+@media screen and (max-width: 425px) {
+    .p-card {
+        margin-bottom: 1rem;
+    }
+}

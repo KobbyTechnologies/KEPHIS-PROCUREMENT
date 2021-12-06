@@ -2,109 +2,59 @@
 {% load bootstrap5 %}
 {% load static %}
 {% block main %}
-<section class="dash1">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12 col md-12">
-                <div class="d-head">
-                    <div class="row">
-                        <div class="col-sm-1 col-md-1">
-                            <div class="d-icon mx-auto text-center">
-                                <img src="../../../static/img/logo/fav.png" width="100px" class="img-fluid" alt=""
-                                    srcset="">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="d-text">
-                                <h4>
-                                    Submitted Expression of Interests
-                                </h4>
-                                <p>
-                                    Kenya Medical Practitioners and Dentists Council
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="d-items">
-                                <ul class="breadcrumb">
-                                    <li><a href="#">Dashboard</a></li>
-                                    <li>Submitted Expression of Interests</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+<section class="dash2">
+    <div class="content-wrapper" style="background: #6c8aaf;padding-bottom: 8rem;">
+        <div class="d-xl-flex justify-content-between align-items-start">
+            <h2 class="text-dark font-weight-bold mb-2">
+                Submitted Expression of Interests</h2>
+            <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
+                <div class="dropdown ml-0 ml-md-4 mt-2 mt-lg-0">
+                    <button class="btn bg-white dropdown-toggle p-3 d-flex align-items-center" type="button"
+                        id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+                            class="mdi mdi-calendar mr-1"></i>{{today}}
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<section class="dash2">
-    <div class="container-fluid">
-        <div class="row">
+        <div class="row my-2">
             <div class="col-md-12">
                 <div class="card" id="d-card">
                     <div class="card-title">
                         <h6>
-                            Submitted Expression of Interests
+                            Submitted Expression of Interests List
                         </h6>
                     </div>
-                    <div class="card-body" id="res_card">
-                        <table id="example"
-                            class="table  table-striped table-bordered table-hover dt-responsive nowrap ">
+                    <div class="card-body">
+                        <table id="example" class="table table-striped table-bordered" style="width:100%">
                             <thead>
-                                <tr>
-                                    <th>EOI No.</th>
-                                    <th>Description</th>
-                                    <th>Date Published</th>
-                                    <th>Closing Date</th>
-                                    <th>Action</th>
+                                <tr id="tops">
+                                    <th>Event No</th>
+                                    <th>Event Name</th>
+                                    <th>Event Description</th>
+                                    <th>Status</th>
+                                    <th>Archived</th>
+                                    <th>Entry No</th>
+                                    <th>Invoicing Method</th>
+                                    <th>Chargeable</th>
+                                    <th>Amount</th>
+                                    <th>Event_Type</th>
                                 </tr>
                             </thead>
-
-
                             <tbody>
+                                {% for res in res %}
                                 <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
+                                    <td>{{res.Event_No}}</td>
+                                    <td id="rap">{{res.Event_Name}}</td>
+                                    <td id="rap">{{res.Event_Description}}</td>
+                                    <td>{{res.Status}}</td>
+                                    <td>{{res.Archived}}</td>
+                                    <td>{{res.Entry_No}}</td>
+                                    <td>{{res.Invoicing_Method}}</td>
+                                    <td>{{res.Chargeable}}</td>
+                                    <td>{{res.Amount}}</td>
+                                    <td>{{res.Event_Type}}</td>
                                 </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>63</td>
-                                    <td>2011/07/25</td>
-                                </tr>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>63</td>
-                                    <td>2011/07/25</td>
-                                </tr>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>63</td>
-                                    <td>2011/07/25</td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -114,5 +64,4 @@
     </div>
 </section>
 
-{% include 'footer.html' %}
 {% endblock %}
