@@ -155,7 +155,8 @@
                         </h6>
                     </div>
                     <div class="card-body">
-                        <table id="example" class="table table-striped table-bordered" style="width:100%">
+                        <table id="example" class="table table-striped table-bordered dt-responsive table-responsive-lg"
+                            style="width:100%">
                             <thead>
                                 <tr id="tops">
                                     <th>Event No</th>
@@ -168,14 +169,15 @@
                                     <th>Chargeable</th>
                                     <th>Amount</th>
                                     <th>Event_Type</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for res in res %}
                                 <tr>
                                     <td>{{res.Event_No}}</td>
-                                    <td id="rap">{{res.Event_Name}}</td>
-                                    <td id="rap">{{res.Event_Description}}</td>
+                                    <td>{{res.Event_Name}}</td>
+                                    <td>{{res.Event_Description}}</td>
                                     <td>{{res.Status}}</td>
                                     <td>{{res.Archived}}</td>
                                     <td>{{res.Entry_No}}</td>
@@ -183,6 +185,12 @@
                                     <td>{{res.Chargeable}}</td>
                                     <td>{{res.Amount}}</td>
                                     <td>{{res.Event_Type}}</td>
+                                    <td>
+                                        <a type="button" href="{% url 'details' res.Event_No %}"
+                                            class="btn btn-success btn-icon-text" style="background: #25CC88;">
+                                            <i class="las la-external-link-alt" style="font-size: 1rem"></i> Apply
+                                        </a>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

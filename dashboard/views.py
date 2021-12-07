@@ -29,9 +29,25 @@ def dashboard(request):
     response = session.get(Access_Point).json()
 
     res = response['value']
+
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     photo = Photo.objects.all()
     ctx = {"photo": photo, "today": todays_date, "res": res}
     return render(request, 'main/dashboard.html', ctx)
+
+
+def details(request, pk):
+    session = requests.Session()
+    session.auth = config.AUTHS
+
+    Access_Point = config.O_DATA.format("/UpcomingEvents")
+    response = session.get(Access_Point).json()
+
+    for tender in response['value']:
+        if tender['Event_No'] == pk:
+            res = tender
+    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    ctx = {"today": todays_date, "res": res}
+    return render(request, "main/details.html", ctx)

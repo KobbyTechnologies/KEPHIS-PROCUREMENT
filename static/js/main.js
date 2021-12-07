@@ -7,19 +7,7 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 
 $(document).ready(function () {
     var table = $('#example').DataTable({
-        responsive: {
-            details: {
-                display: $.fn.dataTable.Responsive.display.modal({
-                    header: function (row) {
-                        var data = row.data();
-                        return 'Details for ' + data[0] + ' ' + data[1];
-                    }
-                }),
-                renderer: $.fn.dataTable.Responsive.renderer.tableAll({
-                    tableClass: 'tables'
-                })
-            }
-        }
+        responsive: true
     });
     new $.fn.dataTable.FixedHeader(table);
 });
