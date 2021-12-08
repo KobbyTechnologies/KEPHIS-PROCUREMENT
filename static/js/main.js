@@ -9,7 +9,7 @@ $(document).ready(function () {
     var table = $('#example').DataTable({
         responsive: true
     });
-    new $.fn.dataTable.FixedHeader(table);
+    // new $.fn.dataTable.FixedHeader(table);
 });
 
 const nxtBtn = document.querySelector('#submitBtn');
@@ -152,12 +152,12 @@ function displayForms() {
 
 // for slider
 
-var slider = document.querySelector(".slider");
-var output = document.querySelector(".output__value");
-output.innerHTML = slider.value;
+// var slider = document.querySelector(".slider");
+// var output = document.querySelector(".output__value");
+// output.innerHTML = slider.value;
 
-slider.oninput = function () {
-    output.innerHTML = this.value;
+// slider.oninput = function () {
+//     output.innerHTML = this.value;
 
 
-}
+// }

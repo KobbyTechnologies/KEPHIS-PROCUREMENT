@@ -17,8 +17,25 @@
     --normal-font: 'Titillium Web', sans-serif;
 }
 
-*,
-::before,
-::after {
-    box-sizing: border-box
+/* Alerts */
+.alert-warn {
+    background: var(--red-color);
+    border-color: var(--red-color);
+    color: white;
+}
+
+.alert-success {
+    background: var(--green-color);
+    border-color: var(--green-color);
+    color: white;
+}
+
+.a-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.a-icon i {
+    font-size: 2rem;
 }

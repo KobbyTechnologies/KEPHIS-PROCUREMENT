@@ -1,31 +1,29 @@
-{% load bootstrap5 %}
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
-    <title>KMPDC</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- all custom styles -->
-    {% block styles %}
-    {% bootstrap_css %}
-    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- icons -->
+    <!-- line -->
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <!-- end -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../static/css/auth.css">
+    <link rel="stylesheet" href="../../static/css/base.css">
     <link rel="shortcut icon" type="image/png" href="../../static/img/logo/fav.png" />
-    {% endblock %}
-    <!-- end -->
-
-    <!-- all cdn -->
-    {% include 'links/cdn.html' %}
-    <!-- end -->
 </head>
 
 <body>
-    <section class="n-logins">
+    <section class="n-login">
         <div class="container-fluid px-0">
             <div class="row">
                 <div id='n-left' class="col-md-6">
@@ -41,7 +39,7 @@
                     <div class="row">
                         <div class="col-md-12 mx-auto text-center">
                             <div class="brand">
-                                <h2 class="n-brand">E-PROCUREMENT PORTAL </br> <span class="br-brand">KMPDC</span></h2>
+                                <h2 class="n-brand">E-PROCUREMENT PORTAL</br> <span class="br-brand">KMPDC</span></h2>
                             </div>
                         </div>
                     </div>
@@ -63,8 +61,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class=" mx-auto text-center mt-2">
-                                <button class="btn btn-md auth1" type=" button">Open Tenders</button>
-                                <button class="btn btn-md auth2" type="button">Expression of Interest</button>
+                                <button class="btn btn-md " id="auth1" type=" button">Open Tenders</button>
+                                <button class="btn btn-md " id="auth2" type="button">Expression of Interest</button>
                             </div>
                             <div class="l-image mx-auto text-center">
                                 <img src='../../static/img/2.png' class="img-fluid" alt="brand image" srcset="">
@@ -126,28 +124,6 @@
                                                 style="text-decoration:none;color:white">Login</a>
                                         </div>
                                     </form>
-                                    <!-- Show Alerts -->
-                                    <!-- <div class="alert alert-warning alert-dismissible fade show alert-success"
-                                        role="alert">
-                                        <div class="row">
-                                            <div class="col-md-2 a-icon">
-                                                <div class="mx-auto text-center">
-                                                    <i class="las la-check-circle"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8 a-icon">
-                                                <p>{{note}}</p>
-                                            </div>
-                                            <div class="col-md-2 a-icon">
-                                                <button type="button" class="close" data-dismiss="alert"
-                                                    aria-label="Close" style="color:#111">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                    <!-- end -->
-                                    <!-- Show Alerts -->
                                     <div class="alert alert-warning alert-dismissible fade show alert-warn"
                                         role="alert">
                                         <div class="row">
@@ -160,27 +136,37 @@
                                                 <p>{{note}}</p>
                                             </div>
                                             <div class="col-md-2 a-icon">
-                                                <button type="button" class="close" data-dismiss="alert"
-                                                    aria-label="Close" style="color:white">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- end -->
+                                    <!-- <div class="alert alert-warning alert-dismissible fade show alert-success"
+                                        role="alert">
+                                        <div class="row">
+                                            <div class="col-md-2 a-icon">
+                                                <div class="mx-auto text-center">
+                                                    <i class="las la-check-circle"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 a-icon">
+                                                <p>{{note}}</p>
+                                                <p>
+                                                    This is a Success Alert. This is a Success Alert.
+                                                </p>
+                                            </div>
+                                            <div class="col-md-2 a-icon">
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                        </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6" id="n-right2">
-                    <!-- <div class="row">
-                        <div class="col-md-12">
-                            <div class="logos mx-auto text-center">
-                                <img src="../../static/img/logo/fav.png" width="100px" alt="" srcset="">
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-text">
@@ -251,24 +237,13 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <a role="button" href="{% url 'auth' %}" type="submit"
-                                                class="btn btn-primary btn-block btn-lg"
-                                                style="text-decoration: none;color: white;">Sign
-                                                Up</a>
+                                            <button type="submit" class="btn btn-primary btn-block btn-lg">Sign
+                                                Up</button>
                                         </div>
                                         <p class="small">By clicking the Sign Up button, you agree to our <br><a
                                                 href="#">Terms &amp; Conditions</a>, and <a href="#">Privacy Policy</a>.
                                         </p>
                                     </form>
-                                    <!-- Show Alerts -->
-                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                        <strong>Holy guacamole!</strong> You should check in on some of those fields
-                                        below.
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <!-- end -->
                                 </div>
                             </div>
                         </div>
@@ -277,14 +252,27 @@
             </div>
 
     </section>
-    <!-- js cdn -->
-    {% include 'links/js_cdn.html' %}
-    <!-- end -->
-    {% block scripts %}
-    <script src="../../static/js/main.js"></script>
-    {% bootstrap_javascript %}
-    {% endblock %}
-    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $("#reg").click(function (e) {
+                e.preventDefault();
+                $("#n-right1").hide();
+                $("#n-right2").show();
+            })
+            $("#log").click(function (e) {
+                e.preventDefault();
+                $("#n-right2").hide();
+                $("#n-right1").show();
+            })
+        })
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

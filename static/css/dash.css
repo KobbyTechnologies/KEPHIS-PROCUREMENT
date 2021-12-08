@@ -172,18 +172,6 @@
     border-radius: 15px;
 }
 
-.allTable {
-    width: 100%;
-}
-
-.allTable tr th {
-    width: auto;
-    word-wrap: normal;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
 #file_up {
     display: none;
 }

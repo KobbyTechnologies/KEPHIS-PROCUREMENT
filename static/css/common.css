@@ -13,6 +13,7 @@
     --primary-font: 'Gelasio', serif;
     --normal-font: 'Titillium Web', sans-serif;
     --third-font: 'Hind', sans-serif;
+    --shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(119, 117, 117, 0.2), 0 1px 5px 0 rgba(128, 125, 125, 0.12);
 
 }
 
@@ -53,19 +54,12 @@
     color: var(--dark-color)
 }
 
-/* end */
-/* main dashboard  */
-/* .dash2 {
-    min-height: 100vh;
-    padding-bottom: 3rem;
-} */
-
 .dash1 {
     background: var(--green-color);
     padding-top: 15px;
     padding-bottom: 15px;
     border-radius: 6px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(119, 117, 117, 0.2), 0 1px 5px 0 rgba(128, 125, 125, 0.12);
+    box-shadow: var(--shadow);
 }
 
 /* end */
@@ -73,21 +67,21 @@
 #res_card {
     margin: 2rem;
     max-width: 1000px;
-    box-shadow: 5px 8px 9px 5px rgba(112, 111, 111, 0.14), 0 3px 1px -2px rgba(107, 106, 106, 0.2), 0 1px 5px 0 rgba(139, 139, 139, 0.12);
+    box-shadow: var(--shadow);
 }
 
 @media screen and (max-width:1400px) {
     #res_card {
         margin: 2rem;
         max-width: 920px;
-        box-shadow: 5px 8px 9px 5px rgba(112, 111, 111, 0.14), 0 3px 1px -2px rgba(107, 106, 106, 0.2), 0 1px 5px 0 rgba(139, 139, 139, 0.12);
+        box-shadow: var(--shadow);
     }
 }
 
 .card_exp {
     margin: 2rem;
     max-width: auto;
-    box-shadow: 5px 8px 9px 5px rgba(112, 111, 111, 0.14), 0 3px 1px -2px rgba(107, 106, 106, 0.2), 0 1px 5px 0 rgba(139, 139, 139, 0.12);
+    box-shadow: var(--shadow);
 }
 
 .table {
@@ -139,51 +133,6 @@ td {
     color: #e1b382;
 }
 
-.n-login {
-    height: 100vh;
-    overflow-x: hidden;
-}
-
-#n-left {
-    background-color: #0b3868;
-    min-height: 100vh;
-}
-
-#n-right1 {
-    background-color: whitesmoke;
-}
-
-#n-right2 {
-    background-color: whitesmoke;
-    display: none;
-}
-
-.alert-success {
-    background: var(--green-color);
-    border-color: var(--green-color);
-    color: white;
-}
-
-.alert-warn {
-    background: var(--red-color);
-    border-color: var(--red-color);
-    color: white;
-}
-
-.a-icon {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.a-icon i {
-    font-size: 2rem;
-}
-
-.body-pds+.header {
-    background: red;
-}
-
 div.dataTables_filter input {
     border-color: var(--green-color);
     display: none;
@@ -230,4 +179,10 @@ div.dataTables_filter input {
     font-weight: bold;
     font-family: var(--normal-font);
     color: #000;
+}
+
+@media screen and (max-width:768px) {
+    #long {
+        min-width: 310px;
+    }
 }
