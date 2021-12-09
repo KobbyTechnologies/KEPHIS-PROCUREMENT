@@ -48,6 +48,7 @@ def details(request, pk):
     for tender in response['value']:
         if tender['Event_No'] == pk:
             res = tender
+            type = tender['Chargeable']
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": res}
+    ctx = {"today": todays_date, "res": res, 'type': type}
     return render(request, "main/details.html", ctx)
