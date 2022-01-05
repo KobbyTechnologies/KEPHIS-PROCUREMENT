@@ -22,7 +22,7 @@ def submittedOpenTenders(request):
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res}
-    return render(request, 'SubOpenTender.html', ctx)
+    return render(request, 'Open/SubOpenTender.html', ctx)
 
 
 def submittedResTenders(request):

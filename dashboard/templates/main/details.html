@@ -15,7 +15,21 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-success" role="alert">
+                    <h4 class="alert-heading">Hello {user} </h4>
+                    <p>
+                        Please Note that, A password will be provided for 2 Envelope Applications
+                        that will be used to submit your financial proposal after Mandatory and technical
+                        evaluation.
+                    </p>
+                    <hr>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
             <div class="col-md-8">
                 <div class="card h-100" id="dt-card">
                     <div class="card-header">
@@ -50,9 +64,9 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        {% if type == res.Chargeable %}
+                                        {% if type != res.Chargeable %}
                                         <form id="regForm">
-                                            <h3>Evaluation Stages:1 Envelope </h3>
+                                            <h3>Evaluation Type: 1 Envelope </h3>
                                             <!-- One "tab" for each step in the form: -->
                                             <div class="tab"> <span class="w-name">
                                                     Mandatory Requirements:
@@ -71,7 +85,7 @@
                                                 </p>
                                             </div>
                                             <div class="tab"><span class="w-name">
-                                                    Technical Requirements:
+                                                    Technical Proposal:
                                                 </span>
                                                 <p>
                                                     <label for="">Attachment 1:</label>
@@ -87,7 +101,7 @@
                                                 </p>
                                             </div>
                                             <div class="tab"> <span class="w-name">
-                                                    Financial Requirements:
+                                                    Financial Proposal:
                                                 </span>
                                                 <p>
                                                     <label for="">Amount:</label>
@@ -115,58 +129,64 @@
                                             </div>
                                         </form>
                                         {% else %}
-                                        <p>
-                                            <form>
-                                                <h3>Evaluation Stages:2 Envelope </h3>
-                                                <!-- One "tab" for each step in the form: -->
-                                                <div class="mb-2"> <span class="w-name">
-                                                        Mandatory Requirements:
-                                                    </span>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <label for="">Attachment 1:</label>
-                                                            <input type="file" class="form-control" name="file1">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label for="">Attachment 2:</label>
-                                                            <input type="file" class="form-control" name="file2">
-                                                        </div>
+                                        <form>
+                                            <h3>Evaluation Type: 2 Envelope </h3>
+                                            <!-- One "tab" for each step in the form: -->
+                                            <div class="mb-2"> <span class="w-name">
+                                                    Mandatory Requirements:
+                                                </span>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="">Attachment 1:</label>
+                                                        <input type="file" class="form-control" name="file1">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="">Attachment 2:</label>
+                                                        <input type="file" class="form-control" name="file2">
                                                     </div>
                                                 </div>
-                                                <div class="mb-2"> <span class="w-name">
-                                                        Technical Requirements:
-                                                    </span>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <label for="">Attachment 1:</label>
-                                                            <input type="file" class="form-control" name="file3">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label for="">Attachment 2:</label>
-                                                            <input type="file" class="form-control" name="file4">
-                                                        </div>
+                                            </div>
+                                            <div class="mb-2"> <span class="w-name">
+                                                    Technical Requirements:
+                                                </span>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="">Attachment 1:</label>
+                                                        <input type="file" class="form-control" name="file3">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="">Attachment 2:</label>
+                                                        <input type="file" class="form-control" name="file4">
                                                     </div>
                                                 </div>
-                                                <div class="tab"> <span class="w-name">
-                                                        Financial Requirements:
-                                                    </span>
-                                                    <div>
-                                                        <label for="recipient-name"
-                                                            class="col-form-label">Amount:</label>
-                                                        <input type="text" class="form-control" id="recipient-name"
-                                                            placeholder="Ksh">
-                                                        <small class="form-text text-muted">We'll never
-                                                            share
-                                                            your email with anyone else.</small>
+                                            </div>
+                                            <div class="tab"> <span class="w-name">
+                                                    Financial Requirements:
+                                                </span>
+                                                <div>
+                                                    <label for="recipient-name" class="col-form-label">Amount:</label>
+                                                    <input type="text" class="form-control" id="recipient-name"
+                                                        placeholder="Ksh">
+                                                    <small class="form-text text-muted">We'll never
+                                                        share
+                                                        your email with anyone else.</small>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="" class="col-form-label">Password</label>
+                                                        <input type="password" class="form-control" id=""
+                                                            placeholder="Password">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="" class="col-form-label">Confirm Password</label>
+                                                        <input type="password" class="form-control" id=""
+                                                            placeholder="Password">
                                                     </div>
                                                 </div>
-                                                <div class="mb-1">
-                                                    <label for="formFileMultiple" class="form-label">Comment</label>
-                                                    <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                        rows="3"></textarea>
-                                                </div>
-                                            </form>
-                                        </p>
+                                            </div>
+                                        </form>
                                         {% endif %}
                                     </div>
                                     <div class="modal-footer">

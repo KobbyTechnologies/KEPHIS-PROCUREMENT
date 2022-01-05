@@ -11,12 +11,6 @@
         float: left;
     }
 
-    #d-card,
-    #card1 {
-        margin-bottom: 1rem;
-    }
-
-
     .card2 {
         margin-top: 1rem;
         margin-top: 1rem;
@@ -127,5 +121,9 @@
 @media screen and (max-width: 425px) {
     .p-card {
         margin-bottom: 1rem;
+    }
+
+    #dash_card {
+        margin-top: 1rem;
     }
 }

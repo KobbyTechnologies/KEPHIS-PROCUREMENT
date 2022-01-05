@@ -143,6 +143,12 @@ div.dataTables_filter input {
     }
 }
 
+@media screen and (max-width:425px) {
+    #dt-sm {
+        margin-top: 10px;
+    }
+}
+
 #dt-card {
     border-radius: 8px;
     background: var(--white-color);

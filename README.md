@@ -32,3 +32,5 @@ Technologies used to develop this application:
 - CSS
 ### Support and contact details
 Should you be unable to access the website, have any recommendations and/or questions, feel free to email me:[emaeba@kobby.co.ke]
+# Passwords to show and hide amount in 2 envelopes
+# Tender Stage
