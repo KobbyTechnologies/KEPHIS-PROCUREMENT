@@ -25,6 +25,21 @@ def open_tenders(request):
     return render(request, 'openTenders.html', ctx)
 
 
+def details(request, pk):
+    session = requests.Session()
+    session.auth = config.AUTHS
+
+    Access_Point = config.O_DATA.format("/ProspectiveSuppliercard")
+    response = session.get(Access_Point).json()
+
+    for tender in response['value']:
+        if tender['No'] == pk:
+            res = tender
+    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    ctx = {"today": todays_date, "res": res}
+    return render(request, "details.html", ctx)
+
+
 def closed_tenders(request):
     session = requests.Session()
     session.auth = config.AUTHS

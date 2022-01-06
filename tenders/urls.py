@@ -6,4 +6,5 @@ urlpatterns = [
     path('openTenders', views.open_tenders, name="open"),
     path('closedTenders', views.closed_tenders, name='closed'),
     path('restrictedTenders', views.Restricted_tenders, name='restricted'),
+    path('details/<str:pk>', views.details, name="details")
 ]

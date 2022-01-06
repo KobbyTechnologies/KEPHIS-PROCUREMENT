@@ -39,6 +39,7 @@
                                     <th>Supplier Status</th>
                                     <th>Opening Date</th>
                                     <th>Closing Date</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,6 +56,12 @@
                                     <td>{{res.Supplier_Status}}</td>
                                     <td>{{res.Contract_Start_Date}}</td>
                                     <td>{{res.Contract_End_Date}}</td>
+                                    <td>
+                                        <a type="button" href="{% url 'details' res.No %}"
+                                            class="btn btn-success btn-icon-text" style="background: #25CC88;">
+                                            <i class="las la-external-link-alt" style="font-size: 1rem"></i> Apply
+                                        </a>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

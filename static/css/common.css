@@ -152,32 +152,14 @@ div.dataTables_filter input {
 #dt-card {
     border-radius: 8px;
     background: var(--white-color);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(119, 117, 117, 0.2), 0 1px 5px 0 rgba(128, 125, 125, 0.12);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-#dt-card .card-header {
-    color: black;
-    padding: 15px;
+#dt-card .detail {
+    background: var(--green-color);
+    padding: 1rem;
+    color: #fff;
     font-family: var(--third-font);
-    font-weight: bold;
-}
-
-#dt-body {
-    background-color: white;
-    color: black;
-    font-family: var(--third-font);
-}
-
-#dt-sm {
-    background-color: var(--green-color);
-    border-radius: 8px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(119, 117, 117, 0.2), 0 1px 5px 0 rgba(128, 125, 125, 0.12);
-}
-
-#dt-sm .card-header {
-    padding: 15px;
-    font-family: var(--third-font);
-    font-weight: bold;
 }
 
 .dt-txt p {
