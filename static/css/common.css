@@ -173,3 +173,12 @@ div.dataTables_filter input {
         min-width: 310px;
     }
 }
+
+.d-card a {
+    text-decoration: none;
+    font-family: var(--normal-font);
+}
+
+.d-card p {
+    color: white;
+}
