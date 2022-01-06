@@ -148,6 +148,7 @@ function displayForms() {
         form5.style.display = 'block';
 
     }
+
 }
 
 // for slider

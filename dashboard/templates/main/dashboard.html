@@ -2,6 +2,8 @@
 {% load bootstrap5 %}
 {% load static %}
 {% block main %}
+
+
 <section>
     <div class="content-wrapper pb-2">
         <div class="row" id="proBanner">
@@ -72,6 +74,45 @@
                         <h3 class="card-title mt-3 mb-0">1800</h3>
                         <p class="card-text">Expression Of Interest</p>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-md-12">
+                <div class="card p-3" style="background: yellow;">
+                    <canvas id="myChart"></canvas>
+                    <script>
+                        const labels = [
+                            'Open Tenders',
+                            'Restricted Tenders',
+                            'Request for Proposal',
+                            'Request for Quotation',
+                            'Expression of Interest',
+                            'June',
+                        ];
+
+                        const data = {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Distribution of Tenders ',
+                                backgroundColor: 'rgb(255, 99, 132)',
+                                borderColor: 'rgb(255, 99, 132)',
+                                data: [3, 10, 5, 2, 20, 30, 45],
+                            }]
+                        };
+
+                        const config = {
+                            type: 'bar',
+                            data: data,
+                            options: {}
+                        };
+                    </script>
+                    <script>
+                        const myChart = new Chart(
+                            document.getElementById('myChart'),
+                            config
+                        );
+                    </script>
                 </div>
             </div>
         </div>

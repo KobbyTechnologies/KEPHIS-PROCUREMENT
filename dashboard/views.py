@@ -27,8 +27,11 @@ def dashboard(request):
 
     Access_Point = config.O_DATA.format("/RFP_Prospective_Supplier_card")
     response = session.get(Access_Point).json()
-
     res = response['value']
+    # for tender in response['value']:
+    #     if tender['No']:
+    #         res = len(tender)
+    #     print(res)
 
     # Get Timezone
     # creating date object
