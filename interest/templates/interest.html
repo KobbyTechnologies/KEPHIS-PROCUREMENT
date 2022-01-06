@@ -28,31 +28,40 @@
                             style="width:100%">
                             <thead>
                                 <tr id="tops">
-                                    <th id="long">Event No</th>
-                                    <th>Event Name</th>
-                                    <th>Event Description</th>
-                                    <th>Status</th>
-                                    <th>Archived</th>
-                                    <th>Entry No</th>
-                                    <th>Invoicing Method</th>
-                                    <th>Chargeable</th>
-                                    <th>Amount</th>
-                                    <th>Event_Type</th>
+                                    <th id="long">Tender No</th>
+                                    <th>Published Date</th>
+                                    <th>Description</th>
+                                    <th>Organization Type</th>
+                                    <th>Supplier Types</th>
+                                    <th>Company PIN No</th>
+                                    <th>Vendor No</th>
+                                    <th>Opening Venue</th>
+                                    <th>Supplier Status</th>
+                                    <th>Opening Date</th>
+                                    <th>Closing Date</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for res in res %}
                                 <tr>
-                                    <td>{{res.Event_No}}</td>
-                                    <td id="rap">{{res.Event_Name}}</td>
-                                    <td id="rap">{{res.Event_Description}}</td>
-                                    <td>{{res.Status}}</td>
-                                    <td>{{res.Archived}}</td>
-                                    <td>{{res.Entry_No}}</td>
-                                    <td>{{res.Invoicing_Method}}</td>
-                                    <td>{{res.Chargeable}}</td>
-                                    <td>{{res.Amount}}</td>
-                                    <td>{{res.Event_Type}}</td>
+                                    <td>{{res.No}}</td>
+                                    <td id="rap">{{res.Date}}</td>
+                                    <td>{{res.Name}}</td>
+                                    <td>{{res.Organization_Type}}</td>
+                                    <td>{{res.Supplier_Types}}</td>
+                                    <td>{{res.Company_PIN_No}}</td>
+                                    <td>{{res.Vendor_No}}</td>
+                                    <td>{{res.Physical_Address}}</td>
+                                    <td>{{res.Supplier_Status}}</td>
+                                    <td>{{res.Contract_Start_Date}}</td>
+                                    <td>{{res.Contract_End_Date}}</td>
+                                    <td>
+                                        <a type="button" href="{% url 'details' res.No %}"
+                                            class="btn btn-success btn-icon-text" style="background: #25CC88;">
+                                            <i class="las la-external-link-alt" style="font-size: 1rem"></i> Apply
+                                        </a>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
