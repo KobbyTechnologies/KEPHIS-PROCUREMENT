@@ -15,7 +15,7 @@ def requestQuote(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
-    Access_Point = config.O_DATA.format("/UpcomingEvents")
+    Access_Point = config.O_DATA.format("/RFQ_Prospective_Supplier_card")
     response = session.get(Access_Point).json()
 
     res = response['value']
@@ -24,7 +24,3 @@ def requestQuote(request):
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res}
     return render(request, 'requestQuote.html', ctx)
-
-
-def daraja(request):
-    return render(request, "daraja.html")
