@@ -14,7 +14,7 @@ def interest_request(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
-    Access_Point = config.O_DATA.format("/UpcomingEvents")
+    Access_Point = config.O_DATA.format("/EOIProspectiveSupplier_card")
     response = session.get(Access_Point).json()
 
     res = response['value']
