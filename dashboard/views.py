@@ -25,7 +25,7 @@ def dashboard(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
-    Access_Point = config.O_DATA.format("/UpcomingEvents")
+    Access_Point = config.O_DATA.format("/RFP_Prospective_Supplier_card")
     response = session.get(Access_Point).json()
 
     res = response['value']
@@ -36,19 +36,3 @@ def dashboard(request):
     photo = Photo.objects.all()
     ctx = {"photo": photo, "today": todays_date, "res": res}
     return render(request, 'main/dashboard.html', ctx)
-
-
-def details(request, pk):
-    session = requests.Session()
-    session.auth = config.AUTHS
-
-    Access_Point = config.O_DATA.format("/UpcomingEvents")
-    response = session.get(Access_Point).json()
-
-    for tender in response['value']:
-        if tender['Event_No'] == pk:
-            res = tender
-            type = tender['Chargeable']
-    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": res, 'type': type}
-    return render(request, "main/details.html", ctx)
