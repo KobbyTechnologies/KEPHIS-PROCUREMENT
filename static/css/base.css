@@ -120,6 +120,7 @@ button:hover {
 }
 
 .content-wrapper {
+    min-height: 100vh;
     background: url(../img/bg/footer-bg.png);
     background-attachment: fixed;
 }
