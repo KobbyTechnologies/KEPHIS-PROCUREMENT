@@ -118,3 +118,8 @@ button:hover {
 .step.finish {
     background-color: var(--green-color);
 }
+
+.content-wrapper {
+    background: url(../img/bg/footer-bg.png);
+    background-attachment: fixed;
+}
