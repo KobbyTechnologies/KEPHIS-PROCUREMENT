@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'interest',
     'applications',
     'accounts',
+    'Proposal',
 ]
 
 MIDDLEWARE = [
