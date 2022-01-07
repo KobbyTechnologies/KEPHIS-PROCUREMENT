@@ -59,7 +59,7 @@
                             <i class="las la-briefcase fill-white" style="font-size:2rem;"></i>
                             <a href="" style="float: right; color:white">View <i class="las la-arrow-right"></i></a>
                         </span>
-                        <h3 class="card-title mt-3 mb-0">15</h3>
+                        <h3 class="card-title mt-3 mb-0">{{rfq}}</h3>
                         <p class="card-text">Request For Quotation</p>
                     </div>
                 </div>
@@ -93,13 +93,16 @@
                         // chart variables
                         var open = "{{open}}"
                         var restTender = "{{restrict}}"
+                        var rfq = "{{rfq}}"
+
+
                         const data = {
                             labels: labels,
                             datasets: [{
                                 label: 'Distribution of Tenders ',
                                 backgroundColor: 'rgb(255, 99, 132)',
                                 borderColor: 'rgb(255, 99, 132)',
-                                data: [open, restTender, 5, 2, 20, 30, 45],
+                                data: [open, restTender, 2, rfq, 20, 30, 45],
                             }]
                         };
 

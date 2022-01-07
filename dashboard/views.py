@@ -32,6 +32,7 @@ def dashboard(request):
         rfp = []
         open = []
         restricted = []
+        rfq = []
         for tender in response['value']:
             if tender['Process_Type'] == 'RFP':
                 output_json = json.dumps(tender)
@@ -44,13 +45,17 @@ def dashboard(request):
             elif tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Restricted Tender':
                 output_json = json.dumps(tender)
                 restricted.append(json.loads(output_json))
+            elif tender['Process_Type'] == 'RFQ':
+                output_json = json.dumps(tender)
+                rfq.append(json.loads(output_json))
         rfp_counter = len(rfp)
         open_counter = len(open)
         restricted_counter = len(restricted)
+        rfq_counter = len(rfq)
     except Exception as e:
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     photo = Photo.objects.all()
     ctx = {"photo": photo, "today": todays_date,
-           "res": res, "open": open_counter, "restrict": restricted_counter}
+           "res": res, "open": open_counter, "restrict": restricted_counter, "rfq": rfq_counter}
     return render(request, 'main/dashboard.html', ctx)
