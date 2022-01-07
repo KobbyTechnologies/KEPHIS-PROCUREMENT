@@ -31,17 +31,22 @@ def dashboard(request):
         response = session.get(Access_Point).json()
         rfp = []
         open = []
+        restricted = []
         for tender in response['value']:
             if tender['Process_Type'] == 'RFP':
                 output_json = json.dumps(tender)
                 rfp.append(json.loads(output_json))
                 res = rfp
 
-            elif tender['Process_Type'] == 'Tender':
+            elif tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender':
                 output_json = json.dumps(tender)
                 open.append(json.loads(output_json))
+            elif tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Restricted Tender':
+                output_json = json.dumps(tender)
+                restricted.append(json.loads(output_json))
         rfp_counter = len(rfp)
         open_counter = len(open)
+        restricted_counter = len(restricted)
     except Exception as e:
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
