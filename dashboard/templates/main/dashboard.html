@@ -77,8 +77,8 @@
             </div>
         </div>
         <div class="row my-3">
-            <div class="col-md-5">
-                <div class="card p-3 h-100" style="background: yellow;">
+            <div class="col-md-12">
+                <div class="card p-3 h-100" style="background: #ebc9a6;">
                     <canvas id="myChart"></canvas>
                     <script>
                         const labels = [
@@ -98,8 +98,15 @@
                             labels: labels,
                             datasets: [{
                                 label: 'Distribution of Tenders ',
-                                backgroundColor: 'rgb(255, 99, 132)',
-                                borderColor: 'rgb(255, 99, 132)',
+                                // backgroundColor: 
+                                backgroundColor: [
+                                    '#ff5e6c',
+                                    '#8076a3',
+                                    '#ffde22',
+                                    'rgb(54, 162, 235)',
+                                    '#101357'
+                                ],
+                                borderColor: '#ff5e6c',
                                 data: [open, restTender, RFP, rfq, EOI],
                             }]
                         };
@@ -118,7 +125,10 @@
                     </script>
                 </div>
             </div>
-            <div class="col-md-7">
+
+        </div>
+        <div class="row my-2">
+            <div class="col-md-12">
                 <div class="card" id="d-card">
                     <div class="card-title">
                         <h6>
@@ -160,11 +170,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row my-2">
-            <div class="col-md-12">
-
             </div>
         </div>
     </div>
