@@ -47,7 +47,7 @@
                             <i class="las la-lock fill-white" style="font-size:2rem;"></i>
                             <a href="" style="float: right; color:white">View <i class="las la-arrow-right"></i></a>
                         </span>
-                        <h3 class="card-title mt-3 mb-0">50</h3>
+                        <h3 class="card-title mt-3 mb-0">{{restrict}}</h3>
                         <p class="card-text">Restricted Tenders</p>
                     </div>
                 </div>
@@ -90,14 +90,16 @@
                             'Expression of Interest',
                             'June',
                         ];
-                        var a = "{{open}}"
+                        // chart variables
+                        var open = "{{open}}"
+                        var restTender = "{{restrict}}"
                         const data = {
                             labels: labels,
                             datasets: [{
                                 label: 'Distribution of Tenders ',
                                 backgroundColor: 'rgb(255, 99, 132)',
                                 borderColor: 'rgb(255, 99, 132)',
-                                data: [a, 10, 5, 2, 20, 30, 45],
+                                data: [open, restTender, 5, 2, 20, 30, 45],
                             }]
                         };
 

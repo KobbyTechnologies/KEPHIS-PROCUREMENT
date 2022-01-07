@@ -52,5 +52,5 @@ def dashboard(request):
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     photo = Photo.objects.all()
     ctx = {"photo": photo, "today": todays_date,
-           "res": res, "open": open_counter}
+           "res": res, "open": open_counter, "restrict": restricted_counter}
     return render(request, 'main/dashboard.html', ctx)
