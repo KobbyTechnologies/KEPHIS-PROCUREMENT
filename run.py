@@ -12,15 +12,17 @@
 
 import requests
 from requests_ntlm import HttpNtlmAuth
+import json
 
 username = "NAVADMIN"
 password = "N@vAdm$n2030!!"
 
-site_url = "http://13.68.215.64:1248/BC140/ODataV4/Company(%27KMPDC%27)/ProspectiveSuppliercard"
+site_url = "http://13.68.215.64:1248/BC140/ODataV4/Company('KMPDC')/ProcurementMethods"
 
-r = requests.get(site_url, auth=HttpNtlmAuth(username, password))
+r = requests.get(site_url, auth=HttpNtlmAuth(username, password)).json()
 
-print(r.content)
+print(r)
+
 
 # import requests
 # from requests_ntlm import HttpNtlmAuth

@@ -25,16 +25,20 @@ def dashboard(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
-    Access_Point = config.O_DATA.format("/RFP_Prospective_Supplier_card")
-    response = session.get(Access_Point).json()
-    res = response['value']
-    # for tender in response['value']:
-    #     if tender['No']:
-    #         res = len(tender)
-    #     print(res)
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
 
-    # Get Timezone
-    # creating date object
+    try:
+        response = session.get(Access_Point).json()
+        responses = []
+        for tender in response['value']:
+            if tender['Process_Type'] == 'RFP':
+                output_json = json.dumps(tender, indent=2)
+                responses.append(json.loads(output_json))
+                res = responses
+        counter = len(responses)
+        print(counter)
+    except Exception as e:
+        print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     photo = Photo.objects.all()
     ctx = {"photo": photo, "today": todays_date, "res": res}

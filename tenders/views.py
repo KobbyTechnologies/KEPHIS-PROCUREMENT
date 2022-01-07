@@ -6,6 +6,7 @@ from requests_ntlm import HttpNtlmAuth
 import json
 from django.conf import settings as config
 import datetime
+from requests.adapters import HTTPAdapter
 
 # Create your views here.
 
@@ -15,9 +16,12 @@ def open_tenders(request):
     session.auth = config.AUTHS
 
     Access_Point = config.O_DATA.format("/ProspectiveSuppliercard")
-    response = session.get(Access_Point).json()
+    try:
+        response = session.get(Access_Point, timeout=10).json()
 
-    res = response['value']
+        res = response['value']
+    except requests.exceptions.ConnectionError:
+        print("Connection Error")
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
@@ -30,7 +34,7 @@ def details(request, pk):
     session.auth = config.AUTHS
 
     Access_Point = config.O_DATA.format("/ProspectiveSuppliercard")
-    response = session.get(Access_Point).json()
+    response = session.get(Access_Point, timeout=10).json()
 
     for tender in response['value']:
         if tender['No'] == pk:

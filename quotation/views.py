@@ -16,7 +16,7 @@ def requestQuote(request):
     session.auth = config.AUTHS
 
     Access_Point = config.O_DATA.format("/RFQ_Prospective_Supplier_card")
-    response = session.get(Access_Point).json()
+    response = session.get(Access_Point, timeout=10).json()
 
     res = response['value']
     # Get Timezone

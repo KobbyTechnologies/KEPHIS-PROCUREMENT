@@ -15,7 +15,7 @@ def interest_request(request):
     session.auth = config.AUTHS
 
     Access_Point = config.O_DATA.format("/EOIProspectiveSupplier_card")
-    response = session.get(Access_Point).json()
+    response = session.get(Access_Point, timeout=10).json()
 
     res = response['value']
     # Get Timezone

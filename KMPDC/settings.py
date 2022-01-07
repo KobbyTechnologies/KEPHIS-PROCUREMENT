@@ -171,7 +171,7 @@ AUTHS = Session()
 
 WEB_SERVICE_PWD = 'N@vAdm$n2030!!'
 BASE_URL = 'http://13.68.215.64:1247/BC140/WS/KMPDC/Page/ProspectiveSuppliercard'
-O_DATA = "http://13.68.215.64:1248/BC140/ODataV4/Company(%27KMPDC%27){}"
+O_DATA = "http://13.68.215.64:1248/BC140/ODataV4/Company('KMPDC'){}"
 
 AUTHS.auth = HttpNtlmAuth('domain\\NAVADMIN', WEB_SERVICE_PWD)
 
