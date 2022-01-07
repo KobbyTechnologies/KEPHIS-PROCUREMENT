@@ -29,17 +29,23 @@ def dashboard(request):
 
     try:
         response = session.get(Access_Point).json()
-        responses = []
+        rfp = []
+        open = []
         for tender in response['value']:
             if tender['Process_Type'] == 'RFP':
-                output_json = json.dumps(tender, indent=2)
-                responses.append(json.loads(output_json))
-                res = responses
-        counter = len(responses)
-        print(counter)
+                output_json = json.dumps(tender)
+                rfp.append(json.loads(output_json))
+                res = rfp
+
+            elif tender['Process_Type'] == 'Tender':
+                output_json = json.dumps(tender)
+                open.append(json.loads(output_json))
+        rfp_counter = len(rfp)
+        open_counter = len(open)
     except Exception as e:
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     photo = Photo.objects.all()
-    ctx = {"photo": photo, "today": todays_date, "res": res}
+    ctx = {"photo": photo, "today": todays_date,
+           "res": res, "open": open_counter}
     return render(request, 'main/dashboard.html', ctx)
