@@ -71,7 +71,7 @@
                             <i class="las la-edit fill-white" style="font-size:2rem;"></i>
                             <a href="" style="float: right; color:white">View <i class="las la-arrow-right"></i></a>
                         </span>
-                        <h3 class="card-title mt-3 mb-0">1800</h3>
+                        <h3 class="card-title mt-3 mb-0">{{EOI}}</h3>
                         <p class="card-text">Expression Of Interest</p>
                     </div>
                 </div>
@@ -88,21 +88,20 @@
                             'Request for Proposal',
                             'Request for Quotation',
                             'Expression of Interest',
-                            'June',
                         ];
                         // chart variables
                         var open = "{{open}}"
                         var restTender = "{{restrict}}"
                         var rfq = "{{rfq}}"
-
-
+                        var EOI = "{{EOI}}"
+                        var RFP = "{{RFP}}"
                         const data = {
                             labels: labels,
                             datasets: [{
                                 label: 'Distribution of Tenders ',
                                 backgroundColor: 'rgb(255, 99, 132)',
                                 borderColor: 'rgb(255, 99, 132)',
-                                data: [open, restTender, 2, rfq, 20, 30, 45],
+                                data: [open, restTender, RFP, rfq, EOI],
                             }]
                         };
 
