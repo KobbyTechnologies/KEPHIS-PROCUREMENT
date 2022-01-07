@@ -28,7 +28,7 @@ def dashboard(request):
     Access_Point = config.O_DATA.format("/ProcurementMethods")
 
     try:
-        response = session.get(Access_Point).json()
+        response = session.get(Access_Point, timeout=10).json()
         rfp = []
         open = []
         restricted = []
@@ -59,7 +59,7 @@ def dashboard(request):
         rfq_counter = len(rfq)
         eoi_counter = len(EOI)
 
-    except Exception as e:
+    except requests.exceptions.ConnectionError as e:
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     photo = Photo.objects.all()
@@ -76,7 +76,7 @@ def RFP_Details(request, pk):
     Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
     try:
         r = session.get(Access2).json()
-        response = session.get(Access_Point).json()
+        response = session.get(Access_Point, timeout=9).json()
         RFP = []
         Doc = []
         for tender in response['value']:
@@ -92,7 +92,7 @@ def RFP_Details(request, pk):
                 output_json = json.dumps(docs)
                 Doc.append(json.loads(output_json))
                 my_doc = Doc
-    except Exception as e:
+    except requests.exceptions.ConnectionError as e:
         print(e)
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")

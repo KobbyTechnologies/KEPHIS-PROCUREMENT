@@ -77,8 +77,8 @@
             </div>
         </div>
         <div class="row my-3">
-            <div class="col-md-12">
-                <div class="card p-3" style="background: yellow;">
+            <div class="col-md-5">
+                <div class="card p-3 h-100" style="background: yellow;">
                     <canvas id="myChart"></canvas>
                     <script>
                         const labels = [
@@ -118,9 +118,7 @@
                     </script>
                 </div>
             </div>
-        </div>
-        <div class="row my-2">
-            <div class="col-md-12">
+            <div class="col-md-7">
                 <div class="card" id="d-card">
                     <div class="card-title">
                         <h6>
@@ -134,7 +132,6 @@
                                 <tr id="tops">
                                     <th id="long">Tender No</th>
                                     <th>Title</th>
-                                    <th>Requisition No</th>
                                     <th>Tender Opening Date</th>
                                     <th>Tender Closing Date</th>
                                     <th>Status</th>
@@ -147,7 +144,6 @@
                                 <tr>
                                     <td>{{res.No}}</td>
                                     <td id="rap">{{res.Title}}</td>
-                                    <td>{{res.RequisitionNo}}</td>
                                     <td>{{res.TenderOpeningDate}}</td>
                                     <td>{{res.TenderClosingDate}}</td>
                                     <td>{{res.Status}}</td>
@@ -164,6 +160,11 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-md-12">
+
             </div>
         </div>
     </div>

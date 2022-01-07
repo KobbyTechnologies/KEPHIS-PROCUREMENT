@@ -1,0 +1,239 @@
+{% extends 'offcanvas.html' %}
+{% load bootstrap5 %}
+{% load static %}
+{% block main %}
+<section class="dash2">
+    <div class="content-wrapper" style="padding-bottom: 13rem;">
+        <div class="d-xl-flex justify-content-between align-items-start">
+            <h2 class="text-dark font-weight-bold mb-2"> Restricted Tender Details</h2>
+            <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
+                <div class="dropdown ml-0 ml-md-4 mt-2 mt-lg-0">
+                    <button class="btn bg-white dropdown-toggle p-3 d-flex align-items-center" type="button"
+                        id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+                            class="mdi mdi-calendar mr-1"></i>{{today}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="card p-3" id="dt-card">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="detail my-2">
+                                <h5>
+                                    Details For Tender No: <span style="color: black;">{{res.No}}</span>
+                                </h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="card h-100 p-3">
+                                        <ul>
+                                            <li class="text-dark">RFP No: <span style="color:green">{{res.No}}</span>
+                                            </li>
+                                            <li class="text-dark">RFP Title: <span
+                                                    style="color:green">{{res.Title}}</span></li>
+                                            <li class="text-dark">RequisitionNo: <span
+                                                    style="color:green">{{res.RequisitionNo}}</span></li>
+                                            <li class="text-dark">RFP Opening Date:
+                                                <span style="color:green">{{res.TenderOpeningDate}}</span></li>
+                                            <li class="text-dark">RFP Closing Date:
+                                                <span style="color:green">{{res.TenderClosingDate}}</span></li>
+                                            <li class="text-dark">RFP Status: <span
+                                                    style="color:green">{{res.Status}}</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100 p-3">
+                                        <ul>
+                                            <li class="text-dark">RFP ItemNo: <span
+                                                    style="color:green">{{res.ItemNo}}</span>
+                                            </li>
+                                            <li class="text-dark">RFP Description: <span
+                                                    style="color:green">{{res.Description}}</span></li>
+                                            <li class="text-dark">Unit of Measure: <span
+                                                    style="color:green">{{res.Unit_of_Measure}}</span></li>
+                                            <li class="text-dark">RFP Unit Price:
+                                                <span style="color:green">{{res.Unit_Price}}</span></li>
+                                            <li class="text-dark">RFP Amount:
+                                                <span style="color:green">{{res.Amount}}</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card h-100 p-3">
+                                        <h5>Required Documents</h5>
+                                        {% for docs in docs %}
+                                        <div class="card doc-card mt-4 p-3">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <i class="las la-file-upload"
+                                                        style="color: red;font-size:1.5rem"></i>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <strong class="text-dark">{{docs.DocumentName}}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
+                        Respond To Tender
+                    </button>
+
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Response -
+                                        {{res.Event_No}}
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {% if type != res.Chargeable %}
+                                    <form id="regForm">
+                                        <h3>Evaluation Type: 1 Envelope </h3>
+
+                                        <div class="tab"> <span class="w-name">
+                                                Mandatory Requirements:
+                                            </span>
+                                            <p>
+                                                <label for="">Attachment 1:</label>
+                                                <input type="file" oninput="this.className = ''" name="file1">
+                                            </p>
+                                            <p>
+                                                <label for="">Attachment 2:</label>
+                                                <input type="file" oninput="this.className = ''" name="file2">
+                                            </p>
+                                            <p>
+                                                <label for="">Attachment 3:</label>
+                                                <input type="file" oninput="this.className = ''" name="file3">
+                                            </p>
+                                        </div>
+                                        <div class="tab"><span class="w-name">
+                                                Technical Proposal:
+                                            </span>
+                                            <p>
+                                                <label for="">Attachment 1:</label>
+                                                <input type="file" oninput="this.className = ''" name="file4">
+                                            </p>
+                                            <p>
+                                                <label for="">Attachment 2:</label>
+                                                <input type="file" oninput="this.className = ''" name="file5">
+                                            </p>
+                                            <p>
+                                                <label for="">Attachment 3:</label>
+                                                <input type="file" oninput="this.className = ''" name="file6">
+                                            </p>
+                                        </div>
+                                        <div class="tab"> <span class="w-name">
+                                                Financial Proposal:
+                                            </span>
+                                            <p>
+                                                <label for="">Amount:</label>
+                                                <input type="text" class="form-control" name="Kshs"
+                                                    placeholder="Amount">
+                                            </p>
+                                            <p>
+                                                <label for="" class="form-label">Comment:</label>
+                                                <textarea class="form-control" rows="3"></textarea>
+                                            </p>
+                                        </div>
+                                        <div style="overflow:auto;">
+                                            <div style="float:right;">
+                                                <button type="button" id="prevBtn"
+                                                    onclick="nextPrev(-1)">Previous</button>
+                                                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                                            </div>
+                                        </div>
+                                        <div style="text-align:center;margin-top:40px;">
+                                            <span class="step"></span>
+                                            <span class="step"></span>
+                                            <span class="step"></span>
+                                        </div>
+                                    </form>
+                                    {% else %}
+                                    <form>
+                                        <h3>Evaluation Type: 2 Envelope </h3>
+                                        <div class="mb-2"> <span class="w-name">
+                                                Mandatory Requirements:
+                                            </span>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="">Attachment 1:</label>
+                                                    <input type="file" class="form-control" name="file1">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="">Attachment 2:</label>
+                                                    <input type="file" class="form-control" name="file2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2"> <span class="w-name">
+                                                Technical Requirements:
+                                            </span>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="">Attachment 1:</label>
+                                                    <input type="file" class="form-control" name="file3">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="">Attachment 2:</label>
+                                                    <input type="file" class="form-control" name="file4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab"> <span class="w-name">
+                                                Financial Requirements:
+                                            </span>
+                                            <div>
+                                                <label for="recipient-name" class="col-form-label">Amount:</label>
+                                                <input type="text" class="form-control" id="recipient-name"
+                                                    placeholder="Ksh">
+                                                <small class="form-text text-muted">We'll never
+                                                    share
+                                                    your email with anyone else.</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="" class="col-form-label">Password</label>
+                                                    <input type="password" class="form-control" id=""
+                                                        placeholder="Password">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="" class="col-form-label">Confirm Password</label>
+                                                    <input type="password" class="form-control" id=""
+                                                        placeholder="Password">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger"
+                                        data-bs-dismiss="modal">Discard</button>
+                                    <button type="button" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

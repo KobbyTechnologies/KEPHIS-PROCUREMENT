@@ -12,15 +12,5 @@ import datetime
 
 
 def requestQuote(request):
-    session = requests.Session()
-    session.auth = config.AUTHS
 
-    Access_Point = config.O_DATA.format("/RFQ_Prospective_Supplier_card")
-    response = session.get(Access_Point, timeout=10).json()
-
-    res = response['value']
-    # Get Timezone
-    # creating date object
-    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": res}
-    return render(request, 'requestQuote.html', ctx)
+    return render(request, 'requestQuote.html')

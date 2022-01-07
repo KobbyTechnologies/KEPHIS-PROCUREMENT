@@ -10,18 +10,8 @@ import datetime
 
 
 def profile_request(request):
-    session = requests.Session()
-    session.auth = config.AUTHS
 
-    Access_Point = config.O_DATA.format("/UpcomingEvents")
-    response = session.get(Access_Point).json()
-
-    res = response['value']
-    # Get Timezone
-    # creating date object
-    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": res}
-    return render(request, 'profile.html', ctx)
+    return render(request, 'profile.html')
 
 
 def login_request(request):
