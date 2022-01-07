@@ -17,7 +17,7 @@ import json
 username = "NAVADMIN"
 password = "N@vAdm$n2030!!"
 
-site_url = "http://13.68.215.64:1248/BC140/ODataV4/Company('KMPDC')/ProcurementMethods"
+site_url = "http://13.68.215.64:1248/BC140/ODataV4/Company(%27KMPDC%27)/ProcurementRequiredDocs"
 
 r = requests.get(site_url, auth=HttpNtlmAuth(username, password)).json()
 

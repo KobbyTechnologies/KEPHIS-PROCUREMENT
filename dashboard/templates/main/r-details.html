@@ -5,7 +5,7 @@
 <section class="dash2">
     <div class="content-wrapper" style="padding-bottom: 13rem;">
         <div class="d-xl-flex justify-content-between align-items-start">
-            <h2 class="text-dark font-weight-bold mb-2"> Tender Details</h2>
+            <h2 class="text-dark font-weight-bold mb-2"> Request For Proposal Details</h2>
             <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
                 <div class="dropdown ml-0 ml-md-4 mt-2 mt-lg-0">
                     <button class="btn bg-white dropdown-toggle p-3 d-flex align-items-center" type="button"
@@ -26,7 +26,7 @@
                                 </h5>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="card h-100 p-3">
                                         <ul>
                                             <li class="text-dark">RFP No: <span style="color:green">{{res.No}}</span>
@@ -44,7 +44,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="card h-100 p-3">
                                         <ul>
                                             <li class="text-dark">RFP ItemNo: <span
@@ -59,6 +59,24 @@
                                             <li class="text-dark">RFP Amount:
                                                 <span style="color:green">{{res.Amount}}</span></li>
                                         </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card h-100 p-3">
+                                        <h5>Required Documents</h5>
+                                        {% for docs in docs %}
+                                        <div class="card doc-card mt-4 p-3">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <i class="las la-file-upload"
+                                                        style="color: red;font-size:1.5rem"></i>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <strong class="text-dark">{{docs.DocumentName}}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>

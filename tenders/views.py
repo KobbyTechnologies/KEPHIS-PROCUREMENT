@@ -15,13 +15,17 @@ def open_tenders(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
-    Access_Point = config.O_DATA.format("/ProspectiveSuppliercard")
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
     try:
-        response = session.get(Access_Point, timeout=10).json()
-
-        res = response['value']
-    except requests.exceptions.ConnectionError:
-        print("Connection Error")
+        response = session.get(Access_Point).json()
+        open = []
+        for tender in response['value']:
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender':
+                output_json = json.dumps(tender)
+                open.append(json.loads(output_json))
+                res = open
+    except Exception as e:
+        print(e)
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")

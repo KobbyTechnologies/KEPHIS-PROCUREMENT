@@ -73,9 +73,12 @@ def RFP_Details(request, pk):
     session.auth = config.AUTHS
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
+    Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
     try:
+        r = session.get(Access2).json()
         response = session.get(Access_Point).json()
         RFP = []
+        Doc = []
         for tender in response['value']:
             if tender['Process_Type'] == 'RFP':
                 output_json = json.dumps(tender)
@@ -84,9 +87,14 @@ def RFP_Details(request, pk):
                 for my_tender in responses:
                     if my_tender['No'] == pk:
                         res = tender
+        for docs in r['value']:
+            if docs['QuoteNo'] == pk:
+                output_json = json.dumps(docs)
+                Doc.append(json.loads(output_json))
+                my_doc = Doc
     except Exception as e:
         print(e)
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": res}
+    ctx = {"today": todays_date, "res": res, "docs": my_doc}
     return render(request, "main/r-details.html", ctx)
