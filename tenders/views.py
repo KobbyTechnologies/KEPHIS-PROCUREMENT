@@ -69,10 +69,17 @@ def Restricted_tenders(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
-    Access_Point = config.O_DATA.format("/UpcomingEvents")
-    response = session.get(Access_Point).json()
-
-    res = response['value']
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
+    try:
+        response = session.get(Access_Point).json()
+        Restricted = []
+        for tender in response['value']:
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Restricted Tender':
+                output_json = json.dumps(tender)
+                Restricted.append(json.loads(output_json))
+                res = Restricted
+    except Exception as e:
+        print(e)
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
