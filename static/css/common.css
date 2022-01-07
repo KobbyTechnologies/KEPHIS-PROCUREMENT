@@ -177,6 +177,11 @@ div.dataTables_filter input {
 .d-card a {
     text-decoration: none;
     font-family: var(--normal-font);
+    color: red;
+}
+
+.d-card a:hover {
+    color: blue;
 }
 
 .d-card p {

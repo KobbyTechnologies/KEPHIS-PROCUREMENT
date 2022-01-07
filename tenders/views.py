@@ -71,13 +71,13 @@ def Restricted_tenders(request):
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     try:
-        response = session.get(Access_Point, timeout=6).json()
-        Restricted = []
+        response = session.get(Access_Point, timeout=10).json()
+        Restrict = []
         for tender in response['value']:
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Restricted Tender':
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender":
                 output_json = json.dumps(tender)
-                Restricted.append(json.loads(output_json))
-                res = Restricted
+                Restrict.append(json.loads(output_json))
+                res = Restrict
     except requests.exceptions.ConnectionError as e:
         print(e)
     # Get Timezone
@@ -87,33 +87,35 @@ def Restricted_tenders(request):
     return render(request, 'restrictedTenders.html', ctx)
 
 
-def RES_Details(request, pk):
+def Restrict_Details(request, pk):
     session = requests.Session()
     session.auth = config.AUTHS
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
     try:
-        r = session.get(Access2, timeout=10).json()
+        r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=9).json()
-        Open = []
+        Restrict = []
         Doc = []
         for tender in response['value']:
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Restricted Tender':
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender":
                 output_json = json.dumps(tender)
-                Open.append(json.loads(output_json))
-                responses = Open
+                Restrict.append(json.loads(output_json))
+                responses = Restrict
                 for my_tender in responses:
                     if my_tender['No'] == pk:
                         res = tender
-        for x in r['value']:
-            if x['QuoteNo'] == pk:
-                output_json = json.dumps(x)
+        for docs in r['value']:
+            if docs['QuoteNo'] == pk:
+                output_json = json.dumps(docs)
                 Doc.append(json.loads(output_json))
-                y = Doc
+                my_doc = Doc
+            else:
+                my_doc = ""
     except requests.exceptions.ConnectionError as e:
         print(e)
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": res, "docs": y}
+    ctx = {"today": todays_date, "res": res, "docs": my_doc}
     return render(request, "details/RES.html", ctx)
