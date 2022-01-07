@@ -33,19 +33,36 @@ def open_tenders(request):
     return render(request, 'openTenders.html', ctx)
 
 
-def details(request, pk):
+def Open_Details(request, pk):
     session = requests.Session()
     session.auth = config.AUTHS
 
-    Access_Point = config.O_DATA.format("/ProspectiveSuppliercard")
-    response = session.get(Access_Point, timeout=10).json()
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
+    Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
+    try:
+        r = session.get(Access2).json()
+        response = session.get(Access_Point).json()
+        Open = []
+        Doc = []
+        for tender in response['value']:
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender':
+                output_json = json.dumps(tender)
+                Open.append(json.loads(output_json))
+                responses = Open
+                for my_tender in responses:
+                    if my_tender['No'] == pk:
+                        res = tender
+        for docs in r['value']:
+            if docs['QuoteNo'] == pk:
+                output_json = json.dumps(docs)
+                Doc.append(json.loads(output_json))
+                my_doc = Doc
+    except Exception as e:
+        print(e)
 
-    for tender in response['value']:
-        if tender['No'] == pk:
-            res = tender
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": res}
-    return render(request, "details.html", ctx)
+    ctx = {"today": todays_date, "res": res, "docs": my_doc}
+    return render(request, "details/open.html", ctx)
 
 
 def Restricted_tenders(request):
