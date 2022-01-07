@@ -66,3 +66,27 @@ def dashboard(request):
     ctx = {"photo": photo, "today": todays_date,
            "res": res, "open": open_counter, "restrict": restricted_counter, "rfq": rfq_counter, "EOI": eoi_counter, "RFP": rfp_counter}
     return render(request, 'main/dashboard.html', ctx)
+
+
+def RFP_Details(request, pk):
+    session = requests.Session()
+    session.auth = config.AUTHS
+
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
+    try:
+        response = session.get(Access_Point).json()
+        RFP = []
+        for tender in response['value']:
+            if tender['Process_Type'] == 'RFP':
+                output_json = json.dumps(tender)
+                RFP.append(json.loads(output_json))
+                responses = RFP
+                for my_tender in responses:
+                    if my_tender['No'] == pk:
+                        res = tender
+    except Exception as e:
+        print(e)
+
+    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    ctx = {"today": todays_date, "res": res}
+    return render(request, "main/r-details.html", ctx)

@@ -3,7 +3,6 @@
 {% load static %}
 {% block main %}
 
-
 <section>
     <div class="content-wrapper pb-2">
         <div class="row" id="proBanner">
@@ -154,7 +153,7 @@
                                     <td>{{res.Status}}</td>
                                     <td>{{res.Type}}</td>
                                     <td>
-                                        <a type="button" href="{% url 'details' res.No %}"
+                                        <a type="button" href="{% url 'r-details' res.No %}"
                                             class="btn btn-success btn-icon-text" style="background: #25CC88;">View
                                             <i class="las la-external-link-alt" style="font-size: 1rem"></i>
                                         </a>
