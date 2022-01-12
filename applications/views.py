@@ -97,3 +97,8 @@ def submittedInterest(request):
     ctx = {"today": todays_date, "res": EOI}
 
     return render(request, 'SubInterest.html', ctx)
+
+
+def submittedRFP(request):
+
+    return render(request, 'SubRFP.html')
