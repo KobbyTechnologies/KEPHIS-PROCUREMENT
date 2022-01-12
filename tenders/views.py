@@ -47,10 +47,10 @@ def Open_Details(request, pk):
     docNo = pk
     notify = ''
     warn = ''
-    Price = int()
+    unitPrice = ''
     if request.method == "POST":
-        Price = int(request.POST.get('amount'))
-    unitPrice = float(Price)
+        unitPrice = float(request.POST.get('amount'))
+    print(unitPrice)
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=8).json()
@@ -81,7 +81,7 @@ def Open_Details(request, pk):
         else:
             raise ValueError('Incorrect input!')
     except Exception as e:
-        warn = e
+        print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,
            "docs": Doc, "warn": warn, "note": notify}
