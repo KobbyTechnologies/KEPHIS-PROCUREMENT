@@ -34,8 +34,25 @@ def submittedOpenTenders(request):
 
 
 def submittedResTenders(request):
+    session = requests.Session()
+    session.auth = config.AUTHS
 
-    return render(request, 'SubResTender.html')
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
+    try:
+        response = session.get(Access_Point, timeout=10).json()
+        Restrict = []
+        for tender in response['value']:
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender" and tender['Status'] == 'Archived':
+                output_json = json.dumps(tender)
+                Restrict.append(json.loads(output_json))
+    except requests.exceptions.ConnectionError as e:
+        print(e)
+    # Get Timezone
+    # creating date object
+    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    ctx = {"today": todays_date, "res": Restrict}
+
+    return render(request, 'SubResTender.html', ctx)
 
 
 def submittedRFQ(request):
