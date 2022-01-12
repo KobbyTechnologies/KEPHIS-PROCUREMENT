@@ -122,7 +122,6 @@ def Restrict_Details(request, pk):
     unitPrice = ''
     if request.method == "POST":
         unitPrice = float(request.POST.get('amount'))
-    print(unitPrice)
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=9).json()
