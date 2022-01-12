@@ -161,18 +161,20 @@
                                     <form method="post" action="{% url 'Odetails' res.No %}">
                                         {% csrf_token %}
                                         {% if docs %}
-                                        {% for docs in docs %}
+
                                         <div class="mb-2"> <span class="w-name">
                                                 Mandatory Requirements:
                                             </span>
                                             <div class="row">
+                                                {% for docs in docs %}
                                                 <div class="col-md-6">
                                                     <label for="">{{docs.DocumentName}}:</label>
                                                     <input type="file" class="form-control" name="file1">
                                                 </div>
+                                                {% endfor %}
                                             </div>
                                         </div>
-                                        {% endfor %}
+
                                         {% endif %}
                                         <div class="tab"> <span class="w-name">
                                                 Financial Requirements:
