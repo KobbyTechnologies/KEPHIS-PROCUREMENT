@@ -5,7 +5,7 @@
 <section class="dash2">
     <div class="content-wrapper" style="padding-bottom: 5rem;">
         <div class="d-xl-flex justify-content-between align-items-start">
-            <h2 class="text-dark font-weight-bold mb-2"> Request Quotation</h2>
+            <h2 class="text-dark font-weight-bold mb-2"> Request For Quotation</h2>
             <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
                 <div class="dropdown ml-0 ml-md-4 mt-2 mt-lg-0">
                     <button class="btn bg-white dropdown-toggle p-3 d-flex align-items-center" type="button"
@@ -32,7 +32,6 @@
                                     <th>Title</th>
                                     <th>Tender Opening Date</th>
                                     <th>Tender Closing Date</th>
-                                    <th>Status</th>
                                     <th>Type</th>
                                     <th>Action</th>
                                 </tr>
@@ -44,7 +43,6 @@
                                     <td id="rap">{{res.Title}}</td>
                                     <td>{{res.TenderOpeningDate}}</td>
                                     <td>{{res.TenderClosingDate}}</td>
-                                    <td>{{res.Status}}</td>
                                     <td>{{res.Type}}</td>
                                     <td>
                                         <a type="button" href="{% url 'QDetails' res.No %}"

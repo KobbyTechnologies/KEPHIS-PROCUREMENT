@@ -29,34 +29,47 @@
                                 <div class="col-md-5">
                                     <div class="card h-100 p-3">
                                         <ul>
-                                            <li class="text-dark">RFP No: <span style="color:green">{{res.No}}</span>
+                                            <li class="text-dark">Tender No: <span style="color:green">{{res.No}}</span>
                                             </li>
-                                            <li class="text-dark">RFP Title: <span
+                                            <li class="text-dark">TenderTitle: <span
                                                     style="color:green">{{res.Title}}</span></li>
-                                            <li class="text-dark">RequisitionNo: <span
-                                                    style="color:green">{{res.RequisitionNo}}</span></li>
-                                            <li class="text-dark">RFP Opening Date:
+                                            <li class="text-dark">Tender Opening Date:
                                                 <span style="color:green">{{res.TenderOpeningDate}}</span></li>
-                                            <li class="text-dark">RFP Closing Date:
+                                            <li class="text-dark">Tender Closing Date:
                                                 <span style="color:green">{{res.TenderClosingDate}}</span></li>
-                                            <li class="text-dark">RFP Status: <span
-                                                    style="color:green">{{res.Status}}</span></li>
                                         </ul>
+                                        <div class="alert alert-warning alert-dismissible fade show alert-warn"
+                                            role="alert">
+                                            <div class="row">
+                                                <div class="col-md-2 a-icon">
+                                                    <div class="mx-auto text-center">
+                                                        <i class="las la-exclamation-triangle"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 a-icon">
+                                                    <p>{{note}}</p>
+                                                </div>
+                                                <div class="col-md-2 a-icon">
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="card h-100 p-3">
                                         <ul>
-                                            <li class="text-dark">RFP ItemNo: <span
+                                            <li class="text-dark">Tender ItemNo: <span
                                                     style="color:green">{{res.ItemNo}}</span>
                                             </li>
-                                            <li class="text-dark">RFP Description: <span
+                                            <li class="text-dark">Tender Description: <span
                                                     style="color:green">{{res.Description}}</span></li>
                                             <li class="text-dark">Unit of Measure: <span
                                                     style="color:green">{{res.Unit_of_Measure}}</span></li>
-                                            <li class="text-dark">RFP Unit Price:
+                                            <li class="text-dark">Tender Unit Price:
                                                 <span style="color:green">{{res.Unit_Price}}</span></li>
-                                            <li class="text-dark">RFP Amount:
+                                            <li class="text-dark">Tender Amount:
                                                 <span style="color:green">{{res.Amount}}</span></li>
                                         </ul>
                                     </div>
@@ -94,77 +107,14 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="staticBackdropLabel">Response -
-                                        {{res.Event_No}}
+                                        {{res.No}}
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    {% if type != res.Chargeable %}
-                                    <form id="regForm">
-                                        <h3>Evaluation Type: 1 Envelope </h3>
-
-                                        <div class="tab"> <span class="w-name">
-                                                Mandatory Requirements:
-                                            </span>
-                                            <p>
-                                                <label for="">Attachment 1:</label>
-                                                <input type="file" oninput="this.className = ''" name="file1">
-                                            </p>
-                                            <p>
-                                                <label for="">Attachment 2:</label>
-                                                <input type="file" oninput="this.className = ''" name="file2">
-                                            </p>
-                                            <p>
-                                                <label for="">Attachment 3:</label>
-                                                <input type="file" oninput="this.className = ''" name="file3">
-                                            </p>
-                                        </div>
-                                        <div class="tab"><span class="w-name">
-                                                Technical Proposal:
-                                            </span>
-                                            <p>
-                                                <label for="">Attachment 1:</label>
-                                                <input type="file" oninput="this.className = ''" name="file4">
-                                            </p>
-                                            <p>
-                                                <label for="">Attachment 2:</label>
-                                                <input type="file" oninput="this.className = ''" name="file5">
-                                            </p>
-                                            <p>
-                                                <label for="">Attachment 3:</label>
-                                                <input type="file" oninput="this.className = ''" name="file6">
-                                            </p>
-                                        </div>
-                                        <div class="tab"> <span class="w-name">
-                                                Financial Proposal:
-                                            </span>
-                                            <p>
-                                                <label for="">Amount:</label>
-                                                <input type="text" class="form-control" name="Kshs"
-                                                    placeholder="Amount">
-                                            </p>
-                                            <p>
-                                                <label for="" class="form-label">Comment:</label>
-                                                <textarea class="form-control" rows="3"></textarea>
-                                            </p>
-                                        </div>
-                                        <div style="overflow:auto;">
-                                            <div style="float:right;">
-                                                <button type="button" id="prevBtn"
-                                                    onclick="nextPrev(-1)">Previous</button>
-                                                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-                                            </div>
-                                        </div>
-                                        <div style="text-align:center;margin-top:40px;">
-                                            <span class="step"></span>
-                                            <span class="step"></span>
-                                            <span class="step"></span>
-                                        </div>
-                                    </form>
-                                    {% else %}
-                                    <form>
-                                        <h3>Evaluation Type: 2 Envelope </h3>
+                                    <form method="post" action="{% url 'Odetails' res.No %}">
+                                        {% csrf_token %}
                                         <div class="mb-2"> <span class="w-name">
                                                 Mandatory Requirements:
                                             </span>
@@ -198,35 +148,18 @@
                                             </span>
                                             <div>
                                                 <label for="recipient-name" class="col-form-label">Amount:</label>
-                                                <input type="text" class="form-control" id="recipient-name"
-                                                    placeholder="Ksh">
-                                                <small class="form-text text-muted">We'll never
-                                                    share
-                                                    your email with anyone else.</small>
+                                                <input type="text" class="form-control" name="amount"
+                                                    id="recipient-name" placeholder="Ksh">
                                             </div>
                                         </div>
-                                        <div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label for="" class="col-form-label">Password</label>
-                                                    <input type="password" class="form-control" id=""
-                                                        placeholder="Password">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="" class="col-form-label">Confirm Password</label>
-                                                    <input type="password" class="form-control" id=""
-                                                        placeholder="Password">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    {% endif %}
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger"
                                         data-bs-dismiss="modal">Discard</button>
-                                    <button type="button" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>

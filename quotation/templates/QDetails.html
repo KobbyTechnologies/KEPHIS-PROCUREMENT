@@ -22,48 +22,44 @@
                         <div class="col-md-12">
                             <div class="detail my-2">
                                 <h5>
-                                    Details For RFP No: <span style="color: black;">{{res.No}}</span>
+                                    Details For RFQ No: <span style="color: black;">{{res.No}}</span>
                                 </h5>
                             </div>
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="card h-100 p-3">
                                         <ul>
-                                            <li class="text-dark">RFP No: <span style="color:green">{{res.No}}</span>
+                                            <li class="text-dark">RFQ No: <span style="color:green">{{res.No}}</span>
                                             </li>
-                                            <li class="text-dark">RFP Title: <span
+                                            <li class="text-dark">RFQ Title: <span
                                                     style="color:green">{{res.Title}}</span></li>
-                                            <li class="text-dark">RequisitionNo: <span
-                                                    style="color:green">{{res.RequisitionNo}}</span></li>
-                                            <li class="text-dark">RFP Opening Date:
+                                            <li class="text-dark">RFQ Opening Date:
                                                 <span style="color:green">{{res.TenderOpeningDate}}</span></li>
-                                            <li class="text-dark">RFP Closing Date:
+                                            <li class="text-dark">RFQ Closing Date:
                                                 <span style="color:green">{{res.TenderClosingDate}}</span></li>
-                                            <li class="text-dark">RFP Status: <span
-                                                    style="color:green">{{res.Status}}</span></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="card h-100 p-3">
                                         <ul>
-                                            <li class="text-dark">RFP ItemNo: <span
+                                            <li class="text-dark">RFQ ItemNo: <span
                                                     style="color:green">{{res.ItemNo}}</span>
                                             </li>
-                                            <li class="text-dark">RFP Description: <span
+                                            <li class="text-dark">RFQ Description: <span
                                                     style="color:green">{{res.Description}}</span></li>
                                             <li class="text-dark">Unit of Measure: <span
                                                     style="color:green">{{res.Unit_of_Measure}}</span></li>
-                                            <li class="text-dark">RFP Unit Price:
+                                            <li class="text-dark">RFQ Unit Price:
                                                 <span style="color:green">{{res.Unit_Price}}</span></li>
-                                            <li class="text-dark">RFP Amount:
+                                            <li class="text-dark">RFQ Amount:
                                                 <span style="color:green">{{res.Amount}}</span></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="card h-100 p-3">
-                                        <h5>Required Documents</h5>
+                                        <h5>Required Attachments</h5>
                                         {% for docs in docs %}
                                         <div class="card doc-card mt-4 p-3">
                                             <div class="row">

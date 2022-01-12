@@ -15,21 +15,22 @@ def profile_request(request):
 
 
 def login_request(request):
-    # '''
-    # In order to catch exception well, make sure to know what every attribute contains
-    # '''
-    # customerNo = '01-00334545'
-    # eventNo = 'ev00030344'
-    # RegNo = 'null'
-    # try:
-    #     if customerNo != '' and eventNo != '':
-    #         result = config.CLIENT.service.RegisterEvent(
-    #             customerNo, eventNo, RegNo)
-    #         print(result)
-    #         notify = "Successfully Added"
-    #     else:
-    #         raise ValueError('Incorrect input!')
-    # except Exception as e:
-    #     notify = e
-    # ctx = {"note": notify}
-    return render(request, 'auth.html')
+    '''
+    In order to catch exception well, make sure to know what every attribute contains
+    '''
+    vendNo = '01254796'
+    procurementMethod = 1
+    docNo = 'TDR-0000017'
+    unitPrice = 3000
+    try:
+        if vendNo != '' and unitPrice != '':
+            result = config.CLIENT.service.FnCreateProspectiveSupplier(
+                vendNo, procurementMethod, docNo, unitPrice)
+            print(result)
+            notify = "Successfully Added"
+        else:
+            raise ValueError('Incorrect input!')
+    except Exception as e:
+        notify = e
+    ctx = {"note": notify}
+    return render(request, 'auth.html', ctx)

@@ -30,10 +30,8 @@
                                 <tr id="tops">
                                     <th id="long">Tender No</th>
                                     <th>Title</th>
-                                    <th>Requisition No</th>
                                     <th>Tender Opening Date</th>
                                     <th>Tender Closing Date</th>
-                                    <th>Status</th>
                                     <th>Type</th>
                                     <th>Action</th>
                                 </tr>
@@ -43,10 +41,8 @@
                                 <tr>
                                     <td>{{res.No}}</td>
                                     <td id="rap">{{res.Title}}</td>
-                                    <td>{{res.RequisitionNo}}</td>
                                     <td>{{res.TenderOpeningDate}}</td>
                                     <td>{{res.TenderClosingDate}}</td>
-                                    <td>{{res.Status}}</td>
                                     <td>{{res.Type}}</td>
                                     <td>
                                         <a type="button" href="{% url 'Odetails' res.No %}"
