@@ -78,5 +78,22 @@ def submittedRFQ(request):
 
 
 def submittedInterest(request):
+    session = requests.Session()
+    session.auth = config.AUTHS
 
-    return render(request, 'SubInterest.html')
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
+    try:
+        response = session.get(Access_Point, timeout=10).json()
+        EOI = []
+        for tender in response['value']:
+            if tender['Process_Type'] == 'EOI' and tender['Status'] == 'Archived':
+                output_json = json.dumps(tender)
+                EOI.append(json.loads(output_json))
+    except requests.exceptions.ConnectionError as e:
+        print(e)
+    # Get Timezone
+    # creating date object
+    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    ctx = {"today": todays_date, "res": EOI}
+
+    return render(request, 'SubInterest.html', ctx)
