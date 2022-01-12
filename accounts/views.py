@@ -20,8 +20,8 @@ def login_request(request):
     '''
     vendNo = '01254796'
     procurementMethod = 1
-    docNo = 'P001'
-    unitPrice = 3000
+    docNo = 'TDR-0000017'
+    unitPrice = 6000
     try:
         if vendNo != '' and unitPrice != '':
             result = config.CLIENT.service.FnCreateProspectiveSupplier(

@@ -46,9 +46,11 @@ def Open_Details(request, pk):
     procurementMethod = 1
     docNo = pk
     notify = ''
+    warn = ''
+    Price = int()
     if request.method == "POST":
-        unitPrice = int(request.POST.get('amount'))
-
+        Price = int(request.POST.get('amount'))
+    unitPrice = float(Price)
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=8).json()
@@ -70,16 +72,16 @@ def Open_Details(request, pk):
     except requests.exceptions.ConnectionError as e:
         print(e)
     try:
-        if vendNo != '' and unitPrice != '':
+        if vendNo != '':
             result = config.CLIENT.service.FnCreateProspectiveSupplier(
                 vendNo, procurementMethod, docNo, unitPrice)
+            print(result)
             notify = f"You have successfully Applied for tender number {docNo}"
 
         else:
             raise ValueError('Incorrect input!')
     except Exception as e:
-        warn = f'You have already applied for tender number  {docNo}'
-        print(e)
+        warn = e
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,
            "docs": Doc, "warn": warn, "note": notify}

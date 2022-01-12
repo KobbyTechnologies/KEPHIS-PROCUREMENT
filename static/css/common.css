@@ -187,3 +187,23 @@ div.dataTables_filter input {
 .d-card p {
     color: white;
 }
+
+.d-cards {
+    background: transparent;
+    border: none;
+}
+
+.data-card {
+    background: whitesmoke;
+    box-shadow: rgba(248, 248, 248, 0.25) 0px 30px 60px -12px inset, rgba(236, 234, 234, 0.3) 0px 18px 36px -18px inset;
+}
+
+.data-card .d-icons {
+    background: yellow;
+    padding: .5rem;
+}
+
+.data-card i {
+    color: red;
+    font-size: 1.7rem;
+}
