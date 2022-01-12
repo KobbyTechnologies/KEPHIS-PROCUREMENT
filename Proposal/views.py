@@ -40,12 +40,13 @@ def RFP_Details(request, pk):
 
     # Responding to Tender
     vendNo = '01254796'
-    procurementMethod = 1
+    procurementMethod = 3
     docNo = pk
     notify = ''
     unitPrice = ''
     if request.method == "POST":
         unitPrice = int(request.POST.get('amount'))
+    print(unitPrice)
     try:
         r = session.get(Access2).json()
         response = session.get(Access_Point, timeout=9).json()
@@ -65,10 +66,11 @@ def RFP_Details(request, pk):
     except requests.exceptions.ConnectionError as e:
         print(e)
     try:
-        if vendNo != '' and unitPrice != '':
+        if vendNo != '':
             result = config.CLIENT.service.FnCreateProspectiveSupplier(
                 vendNo, procurementMethod, docNo, unitPrice)
-            notify = f"You have successfully Applied for RFQ {docNo}"
+            print(result)
+            notify = f"You have successfully Applied for RFP {docNo}"
 
         else:
             raise ValueError('Incorrect input!')
