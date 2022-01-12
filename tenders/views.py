@@ -23,14 +23,13 @@ def open_tenders(request):
             if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 open.append(json.loads(output_json))
-                res = open
 
     except requests.exceptions.ConnectionError as e:
         print(e)
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": res}
+    ctx = {"today": todays_date, "res": open}
     return render(request, 'openTenders.html', ctx)
 
 

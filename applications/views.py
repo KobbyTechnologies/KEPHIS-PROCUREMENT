@@ -11,8 +11,26 @@ import datetime
 
 
 def submittedOpenTenders(request):
+    session = requests.Session()
+    session.auth = config.AUTHS
 
-    return render(request, 'Open/SubOpenTender.html')
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
+    try:
+        response = session.get(Access_Point, timeout=10).json()
+        open = []
+        for tender in response['value']:
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['Status'] == 'Archived':
+                output_json = json.dumps(tender)
+                open.append(json.loads(output_json))
+
+    except requests.exceptions.ConnectionError as e:
+        print(e)
+    # Get Timezone
+    # creating date object
+    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    ctx = {"today": todays_date, "res": open}
+
+    return render(request, 'Open/SubOpenTender.html', ctx)
 
 
 def submittedResTenders(request):
