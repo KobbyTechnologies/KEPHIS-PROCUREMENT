@@ -20,16 +20,15 @@ def requestQuote(request):
         response = session.get(Access_Point, timeout=10).json()
         RFQ = []
         for tender in response['value']:
-            if tender['Process_Type'] == 'RFQ':
+            if tender['Process_Type'] == 'RFQ' and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 RFQ.append(json.loads(output_json))
-                res = RFQ
     except requests.exceptions.ConnectionError as e:
         print(e)
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": res}
+    ctx = {"today": todays_date, "res": RFQ}
     return render(request, 'requestQuote.html', ctx)
 
 
@@ -39,27 +38,44 @@ def Quote_Details(request, pk):
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
+
+    # Responding to Tender
+    vendNo = '01254796'
+    procurementMethod = 1
+    docNo = pk
+    notify = ''
+    if request.method == "POST":
+        unitPrice = int(request.POST.get('amount'))
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=9).json()
         RFQ = []
         Doc = []
         for tender in response['value']:
-            if tender['Process_Type'] == 'RFQ':
+            if tender['Process_Type'] == 'RFQ' and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 RFQ.append(json.loads(output_json))
-                responses = RFQ
-                for my_tender in responses:
+                for my_tender in RFQ:
                     if my_tender['No'] == pk:
-                        res = tender
+                        res = my_tender
         for docs in r['value']:
             if docs['QuoteNo'] == pk:
                 output_json = json.dumps(docs)
                 Doc.append(json.loads(output_json))
-                my_doc = Doc
     except requests.exceptions.ConnectionError as e:
         print(e)
+    try:
+        if vendNo != '' and unitPrice != '':
+            result = config.CLIENT.service.FnCreateProspectiveSupplier(
+                vendNo, procurementMethod, docNo, unitPrice)
+            notify = f"You have successfully Applied for RFQ {docNo}"
 
+        else:
+            raise ValueError('Incorrect input!')
+    except Exception as e:
+        warn = f'You have already applied for RFQ {docNo}'
+        print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": res, "docs": my_doc}
+    ctx = {"today": todays_date, "res": res,
+           "docs": Doc, "warn": warn, "note": notify}
     return render(request, "QDetails.html", ctx)
