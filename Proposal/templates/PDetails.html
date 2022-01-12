@@ -27,64 +27,82 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-5">
-                                    <div class="card h-100 p-3">
-                                        <ul>
-                                            <li class="text-dark">RFP No: <span style="color:green">{{res.No}}</span>
-                                            </li>
-                                            <li class="text-dark">RFP Title: <span
-                                                    style="color:green">{{res.Title}}</span></li>
-                                            <li class="text-dark">RequisitionNo: <span
-                                                    style="color:green">{{res.RequisitionNo}}</span></li>
-                                            <li class="text-dark">RFP Opening Date:
-                                                <span style="color:green">{{res.TenderOpeningDate}}</span></li>
-                                            <li class="text-dark">RFP Closing Date:
-                                                <span style="color:green">{{res.TenderClosingDate}}</span></li>
-                                            <li class="text-dark">RFP Status: <span
-                                                    style="color:green">{{res.Status}}</span></li>
-                                        </ul>
+                                    <div class="card h-100 p-3 d-cards">
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label text-dark">RFP
+                                                    No</label>
+                                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                                    placeholder="{{res.No}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label text-dark">RFP
+                                                    Title</label>
+                                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                                    placeholder="{{res.Title}}" readonly>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label text-dark">RFP
+                                                            Opening Date</label>
+                                                        <input type="email" class="form-control" id="exampleInputEmail1"
+                                                            placeholder="{{res.TenderOpeningDate}}" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label text-dark">RFP
+                                                            Closing Date</label>
+                                                        <input type="email" class="form-control" id="exampleInputEmail1"
+                                                            placeholder="{{res.TenderClosingDate}}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- Danger alert -->
                                         {% if note %}
                                         <div class="alert alert-danger d-flex align-items-center alert-dismissible alert-success"
                                             role="alert">
-                                            <i class="las la-exclamation-triangle"
-                                                style="color: white;font-size: 2rem"></i>
+                                            <i class="las la-check-double" style="color: white;font-size: 2rem"></i>
                                             <div class="a-icon mx-2">
                                                 {{note}}
                                             </div>
                                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                 aria-label="Close"></button>
                                         </div>
-                                        {% elif warn %}
-                                        <div class="alert alert-danger d-flex align-items-center alert-dismissible alert-warn"
-                                            role="alert">
-                                            <i class="las la-exclamation-triangle"
-                                                style="color: white;font-size: 2rem"></i>
-                                            <div class="a-icon mx-2">
-                                                {{warn}}
-                                            </div>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        {% else %}
-                                        <div>
-
-                                        </div>
                                         {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="card h-100 p-3">
+                                    <div class="card h-100 p-3 d-cards">
+                                        <div class="card p-2 data-card">
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    <p class="text-dark" style="font-weight:bold">RFP Item No: <span
+                                                            style="color:green">{{res.ItemNo}}</span>
+                                                    </p>
+                                                    <hr>
+                                                    <div class="p-2">
+                                                        <p class="text-dark" style="font-weight:bold"><i
+                                                                class="las la-clipboard-list"></i> RFP Description:
+                                                            <span style="color:green">{{res.Description}}</span></p>
+                                                        <p class="text-dark" style="font-weight:bold"><i
+                                                                class="las la-balance-scale"></i> Unit of Measure: <span
+                                                                style="color:green">{{res.Unit_of_Measure}}</span></p>
+                                                        <p class="text-dark" style="font-weight:bold"><i
+                                                                class="las la-coins"></i> RFP Unit Price:
+                                                            <span style="color:green">{{res.Unit_Price}}</span></p>
+                                                        <p class="text-dark" style="font-weight:bold"><i
+                                                                class="las la-coins"></i> RFP Amount:
+                                                            <span style="color:green">{{res.Amount}}</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <ul>
-                                            <li class="text-dark">RFP ItemNo: <span
-                                                    style="color:green">{{res.ItemNo}}</span>
-                                            </li>
-                                            <li class="text-dark">RFP Description: <span
-                                                    style="color:green">{{res.Description}}</span></li>
-                                            <li class="text-dark">Unit of Measure: <span
-                                                    style="color:green">{{res.Unit_of_Measure}}</span></li>
-                                            <li class="text-dark">RFP Unit Price:
-                                                <span style="color:green">{{res.Unit_Price}}</span></li>
-                                            <li class="text-dark">RFP Amount:
-                                                <span style="color:green">{{res.Amount}}</span></li>
+
                                         </ul>
                                     </div>
                                 </div>
@@ -112,7 +130,7 @@
                     </div>
                     <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
                         data-bs-target="#staticBackdrop">
-                        Respond To RFD
+                        Respond To RFP
                     </button>
 
                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -129,20 +147,20 @@
                                 <div class="modal-body">
                                     <form method="post" action="{% url 'RFP' res.No %}">
                                         {% csrf_token %}
+                                        {% if docs %}
                                         <div class="mb-2"> <span class="w-name">
                                                 Mandatory Requirements:
                                             </span>
                                             <div class="row">
+                                                {% for docs in docs %}
                                                 <div class="col-md-6">
-                                                    <label for="">Attachment 1:</label>
+                                                    <label for="">{{docs.DocumentName}}:</label>
                                                     <input type="file" class="form-control" name="file1">
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <label for="">Attachment 2:</label>
-                                                    <input type="file" class="form-control" name="file2">
-                                                </div>
+                                                {% endfor %}
                                             </div>
                                         </div>
+                                        {% endif %}
                                         <div class="tab"> <span class="w-name">
                                                 Financial Requirements:
                                             </span>

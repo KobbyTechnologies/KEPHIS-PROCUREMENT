@@ -19,8 +19,8 @@ def login_request(request):
     In order to catch exception well, make sure to know what every attribute contains
     '''
     vendNo = '01254796'
-    procurementMethod = 1
-    docNo = 'TDR-0000017'
+    procurementMethod = 3
+    docNo = 'P001'
     unitPrice = 6000
     try:
         if vendNo != '' and unitPrice != '':

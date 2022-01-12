@@ -45,7 +45,7 @@ def RFP_Details(request, pk):
     notify = ''
     unitPrice = ''
     if request.method == "POST":
-        unitPrice = int(request.POST.get('amount'))
+        unitPrice = float(request.POST.get('amount'))
     print(unitPrice)
     try:
         r = session.get(Access2).json()
