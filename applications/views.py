@@ -100,5 +100,22 @@ def submittedInterest(request):
 
 
 def submittedRFP(request):
+    session = requests.Session()
+    session.auth = config.AUTHS
 
-    return render(request, 'SubRFP.html')
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
+    try:
+        response = session.get(Access_Point, timeout=10).json()
+        RFP = []
+        for tender in response['value']:
+            if tender['Process_Type'] == 'RFP' and tender['Status'] == 'Archived':
+                output_json = json.dumps(tender)
+                RFP.append(json.loads(output_json))
+    except requests.exceptions.ConnectionError as e:
+        print(e)
+    # Get Timezone
+    # creating date object
+    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    ctx = {"today": todays_date, "res": RFP}
+
+    return render(request, 'SubRFP.html', ctx)
