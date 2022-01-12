@@ -69,16 +69,16 @@
 
 /* main dashboard */
 #d-card {
-    background: white;
+    background: rgb(243, 243, 243);
     border-radius: 6px;
-    border: 2px solid white;
+    border: 2px solid rgb(243, 243, 243);
     box-shadow: 0 2px 2px 0 rgba(172, 170, 170, 0.14), 0 3px 1px -2px rgba(202, 199, 199, 0.2), 0 1px 5px 0 rgba(165, 163, 163, 0.12);
 }
 
 #d-card .card-title h6 {
     margin-left: 13px;
     margin-top: 13px;
-    color: #A6ACAF;
+    color: #000;
     font-size: 16px;
 }
 
