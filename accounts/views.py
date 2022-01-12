@@ -20,7 +20,7 @@ def login_request(request):
     '''
     vendNo = '01254796'
     procurementMethod = 1
-    docNo = 'TDR-0000017'
+    docNo = 'P001'
     unitPrice = 3000
     try:
         if vendNo != '' and unitPrice != '':
