@@ -40,12 +40,13 @@ def EOI_Details(request, pk):
 
     # Responding to Tender
     vendNo = '01254796'
-    procurementMethod = 1
+    procurementMethod = 4
     docNo = pk
     notify = ''
+    unitPrice = ''
     if request.method == "POST":
-        unitPrice = int(request.POST.get('amount'))
-
+        unitPrice = float(request.POST.get('amount'))
+    print(unitPrice)
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=9).json()
@@ -65,17 +66,17 @@ def EOI_Details(request, pk):
     except requests.exceptions.ConnectionError as e:
         print(e)
     try:
-        if vendNo != '' and unitPrice != '':
+        if vendNo != '':
             result = config.CLIENT.service.FnCreateProspectiveSupplier(
                 vendNo, procurementMethod, docNo, unitPrice)
+            print(result)
             notify = f"You have successfully Applied for EOI {docNo}"
 
         else:
             raise ValueError('Incorrect input!')
     except Exception as e:
-        warn = f'You have already applied for EOI {docNo}'
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,
-           "docs": Doc, "warn": warn, "note": notify}
+           "docs": Doc, "note": notify}
     return render(request, "EDetails.html", ctx)

@@ -47,7 +47,6 @@ def Quote_Details(request, pk):
     unitPrice = ''
     if request.method == "POST":
         unitPrice = float(request.POST.get('amount'))
-    print(unitPrice)
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=9).json()
@@ -70,7 +69,6 @@ def Quote_Details(request, pk):
         if vendNo != '':
             result = config.CLIENT.service.FnCreateProspectiveSupplier(
                 vendNo, procurementMethod, docNo, unitPrice)
-            print(result)
             notify = f"You have successfully Applied for RFQ {docNo}"
 
         else:
