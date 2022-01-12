@@ -3,7 +3,7 @@
 {% load static %}
 {% block main %}
 <section class="dash2">
-    <div class="content-wrapper" style="background: #6c8aaf;padding-bottom: 8rem;">
+    <div class="content-wrapper" style="padding-bottom: 8rem;">
         <div class="d-xl-flex justify-content-between align-items-start">
             <h2 class="text-dark font-weight-bold mb-2">
                 Submitted RFQ</h2>
@@ -21,7 +21,7 @@
                 <div class="card" id="d-card">
                     <div class="card-title">
                         <h6>
-                            Submitted RFQ List
+                            RFQ List
                         </h6>
                     </div>
                     <div class="card-body">
@@ -29,31 +29,21 @@
                             style="width:100%">
                             <thead>
                                 <tr id="tops">
-                                    <th id="long">Event No</th>
-                                    <th>Event Name</th>
-                                    <th>Event Description</th>
-                                    <th>Status</th>
-                                    <th>Archived</th>
-                                    <th>Entry No</th>
-                                    <th>Invoicing Method</th>
-                                    <th>Chargeable</th>
-                                    <th>Amount</th>
-                                    <th>Event_Type</th>
+                                    <th id="long">Tender No</th>
+                                    <th>Title</th>
+                                    <th>Tender Opening Date</th>
+                                    <th>Tender Closing Date</th>
+                                    <th>Type</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for res in res %}
                                 <tr>
-                                    <td>{{res.Event_No}}</td>
-                                    <td id="rap">{{res.Event_Name}}</td>
-                                    <td id="rap">{{res.Event_Description}}</td>
-                                    <td>{{res.Status}}</td>
-                                    <td>{{res.Archived}}</td>
-                                    <td>{{res.Entry_No}}</td>
-                                    <td>{{res.Invoicing_Method}}</td>
-                                    <td>{{res.Chargeable}}</td>
-                                    <td>{{res.Amount}}</td>
-                                    <td>{{res.Event_Type}}</td>
+                                    <td>{{res.No}}</td>
+                                    <td id="rap">{{res.Title}}</td>
+                                    <td>{{res.TenderOpeningDate}}</td>
+                                    <td>{{res.TenderClosingDate}}</td>
+                                    <td>{{res.Type}}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
