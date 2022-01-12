@@ -38,23 +38,30 @@
                                             <li class="text-dark">Tender Closing Date:
                                                 <span style="color:green">{{res.TenderClosingDate}}</span></li>
                                         </ul>
-                                        <div class="alert alert-warning alert-dismissible fade show alert-warn"
+                                        <!-- Danger alert -->
+                                        {% if note %}
+                                        <div class="alert alert-danger d-flex align-items-center alert-dismissible alert-success"
                                             role="alert">
-                                            <div class="row">
-                                                <div class="col-md-2 a-icon">
-                                                    <div class="mx-auto text-center">
-                                                        <i class="las la-exclamation-triangle"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-8 a-icon">
-                                                    <p>{{note}}</p>
-                                                </div>
-                                                <div class="col-md-2 a-icon">
-                                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                        aria-label="Close"></button>
-                                                </div>
+                                            <i class="las la-exclamation-triangle"
+                                                style="color: white;font-size: 2rem"></i>
+                                            <div class="a-icon mx-2">
+                                                {{note}}
                                             </div>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
                                         </div>
+                                        {% else %}
+                                        <div class="alert alert-danger d-flex align-items-center alert-dismissible alert-warn"
+                                            role="alert">
+                                            <i class="las la-exclamation-triangle"
+                                                style="color: white;font-size: 2rem"></i>
+                                            <div class="a-icon mx-2">
+                                                {{warn}}
+                                            </div>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
