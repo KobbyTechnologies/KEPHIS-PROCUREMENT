@@ -145,7 +145,8 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form method="post" action="{% url 'RFP' res.No %}">
+                                    <form method="post" action="{% url 'RFP' res.No %}" class="needs-validation"
+                                        novalidate>
                                         {% csrf_token %}
                                         {% if docs %}
                                         <div class="mb-2"> <span class="w-name">
@@ -167,9 +168,34 @@
                                             <div>
                                                 <label for="recipient-name" class="col-form-label">Amount:</label>
                                                 <input type="text" class="form-control" name="amount"
-                                                    id="recipient-name" placeholder="Ksh">
+                                                    id="recipient-name" placeholder="Ksh" required>
+                                                <div class="invalid-feedback">
+                                                    Please provide the amount.
+                                                </div>
                                             </div>
                                         </div>
+                                        <script>
+                                            // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                            (function () {
+                                                'use strict'
+
+                                                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                                var forms = document.querySelectorAll('.needs-validation')
+
+                                                // Loop over them and prevent submission
+                                                Array.prototype.slice.call(forms)
+                                                    .forEach(function (form) {
+                                                        form.addEventListener('submit', function (event) {
+                                                            if (!form.checkValidity()) {
+                                                                event.preventDefault()
+                                                                event.stopPropagation()
+                                                            }
+
+                                                            form.classList.add('was-validated')
+                                                        }, false)
+                                                    })
+                                            })()
+                                        </script>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger"
