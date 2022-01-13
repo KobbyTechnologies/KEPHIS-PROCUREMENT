@@ -6,6 +6,7 @@ from requests_ntlm import HttpNtlmAuth
 import json
 from django.conf import settings as config
 import datetime
+from django.contrib import messages
 
 
 # Create your views here.
@@ -43,10 +44,15 @@ def Quote_Details(request, pk):
     vendNo = '01254796'
     procurementMethod = 2
     docNo = pk
-    notify = ''
     unitPrice = ''
     if request.method == "POST":
-        unitPrice = float(request.POST.get('amount'))
+        try:
+            unitPrice = float(request.POST.get('amount'))
+            messages.success(
+                request, f"You have successfully Applied for RFQ {docNo}")
+        except ValueError:
+            messages.error(request, "Invalid Amount, Try Again!!")
+            return redirect('QDetails', pk=docNo)
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=9).json()
@@ -69,13 +75,11 @@ def Quote_Details(request, pk):
         if vendNo != '':
             result = config.CLIENT.service.FnCreateProspectiveSupplier(
                 vendNo, procurementMethod, docNo, unitPrice)
-            notify = f"You have successfully Applied for RFQ {docNo}"
-
-        else:
-            raise ValueError('Incorrect input!')
+            print(result)
+            return redirect('QDetails', pk=docNo)
     except Exception as e:
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,
-           "docs": Doc, "note": notify}
+           "docs": Doc}
     return render(request, "QDetails.html", ctx)
