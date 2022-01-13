@@ -61,17 +61,19 @@
                                             </div>
                                         </form>
                                         <!-- Danger alert -->
-                                        {% if note %}
+                                        {% if messages %}
+                                        {% for message in messages %}
                                         <div class="alert alert-danger d-flex align-items-center alert-dismissible alert-success"
                                             role="alert">
                                             <i class="las la-check-double" style="color: white;font-size: 2rem"></i>
                                             <div class="a-icon mx-2">
-                                                {{note}}
+                                                {{message}}
                                             </div>
                                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div></div>
+                                        {% endfor %}
                                         {% endif %}
                                     </div>
                                 </div>
@@ -201,8 +203,8 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger"
-                                        data-bs-dismiss="modal">Discard</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                        id="hey">Discard</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                                 </form>

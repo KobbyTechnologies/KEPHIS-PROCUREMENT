@@ -7,6 +7,7 @@ import json
 from django.conf import settings as config
 import datetime
 from requests.adapters import HTTPAdapter
+from django.contrib import messages
 
 # Create your views here.
 
@@ -47,7 +48,12 @@ def Open_Details(request, pk):
     notify = ''
     unitPrice = ''
     if request.method == "POST":
-        unitPrice = float(request.POST.get('amount'))
+        try:
+            unitPrice = float(request.POST.get('amount'))
+            messages.success(
+                request, f"You have successfully Applied for tender number {docNo}")
+        except ValueError:
+            messages.error(request, "Invalid Amount, Try Again!!")
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=8).json()
@@ -73,8 +79,7 @@ def Open_Details(request, pk):
             result = config.CLIENT.service.FnCreateProspectiveSupplier(
                 vendNo, procurementMethod, docNo, unitPrice)
             print(result)
-            notify = f"You have successfully Applied for tender number {docNo}"
-
+            return redirect('Odetails', pk=docNo)
         else:
             raise ValueError('Incorrect input!')
     except Exception as e:
