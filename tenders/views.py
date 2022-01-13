@@ -45,7 +45,6 @@ def Open_Details(request, pk):
     vendNo = '01254796'
     procurementMethod = 1
     docNo = pk
-    notify = ''
     unitPrice = ''
     if request.method == "POST":
         try:
@@ -85,7 +84,7 @@ def Open_Details(request, pk):
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,
-           "docs": Doc, "note": notify}
+           "docs": Doc}
     return render(request, "details/open.html", ctx)
 
 
@@ -121,10 +120,15 @@ def Restrict_Details(request, pk):
     vendNo = '01254796'
     procurementMethod = 5
     docNo = pk
-    notify = ''
     unitPrice = ''
     if request.method == "POST":
-        unitPrice = float(request.POST.get('amount'))
+        try:
+            unitPrice = float(request.POST.get('amount'))
+            messages.success(
+                request, f"You have successfully Applied for tender number {docNo}")
+        except ValueError:
+            messages.error(request, "Invalid Amount, Try Again!!")
+            return redirect('RES', pk=docNo)
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=9).json()
@@ -148,13 +152,10 @@ def Restrict_Details(request, pk):
             result = config.CLIENT.service.FnCreateProspectiveSupplier(
                 vendNo, procurementMethod, docNo, unitPrice)
             print(result)
-            notify = f"You have successfully Applied for tender number {docNo}"
-
-        else:
-            raise ValueError('Incorrect input!')
+            return redirect('RES', pk=docNo)
     except Exception as e:
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,
-           "docs": Doc, "note": notify}
+           "docs": Doc}
     return render(request, "details/RES.html", ctx)
