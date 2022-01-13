@@ -6,6 +6,7 @@ from requests_ntlm import HttpNtlmAuth
 import json
 from django.conf import settings as config
 import datetime
+from django.contrib import messages
 
 # Create your views here.
 
@@ -42,10 +43,15 @@ def EOI_Details(request, pk):
     vendNo = '01254796'
     procurementMethod = 4
     docNo = pk
-    notify = ''
     unitPrice = ''
     if request.method == "POST":
-        unitPrice = float(request.POST.get('amount'))
+        try:
+            unitPrice = float(request.POST.get('amount'))
+            messages.success(
+                request, f"You have successfully Applied for EOI {docNo}")
+        except ValueError:
+            messages.error(request, "Invalid Amount, Try Again!!")
+            return redirect('EOI', pk=docNo)
 
     try:
         r = session.get(Access2, timeout=7).json()
@@ -70,13 +76,10 @@ def EOI_Details(request, pk):
             result = config.CLIENT.service.FnCreateProspectiveSupplier(
                 vendNo, procurementMethod, docNo, unitPrice)
             print(result)
-            notify = f"You have successfully Applied for EOI {docNo}"
-
-        else:
-            raise ValueError('Incorrect input!')
+            return redirect('EOI', pk=docNo)
     except Exception as e:
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,
-           "docs": Doc, "note": notify}
+           "docs": Doc}
     return render(request, "EDetails.html", ctx)
