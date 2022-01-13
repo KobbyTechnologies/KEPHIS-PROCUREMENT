@@ -54,6 +54,7 @@ def Open_Details(request, pk):
                 request, f"You have successfully Applied for tender number {docNo}")
         except ValueError:
             messages.error(request, "Invalid Amount, Try Again!!")
+            return redirect('Odetails', pk=docNo)
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=8).json()
@@ -80,8 +81,6 @@ def Open_Details(request, pk):
                 vendNo, procurementMethod, docNo, unitPrice)
             print(result)
             return redirect('Odetails', pk=docNo)
-        else:
-            raise ValueError('Incorrect input!')
     except Exception as e:
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
