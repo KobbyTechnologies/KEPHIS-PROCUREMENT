@@ -119,3 +119,34 @@ def submittedRFP(request):
     ctx = {"today": todays_date, "res": RFP}
 
     return render(request, 'SubRFP.html', ctx)
+
+
+def APP_Details(request, pk):
+    session = requests.Session()
+    session.auth = config.AUTHS
+
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
+    Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
+
+    try:
+        r = session.get(Access2).json()
+        response = session.get(Access_Point, timeout=9).json()
+        ONE = []
+        Doc = []
+        for tender in response['value']:
+            if tender['No'] == pk:
+                output_json = json.dumps(tender)
+                ONE.append(json.loads(output_json))
+                for my_tender in ONE:
+                    if my_tender['No'] == pk:
+                        res = my_tender
+        for docs in r['value']:
+            if docs['QuoteNo'] == pk:
+                output_json = json.dumps(docs)
+                Doc.append(json.loads(output_json))
+    except requests.exceptions.ConnectionError as e:
+        print(e)
+    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    ctx = {"today": todays_date, "res": res,
+           "docs": Doc}
+    return render(request, "appDetail.html", ctx)

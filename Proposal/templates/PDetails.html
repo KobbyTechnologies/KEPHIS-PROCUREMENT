@@ -85,6 +85,17 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                 aria-label="Close"></button>
                                         </div>
+                                        {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                                        <div class="alert alert-info d-flex align-items-center alert-dismissible alert-info"
+                                            role="alert">
+                                            <i class="las la-exclamation-triangle"
+                                                style="color: white;font-size: 2rem"></i>
+                                            <div class="a-icon mx-2">
+                                                {{message}}
+                                            </div>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
                                         {% endif %}
                                         {% endfor %}
                                         {% endif %}
