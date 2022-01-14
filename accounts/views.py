@@ -15,22 +15,5 @@ def profile_request(request):
 
 
 def login_request(request):
-    '''
-    In order to catch exception well, make sure to know what every attribute contains
-    '''
-    vendNo = '01254796'
-    procurementMethod = 1
-    docNo = 'TDR-0000012'
-    unitPrice = 6000
-    try:
-        if vendNo != '' and unitPrice != '':
-            result = config.CLIENT.service.FnCreateProspectiveSupplier(
-                vendNo, procurementMethod, docNo, unitPrice)
-            print(result)
-            notify = "Successfully Added"
-        else:
-            raise ValueError('Incorrect input!')
-    except Exception as e:
-        notify = e
-    ctx = {"note": notify}
-    return render(request, 'auth.html', ctx)
+
+    return render(request, 'auth.html')
