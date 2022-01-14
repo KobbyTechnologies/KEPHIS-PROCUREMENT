@@ -147,7 +147,6 @@
                         data-bs-target="#staticBackdrop">
                         Respond To Tender
                     </button>
-
                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -159,6 +158,18 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
+                                <script>
+                                    var myVar;
+
+                                    function myFunction() {
+                                        myVar = setTimeout(showPage, 3000);
+                                    }
+
+                                    function showPage() {
+                                        document.getElementById("loader").style.display = "none";
+                                        document.getElementById("myDiv").style.display = "block";
+                                    }
+                                </script>
                                 <div class="modal-body">
                                     <form method="post" action="{% url 'Odetails' res.No %}" class="needs-validation"
                                         novalidate>

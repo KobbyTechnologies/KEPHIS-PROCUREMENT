@@ -180,7 +180,10 @@
                 </li>
             </ul>
         </nav>
-        <div class="main-panel">
+        <div id="loader" class="p-3">
+            <p>Loading...</p>
+        </div>
+        <div class="main-panel" style="display:none;" id="loads" class="animate-bottom">
             <!-- Weka content -->
             {% block main %}
             {% endblock %}
