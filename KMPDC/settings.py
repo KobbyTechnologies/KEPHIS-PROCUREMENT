@@ -170,10 +170,9 @@ django_heroku.settings(locals())
 
 AUTHS = Session()
 
-WEB_SERVICE_PWD = 'N@vAdm$n2030!!'
-BASE_URL = 'http://13.68.215.64:1247/BC140/WS/KMPDC/Codeunit/WebPortal'
-O_DATA = "http://13.68.215.64:1248/BC140/ODataV4/Company('KMPDC'){}"
-ACCESS_URL = "http://13.68.215.64:1248/BC140/ODataV4/Company(%27KMPDC%27)/{}"
+WEB_SERVICE_PWD = 'W3C0d3@llD@y'
+BASE_URL = 'http://20.121.189.145:7047/BC140/WS/KMPDC/Codeunit/WebPortal'
+O_DATA = "http://20.121.189.145:7048/BC140/ODataV4/Company(%27KMPDC%27){}"
 AUTHS.auth = HttpNtlmAuth('domain\\NAVADMIN', WEB_SERVICE_PWD)
 
 CLIENT = Client(BASE_URL, transport=Transport(session=AUTHS))

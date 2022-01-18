@@ -15,9 +15,9 @@ from requests_ntlm import HttpNtlmAuth
 import json
 
 username = "NAVADMIN"
-password = "N@vAdm$n2030!!"
+password = "W3C0d3@llD@y"
 
-site_url = "http://13.68.215.64:1248/BC140/ODataV4/Company(%27KMPDC%27)/ProcurementRequiredDocs"
+site_url = "http://20.121.189.145:7048/BC140/ODataV4/Company(%27KMPDC%27)/ProcurementRequiredDocs"
 
 r = requests.get(site_url, auth=HttpNtlmAuth(username, password)).json()
 
@@ -46,27 +46,13 @@ print(r)
 
 # AUTHS = Session()
 
-# WEB_SERVICE_PWD = 'Akinyi2013'
-# BASE_URL = 'http://13.68.215.64:1347/KMPDC/WS/KMPDC/Page/RFQ_Prospective_Supplier_card'
+# WEB_SERVICE_PWD = 'W3C0d3@llD@y'
+# BASE_URL = 'http://20.121.189.145:7047/BC140/WS/KMPDC/Codeunit/WebPortal'
 
-# AUTHS.auth = HttpNtlmAuth('domain\\Winnie', WEB_SERVICE_PWD)
+# AUTHS.auth = HttpNtlmAuth('domain\\NAVADMIN', WEB_SERVICE_PWD)
 # CLIENT = Client(BASE_URL, transport=Transport(session=AUTHS))
 
 
-# result = CLIENT.service.Prospective_Supplier_Tenders(111111, 1111111, 222222)
+# result = CLIENT.service.FnCreateProspectiveSupplier(
+#     '01254796', 1111111, 222222, 10000)
 # print(result)
-
-# def details(request, pk):
-#     session = requests.Session()
-#     session.auth = config.AUTHS
-
-#     Access_Point = config.O_DATA.format("/ProspectiveSuppliercard")
-#     response = session.get(Access_Point).json()
-
-#     for tender in response['value']:
-#         if tender['No'] == pk:
-#             res = tender
-#             type = tender['City']
-#     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-#     ctx = {"today": todays_date, "res": res, 'type': type}
-#     return render(request, "main/details.html", ctx)
