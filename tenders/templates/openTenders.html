@@ -32,6 +32,10 @@
                                     <th>Title</th>
                                     <th>Tender Opening Date</th>
                                     <th>Tender Closing Date</th>
+                                    <th>Tender Opening Date</th>
+                                    <th>Tender Closing Date</th>
+                                    <th>Type</th>
+                                    <th>Action</th>
                                     <th>Type</th>
                                     <th>Action</th>
                                 </tr>
@@ -43,6 +47,15 @@
                                     <td id="rap">{{res.Title}}</td>
                                     <td>{{res.TenderOpeningDate}}</td>
                                     <td>{{res.TenderClosingDate}}</td>
+                                    <td>{{res.TenderOpeningDate}}</td>
+                                    <td>{{res.TenderClosingDate}}</td>
+                                    <td>{{res.Type}}</td>
+                                    <td>
+                                        <a type="button" href="{% url 'Odetails' res.No %}"
+                                            class="btn btn-success btn-icon-text" style="background: #25CC88;">View
+                                            <i class="las la-external-link-alt" style="font-size: 1rem"></i>
+                                        </a>
+                                    </td>
                                     <td>{{res.Type}}</td>
                                     <td>
                                         <a type="button" href="{% url 'Odetails' res.No %}"
