@@ -114,11 +114,6 @@ tr {
     color: white;
 }
 
-.tables tr {
-    color: black;
-    padding: 15px;
-}
-
 #rap {
     word-wrap: break-word;
     word-break: break-all;

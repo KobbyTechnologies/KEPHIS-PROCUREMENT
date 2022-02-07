@@ -17558,7 +17558,7 @@ dl li {
 
 /* purchase btn */
 .purchase-popup {
-  background: var(--green);
+  background: var(--white-color);
   padding: 10px 15px;
   border-radius: 3px;
 }
