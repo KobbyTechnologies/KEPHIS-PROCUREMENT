@@ -78,7 +78,6 @@ INSTALLED_APPS = [
     'tenders',
     'quotation',
     'interest',
-    'applications',
     'accounts',
     'Proposal',
 ]

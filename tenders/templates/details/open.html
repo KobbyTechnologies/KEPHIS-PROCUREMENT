@@ -44,6 +44,97 @@
         {% endif %}
         {% endfor %}
         {% endif %}
+        <div class="row my-3">
+            <div class="col-md-3">
+                <div class="card l-bg-cherry statCard h-100">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0">Procurement Method</h5>
+                        </div>
+                        <div class="row align-items-center mb-2 d-flex">
+                            <div class="col-md-12">
+                                <h2 class="d-flex align-items-center mb-0">
+                                    {{res.TenderType}}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card l-bg-blue-dark statCard h-100">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0">Tender Status</h5>
+                        </div>
+                        {% if res.Status == "New" %}
+                        <div class="row align-items-center mb-2 d-flex">
+                            <div class="col-md-12">
+                                <h2 class="d-flex align-items-center mb-0">
+                                    {{res.Status}}
+                                </h2>
+                            </div>
+
+                        </div>
+                        <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                            <div class="progress-bar l-bg-red" role="progressbar" data-width="50%" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>
+                        </div>
+                        {% elif res.Status == "Archived" %}
+                        <div class="row align-items-center mb-2 d-flex">
+                            <div class="col-md-12">
+                                <h2 class="d-flex align-items-center mb-0">
+                                    Submitted
+                                </h2>
+                            </div>
+
+                        </div>
+                        <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                            <div class="progress-bar l-bg-green" role="progressbar" data-width="100%" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card l-bg-green-dark statCard h-100">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0">{{res.Process_Type}} Opening Date</h5>
+                        </div>
+                        <div class="row align-items-center mb-2 d-flex">
+                            <div class="col-md-12">
+                                <h2 class="d-flex align-items-center mb-0">
+                                    {{res.TenderOpeningDate}}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card l-bg-orange-dark statCard h-100">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large"><i class="fas fa-calendar-times"></i></div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0">{{res.Process_Type}} Closing Date</h5>
+                        </div>
+                        <div class="row align-items-center mb-2 d-flex">
+                            <div class="col-md-12">
+                                <h2 class="d-flex align-items-center mb-0">
+                                    {{res.TenderClosingDate}}
+                                </h2>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <form class="row g-3">
@@ -58,22 +149,6 @@
                     <div class="col-md-4">
                         <label class="form-label">Ref No</label>
                         <input type="text" class="form-control" placeholder="{{res.RefNo}}" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Tender Opening Date</label>
-                        <input type="text" class="form-control" placeholder="{{res.TenderOpeningDate}}" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Tender Closing Date</label>
-                        <input type="text" class="form-control" placeholder="{{res.TenderClosingDate}}" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Status</label>
-                        <input type="text" class="form-control" placeholder="{{res.Status}}" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Tender Type</label>
-                        <input type="text" class="form-control" placeholder="{{res.TenderType}}" readonly>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Submitted To Portal</label>
@@ -102,7 +177,7 @@
                                     <div class="card" id="d-card">
                                         <div class="card-title">
                                             <h6>
-                                                {{res.Process_Type}} Tender Lines
+                                                {{res.Process_Type}} Lines
                                             </h6>
                                         </div>
                                         <div class="card-body">

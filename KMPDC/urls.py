@@ -22,7 +22,6 @@ urlpatterns = [
     path('', include('tenders.urls')),
     path('', include('quotation.urls')),
     path('', include('interest.urls')),
-    path('', include('applications.urls')),
     path('', include('accounts.urls')),
     path('', include('Proposal.urls')),
 ]
