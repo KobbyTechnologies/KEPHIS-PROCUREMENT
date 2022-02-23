@@ -18,17 +18,25 @@ def interest_request(request):
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     try:
         response = session.get(Access_Point, timeout=10).json()
-        EOI = []
+        OpenEOI = []
+        Submitted = []
         for tender in response['value']:
             if tender['Process_Type'] == 'EOI' and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
-                EOI.append(json.loads(output_json))
+                OpenEOI.append(json.loads(output_json))
+            if tender['Process_Type'] == 'EOI' and tender['Status'] == 'Archived':
+                output_json = json.dumps(tender)
+                Submitted.append(json.loads(output_json))
     except requests.exceptions.ConnectionError as e:
         print(e)
+
+    count = len(OpenEOI)
+    counter = len(Submitted)
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": EOI}
+    ctx = {"today": todays_date, "res": OpenEOI,
+           "count": count, "sub": Submitted, "counter": counter}
     return render(request, 'interest.html', ctx)
 
 

@@ -18,17 +18,24 @@ def proposal_request(request):
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     try:
         response = session.get(Access_Point, timeout=10).json()
-        RFP = []
+        OpenRFP = []
+        Submitted = []
         for tender in response['value']:
             if tender['Process_Type'] == 'RFP' and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
-                RFP.append(json.loads(output_json))
+                OpenRFP.append(json.loads(output_json))
+            if tender['Process_Type'] == 'RFP' and tender['Status'] == 'Archived':
+                output_json = json.dumps(tender)
+                Submitted.append(json.loads(output_json))
     except requests.exceptions.ConnectionError as e:
         print(e)
+    count = len(OpenRFP)
+    counter = len(Submitted)
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": RFP}
+    ctx = {"today": todays_date, "res": OpenRFP,
+           "count": count, "counter": counter, "sub": Submitted}
     return render(request, 'proposal.html', ctx)
 
 
