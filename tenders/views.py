@@ -17,20 +17,27 @@ def open_tenders(request):
     session.auth = config.AUTHS
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
+
     try:
         response = session.get(Access_Point, timeout=10).json()
         open = []
+        Submitted = []
         for tender in response['value']:
             if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 open.append(json.loads(output_json))
-
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['Status'] == 'Archived':
+                output_json = json.dumps(tender)
+                Submitted.append(json.loads(output_json))
     except requests.exceptions.ConnectionError as e:
         print(e)
+    count = len(open)
+    counter = len(Submitted)
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": open}
+    ctx = {"today": todays_date, "res": open,
+           "count": count, "counter": counter, "sub": Submitted}
     return render(request, 'openTenders.html', ctx)
 
 
@@ -40,20 +47,23 @@ def Open_Details(request, pk):
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
-
+    res = ''
+    State = ''
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=8).json()
         Open = []
         Doc = []
         for tender in response['value']:
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['Status'] == 'New':
+            if tender['No'] == pk:
                 output_json = json.dumps(tender)
                 Open.append(json.loads(output_json))
                 responses = Open
                 for my_tender in responses:
                     if my_tender['No'] == pk:
                         res = my_tender
+                    if my_tender['Status'] == "New":
+                        State = 1
         for docs in r['value']:
             if docs['QuoteNo'] == pk:
                 output_json = json.dumps(docs)
@@ -64,14 +74,32 @@ def Open_Details(request, pk):
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,
-           "docs": Doc}
+           "docs": Doc, "state": State}
     return render(request, "details/open.html", ctx)
 
 
 def DocResponse(request, pk):
-    # Responding to Tender
+    session = requests.Session()
+    session.auth = config.AUTHS
+    procurementMethod = ''
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
+    try:
+        response = session.get(Access_Point, timeout=8).json()
+        Open = []
+        for tender in response['value']:
+            if tender['No'] == pk:
+                output_json = json.dumps(tender)
+                Open.append(json.loads(output_json))
+                responses = Open
+                for my_tender in responses:
+                    if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender':
+                        procurementMethod = 1
+                    if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender":
+                        procurementMethod = 5
+    except requests.exceptions.ConnectionError as e:
+        print(e)
+    print(procurementMethod)
     vendNo = '01254796'
-    procurementMethod = 1
     docNo = pk
     unitPrice = ''
     if request.method == "POST":
@@ -102,16 +130,23 @@ def Restricted_tenders(request):
     try:
         response = session.get(Access_Point, timeout=10).json()
         Restrict = []
+        Submitted = []
         for tender in response['value']:
             if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender" and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 Restrict.append(json.loads(output_json))
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender" and tender['Status'] == 'Archived':
+                output_json = json.dumps(tender)
+                Submitted.append(json.loads(output_json))
     except requests.exceptions.ConnectionError as e:
         print(e)
-    # Get Timezone
-    # creating date object
+
+    count = len(Restrict)
+    counter = len(Submitted)
+
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": Restrict}
+    ctx = {"today": todays_date, "res": Restrict,
+           "count": count, "sub": Submitted, "counter": counter}
     return render(request, 'restrictedTenders.html', ctx)
 
 

@@ -5,10 +5,14 @@
 <section class="dash2">
     <div class="content-wrapper" style="padding-bottom: 13rem;">
         <div class="d-xl-flex justify-content-between align-items-start">
-            <h2 class="text-dark font-weight-bold mb-2"> {{res.Title}} Details <button class="btn btn-primary"
-                    data-bs-toggle="modal" data-bs-target="#dynamic{{res.No}}"> <i class="las la-plus"></i> Respond To
+            <h2 class="text-dark font-weight-bold mb-2"> {{res.Title}} Details
+                {% if state == 1 %}
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dynamic{{res.No}}"> <i
+                        class="las la-plus"></i> Respond To
                     {{res.Process_Type}}
-                </button></h2>
+                </button>
+                {% endif %}
+            </h2>
             <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
                 <div class="dropdown ml-0 ml-md-4 mt-2 mt-lg-0">
                     <button class="btn bg-white dropdown-toggle p-3 d-flex align-items-center" type="button"
@@ -162,18 +166,6 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <script>
-                                    var myVar;
-
-                                    function myFunction() {
-                                        myVar = setTimeout(showPage, 3000);
-                                    }
-
-                                    function showPage() {
-                                        document.getElementById("loader").style.display = "none";
-                                        document.getElementById("myDiv").style.display = "block";
-                                    }
-                                </script>
                                 <div class="modal-body">
                                     <form method="post" action="{% url 'DocResponse' res.No %}"
                                         class="myForm needs-validation" novalidate>
@@ -191,7 +183,6 @@
                                                 {% endfor %}
                                             </div>
                                         </div>
-
                                         {% endif %}
                                         <div class="tab"> <span class="w-name">
                                                 Financial Requirements:

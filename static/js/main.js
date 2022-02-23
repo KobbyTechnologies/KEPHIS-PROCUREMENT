@@ -245,3 +245,6 @@ function showPage() {
     document.getElementById("loader").style.display = "none";
     document.getElementById("loads").style.display = "block";
 }
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
