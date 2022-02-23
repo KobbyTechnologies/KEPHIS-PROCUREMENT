@@ -96,6 +96,8 @@ def DocResponse(request, pk):
                         procurementMethod = 1
                     if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender":
                         procurementMethod = 5
+                    if tender['Process_Type'] == 'RFQ':
+                        procurementMethod = 2
     except requests.exceptions.ConnectionError as e:
         print(e)
     print(procurementMethod)

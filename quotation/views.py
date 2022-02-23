@@ -19,17 +19,25 @@ def requestQuote(request):
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     try:
         response = session.get(Access_Point, timeout=10).json()
-        RFQ = []
+        OpenRFQ = []
+        Submitted = []
         for tender in response['value']:
             if tender['Process_Type'] == 'RFQ' and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
-                RFQ.append(json.loads(output_json))
+                OpenRFQ.append(json.loads(output_json))
+            if tender['Process_Type'] == 'RFQ' and tender['Status'] == 'Archived':
+                output_json = json.dumps(tender)
+                Submitted.append(json.loads(output_json))
     except requests.exceptions.ConnectionError as e:
         print(e)
+
+    count = len(OpenRFQ)
+    counter = len(Submitted)
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": RFQ}
+    ctx = {"today": todays_date, "res": OpenRFQ,
+           "count": count, "counter": counter, "sub": Submitted}
     return render(request, 'requestQuote.html', ctx)
 
 
