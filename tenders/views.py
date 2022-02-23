@@ -41,19 +41,6 @@ def Open_Details(request, pk):
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
 
-    # Responding to Tender
-    vendNo = '01254796'
-    procurementMethod = 1
-    docNo = pk
-    unitPrice = ''
-    if request.method == "POST":
-        try:
-            unitPrice = float(request.POST.get('amount'))
-            messages.success(
-                request, f"You have successfully Applied for tender number {docNo}")
-        except ValueError:
-            messages.error(request, "Invalid Amount, Try Again!!")
-            return redirect('Odetails', pk=docNo)
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=8).json()
@@ -74,6 +61,27 @@ def Open_Details(request, pk):
 
     except requests.exceptions.ConnectionError as e:
         print(e)
+
+    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    ctx = {"today": todays_date, "res": res,
+           "docs": Doc}
+    return render(request, "details/open.html", ctx)
+
+
+def DocResponse(request, pk):
+    # Responding to Tender
+    vendNo = '01254796'
+    procurementMethod = 1
+    docNo = pk
+    unitPrice = ''
+    if request.method == "POST":
+        try:
+            unitPrice = float(request.POST.get('amount'))
+            messages.success(
+                request, f"You have successfully Applied for Doc number {docNo}")
+        except ValueError:
+            messages.error(request, "Invalid Amount, Try Again!!")
+            return redirect('Odetails', pk=docNo)
     try:
         if vendNo != '':
             result = config.CLIENT.service.FnCreateProspectiveSupplier(
@@ -81,11 +89,9 @@ def Open_Details(request, pk):
             print(result)
             return redirect('Odetails', pk=docNo)
     except Exception as e:
+        messages.error(request, e)
         print(e)
-    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": res,
-           "docs": Doc}
-    return render(request, "details/open.html", ctx)
+    return redirect('Odetails', pk=docNo)
 
 
 def Restricted_tenders(request):

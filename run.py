@@ -10,18 +10,18 @@
 
 # print(r.status_code)
 
-import requests
-from requests_ntlm import HttpNtlmAuth
-import json
+# import requests
+# from requests_ntlm import HttpNtlmAuth
+# import json
 
-username = "NAVADMIN"
-password = "W3C0d3@llD@y"
+# username = "NAVADMIN"
+# password = "W3C0d3@llD@y"
 
-site_url = "http://20.121.189.145:7048/BC140/ODataV4/Company('KMPDC')/Imprests"
+# site_url = "http://20.121.189.145:7048/BC140/ODataV4/Company('KMPDC')/Imprests"
 
-r = requests.get(site_url, auth=HttpNtlmAuth(username, password)).json()
+# r = requests.get(site_url, auth=HttpNtlmAuth(username, password)).json()
 
-print(r)
+# print(r)
 
 
 # import requests
@@ -37,22 +37,38 @@ print(r)
 # print(r.status_code)
 
 
-# import requests
-# from requests import Session
-# from requests_ntlm import HttpNtlmAuth
-# from zeep import Client
-# from zeep.transports import Transport
+import requests
+from requests import Session
+from requests_ntlm import HttpNtlmAuth
+from zeep import Client
+from zeep.transports import Transport
 
 
-# AUTHS = Session()
+AUTHS = Session()
 
-# WEB_SERVICE_PWD = 'W3C0d3@llD@y'
-# BASE_URL = 'http://20.121.189.145:7047/BC140/WS/KMPDC/Codeunit/WebPortal'
+WEB_SERVICE_PWD = 'W3C0d3@llD@y'
+BASE_URL = 'http://20.121.189.145:7047/BC140/WS/KMPDC/Codeunit/WebPortal'
 
-# AUTHS.auth = HttpNtlmAuth('domain\\NAVADMIN', WEB_SERVICE_PWD)
-# CLIENT = Client(BASE_URL, transport=Transport(session=AUTHS))
+AUTHS.auth = HttpNtlmAuth('domain\\NAVADMIN', WEB_SERVICE_PWD)
+CLIENT = Client(BASE_URL, transport=Transport(session=AUTHS))
 
 
-# result = CLIENT.service.FnCreateProspectiveSupplier(
-#     '01254796', 1111111, 222222, 10000)
+# result = CLIENT.service.InsertModifyImprestHeader(
+#     '', 'False', '', 'sijui', 1111111, 222222, 10000)
 # print(result)
+imprestNo = ""
+isOnBehalf = False
+accountNo = ''
+responsibilityCenter = ''
+travelType = 1
+payee = 'Enock'
+purpose = "Test"
+usersId = "NAVADMIN"
+personalNo = ''
+idPassport = '12345678'
+isImprest = True
+isDsa = True
+myAction = 'insert'
+result = CLIENT.service.FnImprestHeader(
+    imprestNo, isOnBehalf, accountNo, responsibilityCenter, travelType, payee, purpose, usersId, personalNo, idPassport, isImprest, isDsa, myAction)
+print(result)
