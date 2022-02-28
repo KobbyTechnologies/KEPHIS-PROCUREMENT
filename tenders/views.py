@@ -26,8 +26,6 @@ def open_tenders(request):
             if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 open.append(json.loads(output_json))
-                # t = open[0]['TenderOpeningDate']
-                # print(datetime.datetime.strptime(t, '%Y-%m-%d'))
             if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['Status'] == 'Archived':
                 output_json = json.dumps(tender)
                 Submitted.append(json.loads(output_json))
@@ -49,13 +47,20 @@ def Open_Details(request, pk):
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
+    lines = config.O_DATA.format("/ProcurementMethodLines")
     res = ''
     State = ''
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=8).json()
+        lines_res = session.get(lines, timeout=8).json()
         Open = []
         Doc = []
+        Lines = []
+        for lines in lines_res['value']:
+            if lines['RequisitionNo'] == pk:
+                output_json = json.dumps(lines)
+                Lines.append(json.loads(output_json))
         for tender in response['value']:
             if tender['No'] == pk:
                 output_json = json.dumps(tender)
@@ -76,7 +81,7 @@ def Open_Details(request, pk):
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,
-           "docs": Doc, "state": State}
+           "docs": Doc, "state": State, "line": Lines}
     return render(request, "details/open.html", ctx)
 
 

@@ -3,7 +3,7 @@
 {% load static %}
 {% block main %}
 <section class="dash2">
-    <div class="content-wrapper" style="padding-bottom: 13rem;">
+    <div class="content-wrapper" style="padding-bottom: 3rem;">
         <div class="d-xl-flex justify-content-between align-items-start">
             <h2 class="text-dark font-weight-bold mb-2"> {{res.Title}} Details
                 {% if state == 1 %}
@@ -187,19 +187,23 @@
                                                 <thead>
                                                     <tr id="tops">
                                                         <th id="long">Item No</th>
+                                                        <th>Procurement Plan</th>
                                                         <th>Description</th>
                                                         <th>Unit of Measure</th>
+                                                        <th>Quantity</th>
                                                         <th>Unit Price</th>
                                                         <th>Amount</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% for res in res %}
+                                                    {% for res in line %}
                                                     <tr>
                                                         <td>{{res.No}}</td>
-                                                        <td id="rap">{{res.Description}}</td>
-                                                        <td>{{res.Unit_of_Measure}}</td>
-                                                        <td>{{res.Unit_Price}}</td>
+                                                        <td id="rap">{{res.ProcurementPlan}}</td>
+                                                        <td>{{res.Description}}</td>
+                                                        <td>{{res.UnitofMeasure}}</td>
+                                                        <td>{{res.Quantity}}</td>
+                                                        <td>{{res.UnitPrice}}</td>
                                                         <td>{{res.Amount}}</td>
                                                     </tr>
                                                     {% endfor %}
@@ -210,7 +214,11 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="card h-100 p-3">
+                                        {% if state == 1 %}
                                         <h5>Required Documents</h5>
+                                        {% else %}
+                                        <h5>Attached Documents</h5>
+                                        {% endif %}
                                         {% for docs in docs %}
                                         <div class="card doc-card mt-4 p-3">
                                             <div class="row">
