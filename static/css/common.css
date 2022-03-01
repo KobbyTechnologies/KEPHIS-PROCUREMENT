@@ -93,16 +93,23 @@
 thead,
 tr {
     width: 100%;
-    font-family: var(--normal-font);
+    font-family: var(--primary-font);
+}
+
+th {
+    color: white;
+    text-shadow: 0 1px 0 var(--first-color);
+    font-weight: bold;
 }
 
 #tops {
-    background: var(--green-color)
+    background: var(--first-color)
 }
 
 .page-item.active .page-link {
-    background-color: var(--green-color) !important;
-    border: 1px solid var(--green-color);
+    background-color: var(--olive) !important;
+    border: 1px solid var(--olive);
+    color: white;
 }
 
 .page-link {
@@ -110,7 +117,7 @@ tr {
 }
 
 .modal-header {
-    background: var(--green-color);
+    background: var(--first-color);
     color: white;
 }
 
@@ -128,13 +135,13 @@ td {
 }
 
 div.dataTables_filter input {
-    border-color: var(--green-color);
+    border-color: var(--first-color);
     display: none;
 }
 
 @media screen and (max-width:375px) {
     div.dataTables_filter input {
-        border-color: var(--green-color);
+        border-color: var(--first-color);
     }
 }
 

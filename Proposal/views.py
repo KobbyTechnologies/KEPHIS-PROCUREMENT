@@ -15,6 +15,7 @@ def proposal_request(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
+    year = request.session['years']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     try:
         response = session.get(Access_Point, timeout=10).json()
@@ -35,5 +36,6 @@ def proposal_request(request):
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": OpenRFP,
-           "count": count, "counter": counter, "sub": Submitted}
+           "count": count, "counter": counter,
+           "year": year, "sub": Submitted}
     return render(request, 'proposal.html', ctx)

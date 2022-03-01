@@ -25,7 +25,7 @@ def dashboard(request):
     session.auth = config.AUTHS
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
-
+    year = request.session['years']
     try:
         response = session.get(Access_Point, timeout=10).json()
         OPEN = []
@@ -99,5 +99,11 @@ def dashboard(request):
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date,
-           "All_T": All_O, "Active_O": Active_O, "RES": RES_Count, "RES_A": RES_Active, "RFP": RFP_Count, "RFP_A": RFP_Active, "RFQ": RFQ_Count, "RFQ_A": RFQ_Active, "EOI": EOI_Count, "EOI_A": EOI_Active, "Close": Close, "Actives": Actives}
+           "All_T": All_O, "Active_O": Active_O,
+           "RES": RES_Count,
+           "RES_A": RES_Active,
+           "RFP": RFP_Count, "RFP_A": RFP_Active,
+           "RFQ": RFQ_Count, "RFQ_A": RFQ_Active,
+           "EOI": EOI_Count, "EOI_A": EOI_Active,
+           "Close": Close, "Actives": Actives, "year": year}
     return render(request, 'main/dashboard.html', ctx)

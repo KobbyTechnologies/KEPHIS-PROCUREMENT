@@ -16,6 +16,7 @@ def requestQuote(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
+    year = request.session['years']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     try:
         response = session.get(Access_Point, timeout=10).json()
@@ -37,5 +38,6 @@ def requestQuote(request):
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": OpenRFQ,
-           "count": count, "counter": counter, "sub": Submitted}
+           "count": count, "counter": counter,
+           "year": year, "sub": Submitted}
     return render(request, 'requestQuote.html', ctx)

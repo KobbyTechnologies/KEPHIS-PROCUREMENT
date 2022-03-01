@@ -39,6 +39,16 @@
 
 .brand {
     margin-top: 10px;
+    text-shadow: 0 1px 0 var(--first-color);
+}
+
+.btns {
+    font-size: 16px;
+    font-weight: bold;
+    background: var(--green-color) !important;
+    border-radius: 3px;
+    border: none;
+    min-width: 140px;
 }
 
 .brand h2 {
@@ -46,6 +56,7 @@
     font-size: 1.6rem;
     font-weight: 300;
     font-style: normal;
+    text-shadow: 0 1px 0 var(--first-color);
     line-height: 50px;
     font-family: var(--primary-font)
 }
@@ -58,6 +69,7 @@
 .l-text {
     margin-top: 20px;
     padding: 10px;
+    text-shadow: 0 1px 0 var(--first-color);
 }
 
 .l-text p {
@@ -85,13 +97,14 @@
 }
 
 .logo img {
-    width: 280px;
+    width: 150px;
     height: auto;
 }
 
 .form-text {
     margin-top: 70px;
     margin-left: 85px;
+    text-shadow: 0 1px 0 whitesmoke;
 }
 
 .form-text h3 {
@@ -102,6 +115,7 @@
     color: var(--primary-color);
     line-height: 40px;
     text-transform: uppercase;
+    text-shadow: 0 1px 0 whitesmoke;
 }
 
 .form-text p {
@@ -110,6 +124,7 @@
     font-style: normal;
     font-size: 16px;
     color: #17171F;
+    text-shadow: 0 1px 0 whitesmoke;
     line-height: 24px;
 }
 
@@ -225,10 +240,13 @@ label {
 }
 
 #auth1 {
-    background: var(--green-color);
+    font-size: 16px;
+    font-weight: bold;
+    background: var(--green-color) !important;
+    border-radius: 3px;
+    border: none;
+    color: rgb(216, 15, 15);
     font-family: var(--normal-font);
-    color: white;
-    border-radius: 4px;
 }
 
 #auth1:hover {
@@ -247,24 +265,36 @@ label {
 }
 
 .f-text {
+    position: fixed;
     width: auto;
     bottom: 0;
     padding: 10px
 }
 
 .f-text p {
-    font-size: 14px;
+    font-size: 1rem;
     color: white;
-    display: inline-block;
-    font-family: var(--normal-font);
+    text-shadow: 0 1px 0 var(--first-color);
+    font-family: var(--primary-font);
 }
 
-#kobby {
-    float: right;
+.text-200 {
+    font-size: .8rem;
+    text-shadow: 0 1px 0 rgb(255, 255, 255);
+    position: fixed;
+    width: auto;
+    bottom: 0;
+    font-family: var(--primary-font);
+    right: 2px;
+    text-decoration: none;
 }
 
-@media screen and (max-width:768px) {
-    #kobby {
-        float: left;
-    }
+.text-200 a {
+    color: var(--dark-color);
+    text-decoration: none;
+}
+
+.text-200 a:hover {
+    color: var(--red-color);
+    text-decoration: none;
 }

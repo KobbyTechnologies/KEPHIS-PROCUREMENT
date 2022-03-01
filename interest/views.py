@@ -15,6 +15,7 @@ def interest_request(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
+    year = request.session['years']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     try:
         response = session.get(Access_Point, timeout=10).json()
@@ -36,5 +37,6 @@ def interest_request(request):
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": OpenEOI,
-           "count": count, "sub": Submitted, "counter": counter}
+           "count": count, "sub": Submitted,
+           "year": year, "counter": counter}
     return render(request, 'interest.html', ctx)

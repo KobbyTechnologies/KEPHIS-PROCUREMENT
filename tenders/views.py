@@ -15,7 +15,7 @@ from django.contrib import messages
 def open_tenders(request):
     session = requests.Session()
     session.auth = config.AUTHS
-
+    year = request.session['years']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
 
     try:
@@ -37,7 +37,7 @@ def open_tenders(request):
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": open,
-           "count": count, "counter": counter, "sub": Submitted}
+           "count": count, "counter": counter, "sub": Submitted, "year": year}
     return render(request, 'openTenders.html', ctx)
 
 
@@ -45,6 +45,7 @@ def Open_Details(request, pk):
     session = requests.Session()
     session.auth = config.AUTHS
 
+    year = request.session['years']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
     lines = config.O_DATA.format("/ProcurementMethodLines")
@@ -81,7 +82,7 @@ def Open_Details(request, pk):
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,
-           "docs": Doc, "state": State, "line": Lines}
+           "docs": Doc, "state": State, "line": Lines, "year": year}
     return render(request, "details/open.html", ctx)
 
 
@@ -138,7 +139,7 @@ def DocResponse(request, pk):
 def Restricted_tenders(request):
     session = requests.Session()
     session.auth = config.AUTHS
-
+    year = request.session['years']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     try:
         response = session.get(Access_Point, timeout=10).json()
@@ -159,5 +160,5 @@ def Restricted_tenders(request):
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": Restrict,
-           "count": count, "sub": Submitted, "counter": counter}
+           "count": count, "sub": Submitted, "counter": counter, "year": year}
     return render(request, 'restrictedTenders.html', ctx)

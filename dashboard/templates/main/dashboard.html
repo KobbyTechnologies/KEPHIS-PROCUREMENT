@@ -9,9 +9,8 @@
             <div class="col-12">
                 <span class="d-flex align-items-center purchase-popup">
                     <img src="../../../static/img/logo/fav.png" width="70px" class="img-fluid" alt="" srcset="">
-                    <a href="{% url 'profile' %}" target="_blank" class="btn ml-auto download-button"> View Profile <i
-                            class="las la-user-circle fill-white" style="font-size:1.2rem;color: white;"></i></a>
-                    <a href="{% url 'proposal' %}" target="_blank" class="btn purchase-button">Request For Proposal</a>
+                    <a href="{% url 'proposal' %}" class="btn purchase-button">View Profile <i
+                            class="las la-user-circle fill-white" style="font-size:1rem;color: white;"></i></a>
                 </span>
             </div>
         </div>
@@ -32,11 +31,12 @@
                     <div class="card-body">
                         <span>
                             <i class="las la-box-open fill-white" style="font-size:2rem;"></i>
-                            <a href="{% url 'open' %}" style="float: right; color:rgb(255, 255, 255)">View <i
-                                    class="las la-arrow-right"></i></a>
+                            <a href="{% url 'open' %}"
+                                style="float: right; color:rgb(255, 255, 255);font-weight: bold;  text-shadow: 0 1px 0 #0275d8;">View
+                                <i class="las la-arrow-right"></i></a>
                         </span>
                         <h3 class="card-title mt-3 mb-0">{{All_T}}</h3>
-                        <p class="card-text">Open Tenders</p>
+                        <p class="card-text" style="text-shadow: 0 1px 0 #0275d8;">Open Tenders</p>
                     </div>
                 </div>
             </div>
@@ -45,11 +45,12 @@
                     <div class="card-body">
                         <span>
                             <i class="las la-lock fill-white" style="font-size:2rem;"></i>
-                            <a href="{% url 'restricted' %}" style="float: right; color:white">View <i
-                                    class="las la-arrow-right"></i></a>
+                            <a href="{% url 'restricted' %}"
+                                style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #5cb85c;">View
+                                <i class="las la-arrow-right"></i></a>
                         </span>
                         <h3 class="card-title mt-3 mb-0">{{RES}}</h3>
-                        <p class="card-text">Restricted Tenders</p>
+                        <p class="card-text" style="text-shadow: 0 1px 0 #5cb85c;">Restricted Tenders</p>
                     </div>
                 </div>
             </div>
@@ -58,11 +59,12 @@
                     <div class="card-body">
                         <span>
                             <i class="las la-briefcase fill-white" style="font-size:2rem;"></i>
-                            <a href="{% url 'quote' %}" style="float: right; color:white">View <i
-                                    class="las la-arrow-right"></i></a>
+                            <a href="{% url 'quote' %}"
+                                style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #d9534f;">View
+                                <i class="las la-arrow-right"></i></a>
                         </span>
                         <h3 class="card-title mt-3 mb-0">{{RFQ}}</h3>
-                        <p class="card-text">Request For Quotation</p>
+                        <p class="card-text" style="text-shadow: 0 1px 0 #d9534f;">Request For Quotation</p>
                     </div>
                 </div>
             </div>
@@ -71,11 +73,12 @@
                     <div class="card-body">
                         <span>
                             <i class="las la-edit fill-white" style="font-size:2rem;"></i>
-                            <a href="{% url 'interest' %}" style="float: right; color:white">View <i
-                                    class="las la-arrow-right"></i></a>
+                            <a href="{% url 'interest' %}"
+                                style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #9933CC;">View
+                                <i class="las la-arrow-right"></i></a>
                         </span>
                         <h3 class="card-title mt-3 mb-0">{{EOI}}</h3>
-                        <p class="card-text">Expression Of Interest</p>
+                        <p class="card-text" style="text-shadow: 0 1px 0 #9933CC;">Expression Of Interest</p>
                     </div>
                 </div>
             </div>
