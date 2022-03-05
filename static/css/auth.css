@@ -29,8 +29,7 @@
 }
 
 #n-right2 {
-    background-color: whitesmoke;
-    display: none;
+    background-color: whitesmoke !important;
 }
 
 .n-icon {
