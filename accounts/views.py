@@ -31,7 +31,20 @@ def login_request(request):
     todays_date = date.today()
     year = todays_date.year
     request.session['years'] = year
-    print(request.session['years'])
+    if request.method == 'POST':
+        try:
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+        except ValueError:
+            print("Invalid credentials, try again")
+            return redirect('login')
+        user = Users.objects.get(email=email)
+        if user.email == email and user.password == password:
+            return redirect('dashboard')
+        else:
+            messages.error(
+                request, "Invalid Credentials")
+            return redirect('login')
     ctx = {"year": year}
     return render(request, 'login.html', ctx)
 
