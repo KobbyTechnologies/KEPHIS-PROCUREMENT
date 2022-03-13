@@ -24,7 +24,7 @@
         </div>
         <!--alert -->
         {% if messages %}
-        {% for message in messages %}
+        {% for message in messages %}g
         {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
         <div class="alert alert-success d-flex align-items-center alert-dismissible alert-success" role="alert">
             <i class="las la-check-double" style="color: white;font-size: 2rem"></i>
@@ -80,7 +80,9 @@
                         </div>
                         <div class="progress mt-1 " data-height="8" style="height: 8px;">
                             <div class="progress-bar l-bg-red" role="progressbar" data-width="50%" aria-valuenow="25"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>
+                                aria-valuemin="0" aria-valuemax="100"
+                                style="width: 50%; background: linear-gradient(to right, #a86008, #c18b39) !important;">
+                            </div>
                         </div>
                         {% elif res.Status == "Archived" %}
                         <div class="row align-items-center mb-2 d-flex">
@@ -93,7 +95,9 @@
                         </div>
                         <div class="progress mt-1 " data-height="8" style="height: 8px;">
                             <div class="progress-bar l-bg-green" role="progressbar" data-width="100%" aria-valuenow="25"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                                aria-valuemin="0" aria-valuemax="100"
+                                style="width: 100%; background: linear-gradient(to right, #a86008, #c18b39) !important;">
+                            </div>
                         </div>
                         {% endif %}
                     </div>
@@ -253,54 +257,14 @@
                                     <form method="post" action="{% url 'DocResponse' res.No %}"
                                         class="myForm needs-validation" novalidate>
                                         {% csrf_token %}
-                                        {% if docs %}
-                                        <div class="mb-2"> <span class="w-name">
-                                                Mandatory Requirements:
-                                            </span>
-                                            <div class="row">
-                                                {% for docs in docs %}
-                                                <div class="col-md-6">
-                                                    <label for="">{{docs.DocumentName}}:</label>
-                                                    <input type="file" class="form-control" name="file1">
-                                                </div>
-                                                {% endfor %}
+                                        <div>
+                                            <label for="recipient-name" class="col-form-label">Amount:</label>
+                                            <input type="text" class="form-control" name="amount" id="recipient-name"
+                                                placeholder="Ksh" required>
+                                            <div class="invalid-feedback">
+                                                Please provide the amount.
                                             </div>
                                         </div>
-                                        {% endif %}
-                                        <div class="tab"> <span class="w-name">
-                                                Financial Requirements:
-                                            </span>
-                                            <div>
-                                                <label for="recipient-name" class="col-form-label">Amount:</label>
-                                                <input type="text" class="form-control" name="amount"
-                                                    id="recipient-name" placeholder="Ksh" required>
-                                                <div class="invalid-feedback">
-                                                    Please provide the amount.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <script>
-                                            // Example starter JavaScript for disabling form submissions if there are invalid fields
-                                            (function () {
-                                                'use strict'
-
-                                                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                                                var forms = document.querySelectorAll('.needs-validation')
-
-                                                // Loop over them and prevent submission
-                                                Array.prototype.slice.call(forms)
-                                                    .forEach(function (form) {
-                                                        form.addEventListener('submit', function (event) {
-                                                            if (!form.checkValidity()) {
-                                                                event.preventDefault()
-                                                                event.stopPropagation()
-                                                            }
-
-                                                            form.classList.add('was-validated')
-                                                        }, false)
-                                                    })
-                                            })()
-                                        </script>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal"

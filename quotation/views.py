@@ -23,7 +23,7 @@ def requestQuote(request):
         OpenRFQ = []
         Submitted = []
         for tender in response['value']:
-            if tender['Process_Type'] == 'RFQ' and tender['Status'] == 'New':
+            if tender['Process_Type'] == 'RFQ' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 OpenRFQ.append(json.loads(output_json))
             if tender['Process_Type'] == 'RFQ' and tender['Status'] == 'Archived':

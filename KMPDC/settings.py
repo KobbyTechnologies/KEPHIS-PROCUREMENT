@@ -149,6 +149,8 @@ USE_L10N = True
 USE_TZ = True
 
 # Send Email Settings
+# Fernet Encryption
+ENCRYPT_KEY = b'BpKKQvJ4-Zm1lxSlVZ2jJk1605X7r7Wvi3UHQS-j1Ko='
 
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 EMAIL_BACKEND = config('EMAIL_BACKEND')

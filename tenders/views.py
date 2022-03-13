@@ -23,7 +23,7 @@ def open_tenders(request):
         open = []
         Submitted = []
         for tender in response['value']:
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['Status'] == 'New':
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 open.append(json.loads(output_json))
             if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['Status'] == 'Archived':

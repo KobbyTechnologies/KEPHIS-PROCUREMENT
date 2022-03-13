@@ -27,58 +27,62 @@
         </div>
         <div class="row my-4">
             <div class="col-md-3">
-                <div class="card text-white bg-primary h-100 d-card">
+                <div class="card text-white h-100 d-card"
+                    style="background: linear-gradient(to right, #373b44, #144a85) !important;border:none">
                     <div class="card-body">
                         <span>
                             <i class="las la-box-open fill-white" style="font-size:2rem;"></i>
                             <a href="{% url 'open' %}"
-                                style="float: right; color:rgb(255, 255, 255);font-weight: bold;  text-shadow: 0 1px 0 #0275d8;">View
+                                style="float: right; color:rgb(255, 255, 255);font-weight: bold;  text-shadow: 0 1px 0 #144a85;">View
                                 <i class="las la-arrow-right"></i></a>
                         </span>
                         <h3 class="card-title mt-3 mb-0">{{All_T}}</h3>
-                        <p class="card-text" style="text-shadow: 0 1px 0 #0275d8;">Open Tenders</p>
+                        <p class="card-text" style="text-shadow: 0 1px 0 #144a85;">Open Tenders</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card text-white bg-success h-100 d-card">
+                <div class="card text-white  h-100 d-card"
+                    style="background: linear-gradient(to right, #444a4a, #e51e25) !important;border: none;">
                     <div class="card-body">
                         <span>
                             <i class="las la-lock fill-white" style="font-size:2rem;"></i>
                             <a href="{% url 'restricted' %}"
-                                style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #5cb85c;">View
+                                style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #e51e25;">View
                                 <i class="las la-arrow-right"></i></a>
                         </span>
                         <h3 class="card-title mt-3 mb-0">{{RES}}</h3>
-                        <p class="card-text" style="text-shadow: 0 1px 0 #5cb85c;">Restricted Tenders</p>
+                        <p class="card-text" style="text-shadow: 0 1px 0 #e51e25;">Restricted Tenders</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card text-white bg-danger h-100 d-card">
+                <div class="card text-white h-100 d-card"
+                    style="background: linear-gradient(to right, #0a504a, #134326) !important;border:none">
                     <div class="card-body">
                         <span>
                             <i class="las la-briefcase fill-white" style="font-size:2rem;"></i>
                             <a href="{% url 'quote' %}"
-                                style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #d9534f;">View
+                                style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #134326;">View
                                 <i class="las la-arrow-right"></i></a>
                         </span>
                         <h3 class="card-title mt-3 mb-0">{{RFQ}}</h3>
-                        <p class="card-text" style="text-shadow: 0 1px 0 #d9534f;">Request For Quotation</p>
+                        <p class="card-text" style="text-shadow: 0 1px 0 #134326;">Request For Quotation</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card text-white bg-info h-100 d-card">
+                <div class="card text-white h-100 d-card"
+                    style=" background: linear-gradient(to right, #a86008, #c18b39) !important;border:none">
                     <div class="card-body">
                         <span>
                             <i class="las la-edit fill-white" style="font-size:2rem;"></i>
                             <a href="{% url 'interest' %}"
-                                style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #9933CC;">View
+                                style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #c18b39;">View
                                 <i class="las la-arrow-right"></i></a>
                         </span>
                         <h3 class="card-title mt-3 mb-0">{{EOI}}</h3>
-                        <p class="card-text" style="text-shadow: 0 1px 0 #9933CC;">Expression Of Interest</p>
+                        <p class="card-text" style="text-shadow: 0 1px 0 #c18b39;">Expression Of Interest</p>
                     </div>
                 </div>
             </div>

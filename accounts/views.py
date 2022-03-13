@@ -1,3 +1,4 @@
+import base64
 import threading
 from django.http import response
 from django.shortcuts import redirect, render, HttpResponse
@@ -16,9 +17,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from . models import Users
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text, force_str, DjangoUnicodeDecodeError
-from .utils import generate_token
 import secrets
 import string
+from cryptography.fernet import Fernet
 # Create your views here.
 
 
@@ -30,6 +31,12 @@ def profile_request(request):
 def login_request(request):
     todays_date = date.today()
     year = todays_date.year
+    session = requests.Session()
+    session.auth = config.AUTHS
+
+    Access_Point = config.O_DATA.format("/VendorDetails")
+    Access = config.O_DATA.format("/ProspectiveSupplier")
+    decoded_text = ''
     request.session['years'] = year
     if request.method == 'POST':
         try:
@@ -38,15 +45,106 @@ def login_request(request):
         except ValueError:
             print("Invalid credentials, try again")
             return redirect('login')
-        user = Users.objects.get(email=email)
-        if user.email == email and user.password == password:
+        try:
+            response = session.get(Access_Point, timeout=10).json()
+            res = session.get(Access, timeout=10).json()
+            for applicant in response['value']:
+                if applicant['EMail'] == email:
+                    Portal_Password = base64.urlsafe_b64decode(
+                        applicant['SerialID'])
+            for applicant in res['value']:
+                if applicant['Email'] == email:
+                    Portal_Password = base64.urlsafe_b64decode(
+                        applicant['SerialID'])
+        except requests.exceptions.ConnectionError as e:
+            messages.error(
+                request, "If you are a vendor please reset your password else create a new account")
+            print(e)
+        cipher_suite = Fernet(config.ENCRYPT_KEY)
+        try:
+            decoded_text = cipher_suite.decrypt(
+                Portal_Password).decode("ascii")
+        except Exception as e:
+            print(e)
+        if decoded_text == password:
             return redirect('dashboard')
         else:
             messages.error(
-                request, "Invalid Credentials")
+                request, "Invalid Credentials. If you are a vendor please reset your password else create a new account")
             return redirect('login')
     ctx = {"year": year}
     return render(request, 'login.html', ctx)
+
+
+def FnResetPassword(request):
+    alphabet = string.ascii_letters + string.digits
+    SecretCode = ''.join(secrets.choice(alphabet) for i in range(5))
+    session = requests.Session()
+    session.auth = config.AUTHS
+
+    Access_Point = config.O_DATA.format("/VendorDetails")
+    Access = config.O_DATA.format("/ProspectiveSupplier")
+
+    emailAddress = ""
+    password = ""
+    confirm_password = ''
+    verificationToken = SecretCode
+    if request.method == 'POST':
+        try:
+            emailAddress = request.POST.get('emailAddress')
+            password = request.POST.get('password')
+            confirm_password = request.POST.get('confirm_password')
+        except ValueError:
+            print("Invalid credentials, try again")
+            return redirect('login')
+        if len(password) < 6:
+            messages.error(request, "Password should be at least 6 characters")
+            return redirect('login')
+        if password != confirm_password:
+            messages.error(request, "Password mismatch")
+            return redirect('login')
+        try:
+            response = session.get(Access_Point, timeout=10).json()
+            res = session.get(Access, timeout=10).json()
+            for applicant in response['value']:
+                if applicant['EMail'] == emailAddress:
+                    cipher_suite = Fernet(config.ENCRYPT_KEY)
+                    try:
+                        encrypted_text = cipher_suite.encrypt(
+                            password.encode('ascii'))
+                        password = base64.urlsafe_b64encode(
+                            encrypted_text).decode("ascii")
+                        response = config.CLIENT.service.FnResetPassword(
+                            emailAddress, password, verificationToken)
+                        print(response)
+                        messages.error(
+                            request, "Reset was successful, now login")
+                        return redirect('login')
+                    except Exception as e:
+                        messages.error(request, e)
+                        return redirect('login')
+            for applicant in res['value']:
+                if applicant['Email'] == emailAddress:
+                    cipher_suite = Fernet(config.ENCRYPT_KEY)
+                    try:
+                        encrypted_text = cipher_suite.encrypt(
+                            password.encode('ascii'))
+                        password = base64.urlsafe_b64encode(
+                            encrypted_text).decode("ascii")
+                        response = config.CLIENT.service.FnResetPassword(
+                            emailAddress, password, verificationToken)
+                        print(response)
+                        messages.error(
+                            request, "Reset was successful, now login")
+                        return redirect('login')
+                    except Exception as e:
+                        messages.error(request, e)
+                        return redirect('login')
+        except requests.exceptions.ConnectionError as e:
+            messages.error(
+                request, "If you are a vendor please reset your password else create a new account")
+            print(e)
+    return redirect('login')
 
 
 class EmailThread(threading.Thread):
@@ -58,13 +156,13 @@ class EmailThread(threading.Thread):
         self.email.send()
 
 
-def activate_user(request, uidb64, token):
+def activate_user(request, uidb64):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
-        user = Users.objects.get(pk=uid)
+        user = "Enock"
     except Exception as e:
         user = None
-    if user and generate_token.check_token(user, token):
+    if user:
         messages.success(
             request, "Email verified, you can now login")
         return redirect(reverse('login'))
@@ -74,53 +172,77 @@ def activate_user(request, uidb64, token):
 def register_request(request):
     todays_date = date.today()
     year = todays_date.year
+    session = requests.Session()
+    session.auth = config.AUTHS
 
-    firstname = ''
-    lastname = ''
-    email = ''
-    password = ''
+    citizenship = config.O_DATA.format("/CountryRegion")
+    try:
+        response = session.get(citizenship, timeout=10).json()
+        country = response['value']
+    except requests.exceptions.ConnectionError as e:
+        print(e)
+    alphabet = string.ascii_letters + string.digits
+    SecretCode = ''.join(secrets.choice(alphabet) for i in range(5))
+
+    prospNo = ""
+    supplierName = " "
+    supplierMail = ""
+    countryRegionCode = ""
+    postalAddress = ""
+    postCode = ""
+    city = ""
+    contactPersonName = ""
+    contactPhoneNo = ""
+    contactMail = ""
+    myPassword = ""
     confirm_password = ''
-    if request.method == 'POST':
+    verificationToken = SecretCode
+    myAction = "insert"
+
+    if request.method == "POST":
         try:
-            firstname = request.POST.get('firstname').strip()
-            lastname = request.POST.get('lastname').strip()
-            email = request.POST.get('email').strip()
-            password = request.POST.get('password').strip()
-            confirm_password = request.POST.get('confirm_password').strip()
+            supplierName = request.POST.get('supplierName')
+            supplierMail = request.POST.get('supplierMail')
+            countryRegionCode = request.POST.get('countryRegionCode')
+            postalAddress = request.POST.get('postalAddress')
+            postCode = request.POST.get('postCode')
+            city = request.POST.get('city')
+            contactPersonName = request.POST.get('contactPersonName')
+            contactPhoneNo = request.POST.get('contactPhoneNo')
+            contactMail = request.POST.get('contactMail')
+            Password = str(request.POST.get('myPassword'))
+            confirm_password = str(request.POST.get('confirm_password'))
         except ValueError:
-            print("Invalid credentials, try again")
+            messages.error(request, "Invalid credentials, try again")
             return redirect('register')
-        if len(password) < 6:
+        if len(Password) < 6:
             messages.error(request, "Password should be at least 6 characters")
             return redirect('register')
-        if password != confirm_password:
+        if Password != confirm_password:
             messages.error(request, "Password mismatch")
             return redirect('register')
+        cipher_suite = Fernet(config.ENCRYPT_KEY)
 
-        user = Users.objects.create(
-            firstname=firstname,
-            lastname=lastname,
-            email=email,
-            password=password,
-        )
-        alphabet = string.ascii_letters + string.digits
-        SecretCode = ''.join(secrets.choice(alphabet) for i in range(5))
-        request.session['SecretCode'] = SecretCode
-        current_site = get_current_site(request)
-        email_subject = 'Activate your account'
-        email_body = render_to_string('activate.html', {
-            "user": user.firstname,
-            "domain": current_site,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            "token": generate_token.make_token(user),
-            "code": SecretCode
-        })
-        email = EmailMessage(subject=email_subject, body=email_body,
-                             from_email=config.EMAIL_HOST_USER, to=[user.email])
-        EmailThread(email).start()
-        messages.success(
-            request, "We sent you an email to verify your account")
-        return redirect('register')
-    print(request.session['SecretCode'])
-    ctx = {"year": year}
+        encrypted_text = cipher_suite.encrypt(Password.encode('ascii'))
+        myPassword = base64.urlsafe_b64encode(encrypted_text).decode("ascii")
+        try:
+            response = config.CLIENT.service.FnProspectiveSupplierSignup(
+                prospNo, supplierName, supplierMail, countryRegionCode, postalAddress, postCode, city, contactPersonName, contactPhoneNo, contactMail, myPassword, verificationToken, myAction)
+            print(response)
+            current_site = get_current_site(request)
+            email_subject = 'Activate your account'
+            email_body = render_to_string('activate.html', {
+                "user": supplierName,
+                "domain": current_site,
+                'uid': urlsafe_base64_encode(force_bytes(supplierName)),
+            })
+            email = EmailMessage(subject=email_subject, body=email_body,
+                                 from_email=config.EMAIL_HOST_USER, to=[supplierMail])
+            EmailThread(email).start()
+            messages.success(
+                request, "We sent you an email to verify your account")
+            return redirect('register')
+        except Exception as e:
+            print(e)
+    ctx = {"year": year, "country": country, }
     return render(request, "register.html", ctx)

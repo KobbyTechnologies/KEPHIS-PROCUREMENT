@@ -54,7 +54,7 @@
                                     projects to promote regional integration towards the
                                 </p>
                                 <p>
-                                    accelerated realisation of Agenda 2063.
+                                    accelerated realization of Agenda 2063.
                                 </p>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                         <div class="col-md-12">
                             <div class="f-text">
                                 <p>
-                                    © {{year}} SCOTT CHRISTIAN UNIVERSITY
+                                    © {{year}} Kenya Medical Practitioners and Dentists Council
                                 </p>
                             </div>
                         </div>
@@ -100,7 +100,86 @@
                         <div class="col-md-12">
                             <div class="l-form">
                                 <div class="login-form">
-                                    <form method="post" action="{% url 'register' %}">
+                                    <form action="{% url 'register' %}" method="post">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Supplier Name</label>
+                                                <input type="text" class="form-control" name="supplierName"
+                                                    placeholder="Name" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Supplier Email</label>
+                                                <input type="email" class="form-control" name="supplierMail"
+                                                    placeholder="Email" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="form-label">Country</label>
+                                                <select class="form-select" name="countryRegionCode">
+                                                    <option selected>Select Country</option>
+                                                    {% for res in country %}
+                                                    <option value="{{res.Code}}">{{res.Name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Select Your Citizenship.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Postal Address</label>
+                                                <input type="text" class="form-control" name="postalAddress"
+                                                    placeholder="Postal Address" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Post Code</label>
+                                                <input type="text" class="form-control" name="postCode"
+                                                    placeholder="Post Code" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-label">City</label>
+                                                <input type="text" class="form-control" name="city" placeholder="City"
+                                                    required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Contact Person Name</label>
+                                                <input type="text" class="form-control" name="contactPersonName"
+                                                    placeholder="Contact Person Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Contact Phone No</label>
+                                                <input type="text" class="form-control" name="contactPhoneNo"
+                                                    placeholder="Contact Phone No" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Contact Email</label>
+                                                <input type="email" class="form-control" name="contactMail"
+                                                    placeholder="Contact Email" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Password</label>
+                                                <input type="password" class="form-control" name="myPassword"
+                                                    placeholder="Password" required="required">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Confirm Password</label>
+                                                <input type="password" class="form-control" name="confirm_password"
+                                                    placeholder="Confirm Password" required="required">
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary my-3">Sign Up</button>
+
+                                    </form>
+                                    <!-- <form method="post" action="{% url 'register' %}">
                                         {% csrf_token %}
                                         <div class="row">
                                             <div class="col-md-6">
@@ -108,8 +187,8 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i
                                                                 class="fa fa-user"></i></span>
-                                                        <input type="text" class="form-control" name="firstname"
-                                                            placeholder="First name" required="required">
+                                                        <input type="text" class="form-control" name="supplierName"
+                                                            placeholder="Supplier Name" required="required">
                                                     </div>
                                                 </div>
                                             </div>
@@ -118,8 +197,34 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i
                                                                 class="fa fa-user"></i></span>
-                                                        <input type="text" class="form-control" name="lastname"
-                                                            placeholder="Last name" required="required">
+                                                        <input type="email" class="form-control" name="supplierMail"
+                                                            placeholder="Supplier Email" required="required">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i
+                                                                class="fa fa-user"></i></span>
+                                                        <select class="form-select" aria-label="Default select example">
+                                                            <option selected>Open this select menu</option>
+                                                            <option value="1">One</option>
+                                                            <option value="2">Two</option>
+                                                            <option value="3">Three</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i
+                                                                class="fa fa-user"></i></span>
+                                                        <input type="email" class="form-control" name="supplierMail"
+                                                            placeholder="Supplier Email" required="required">
                                                     </div>
                                                 </div>
                                             </div>
@@ -155,7 +260,7 @@
                                         <p class="small">By clicking the Sign Up button, you agree to our <br><a
                                                 href="#">Terms &amp; Conditions</a>, and <a href="#">Privacy Policy</a>.
                                         </p>
-                                    </form>
+                                    </form> -->
                                     <!--alert -->
                                     {% if messages %}
                                     {% for message in messages %}
