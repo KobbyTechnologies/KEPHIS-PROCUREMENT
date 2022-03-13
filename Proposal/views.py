@@ -17,19 +17,23 @@ def proposal_request(request):
 
     year = request.session['years']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
+    Access = config.O_DATA.format("/QyProspectiveSupplierTender")
     try:
         response = session.get(Access_Point, timeout=10).json()
+        res = session.get(Access, timeout=10).json()
         OpenRFP = []
         Submitted = []
         for tender in response['value']:
             if tender['Process_Type'] == 'RFP' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 OpenRFP.append(json.loads(output_json))
-            if tender['Process_Type'] == 'RFP' and tender['Status'] == 'Archived':
+        for tender in res['value']:
+            if tender['Type'] == 'RFP' and tender['Vendor_No'] == request.session['vendorNo']:
                 output_json = json.dumps(tender)
                 Submitted.append(json.loads(output_json))
     except requests.exceptions.ConnectionError as e:
         print(e)
+
     count = len(OpenRFP)
     counter = len(Submitted)
     # Get Timezone

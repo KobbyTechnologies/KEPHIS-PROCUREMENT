@@ -17,15 +17,18 @@ def interest_request(request):
 
     year = request.session['years']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
+    Access = config.O_DATA.format("/QyProspectiveSupplierTender")
     try:
         response = session.get(Access_Point, timeout=10).json()
+        responses = session.get(Access, timeout=10).json()
         OpenEOI = []
         Submitted = []
         for tender in response['value']:
             if tender['Process_Type'] == 'EOI' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 OpenEOI.append(json.loads(output_json))
-            if tender['Process_Type'] == 'EOI' and tender['Status'] == 'Archived':
+        for tender in responses['value']:
+            if tender['Type'] == 'EOI' and tender['Vendor_No'] == request.session['vendorNo']:
                 output_json = json.dumps(tender)
                 Submitted.append(json.loads(output_json))
     except requests.exceptions.ConnectionError as e:
