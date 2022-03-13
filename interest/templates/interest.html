@@ -90,15 +90,13 @@
                                         <tbody>
                                             {% for res in sub %}
                                             <tr>
-                                                <td>{{res.No}}</td>
+                                                <td>{{res.Tender_No_}}</td>
                                                 <td id="rap">{{res.Title}}</td>
                                                 <td>{{res.TenderOpeningDate}}</td>
                                                 <td>{{res.TenderClosingDate}}</td>
-                                                <td>{{res.Type}}</td>
                                                 <td>
-                                                    <a type="button" href="{% url 'Odetails' res.No %}"
-                                                        class="btn btn-success btn-icon-text" data-toggle="tooltip"
-                                                        data-placement="top" title="view"
+                                                    <a type="button" href="" class="btn btn-success btn-icon-text"
+                                                        data-toggle="tooltip" data-placement="top" title="view"
                                                         style="background: #25CC88;">View
                                                         <i class="las la-external-link-alt" style="font-size: 1rem"></i>
                                                     </a>

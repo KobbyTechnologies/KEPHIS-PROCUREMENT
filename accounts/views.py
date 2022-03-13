@@ -37,6 +37,9 @@ def login_request(request):
     Access_Point = config.O_DATA.format("/VendorDetails")
     Access = config.O_DATA.format("/ProspectiveSupplier")
     decoded_text = ''
+    vendorNo = ""
+    state = ""
+    ProspectNo = ""
     request.session['years'] = year
     if request.method == 'POST':
         try:
@@ -52,10 +55,17 @@ def login_request(request):
                 if applicant['EMail'] == email:
                     Portal_Password = base64.urlsafe_b64decode(
                         applicant['SerialID'])
+                    request.session['vendorNo'] = applicant['No']
+                    vendorNo = request.session['vendorNo']
+                    state = "Vendor"
             for applicant in res['value']:
-                if applicant['Email'] == email:
+                if applicant['Verification_Token'] and applicant['Email'] == email:
                     Portal_Password = base64.urlsafe_b64decode(
                         applicant['SerialID'])
+                    request.session['vendorNo'] = applicant['No']
+                    vendorNo = request.session['vendorNo']
+                    state = "Prospect"
+
         except requests.exceptions.ConnectionError as e:
             messages.error(
                 request, "If you are a vendor please reset your password else create a new account")
@@ -229,19 +239,24 @@ def register_request(request):
             response = config.CLIENT.service.FnProspectiveSupplierSignup(
                 prospNo, supplierName, supplierMail, countryRegionCode, postalAddress, postCode, city, contactPersonName, contactPhoneNo, contactMail, myPassword, verificationToken, myAction)
             print(response)
-            current_site = get_current_site(request)
-            email_subject = 'Activate your account'
-            email_body = render_to_string('activate.html', {
-                "user": supplierName,
-                "domain": current_site,
-                'uid': urlsafe_base64_encode(force_bytes(supplierName)),
-            })
-            email = EmailMessage(subject=email_subject, body=email_body,
-                                 from_email=config.EMAIL_HOST_USER, to=[supplierMail])
-            EmailThread(email).start()
-            messages.success(
-                request, "We sent you an email to verify your account")
-            return redirect('register')
+            if response == True:
+                current_site = get_current_site(request)
+                email_subject = 'Activate your account'
+                email_body = render_to_string('activate.html', {
+                    "user": supplierName,
+                    "domain": current_site,
+                    'uid': urlsafe_base64_encode(force_bytes(supplierName)),
+                })
+                email = EmailMessage(subject=email_subject, body=email_body,
+                                     from_email=config.EMAIL_HOST_USER, to=[supplierMail])
+                EmailThread(email).start()
+                messages.success(
+                    request, "We sent you an email to verify your account")
+                return redirect('login')
+            else:
+                messages.error(
+                    request, "Email not sent")
+                return redirect('register')
         except Exception as e:
             print(e)
     ctx = {"year": year, "country": country, }

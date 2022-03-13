@@ -17,20 +17,25 @@ def open_tenders(request):
     session.auth = config.AUTHS
     year = request.session['years']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
+    Access = config.O_DATA.format("/QyProspectiveSupplierTender")
 
     try:
         response = session.get(Access_Point, timeout=10).json()
+        responses = session.get(Access, timeout=10).json()
         open = []
         Submitted = []
         for tender in response['value']:
             if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 open.append(json.loads(output_json))
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['Status'] == 'Archived':
+        for tender in responses['value']:
+            if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['vendorNo']:
                 output_json = json.dumps(tender)
                 Submitted.append(json.loads(output_json))
+
     except requests.exceptions.ConnectionError as e:
         print(e)
+    print(request.session['vendorNo'])
     count = len(open)
     counter = len(Submitted)
     # Get Timezone
@@ -93,6 +98,7 @@ def DocResponse(request, pk):
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     try:
         response = session.get(Access_Point, timeout=8).json()
+
         Open = []
         for tender in response['value']:
             if tender['No'] == pk:
@@ -112,10 +118,11 @@ def DocResponse(request, pk):
                         procurementMethod = 3
     except requests.exceptions.ConnectionError as e:
         print(e)
-    print(procurementMethod)
-    vendNo = '01254796'
+
+    vendNo = request.session['vendorNo']
     docNo = pk
     unitPrice = ''
+
     if request.method == "POST":
         try:
             unitPrice = float(request.POST.get('amount'))
@@ -141,15 +148,19 @@ def Restricted_tenders(request):
     session.auth = config.AUTHS
     year = request.session['years']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
+    Access = config.O_DATA.format("/QyProspectiveSupplierTender")
+
     try:
         response = session.get(Access_Point, timeout=10).json()
+        responses = session.get(Access, timeout=10).json()
         Restrict = []
         Submitted = []
         for tender in response['value']:
             if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender" and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 Restrict.append(json.loads(output_json))
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender" and tender['Status'] == 'Archived':
+        for tender in responses['value']:
+            if tender['Type'] == 'Restricted' and tender['Vendor_No'] == request.session['vendorNo']:
                 output_json = json.dumps(tender)
                 Submitted.append(json.loads(output_json))
     except requests.exceptions.ConnectionError as e:
