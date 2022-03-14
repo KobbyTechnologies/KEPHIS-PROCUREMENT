@@ -25,9 +25,11 @@ def dashboard(request):
     session.auth = config.AUTHS
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
+    Access = config.O_DATA.format("/QyProspectiveSupplierTender")
     year = request.session['years']
     try:
         response = session.get(Access_Point, timeout=10).json()
+        responses = session.get(Access, timeout=10).json()
         OPEN = []
         OPEN_A = []
         RES = []
@@ -42,40 +44,25 @@ def dashboard(request):
         Active = []
         for tender in response['value']:
             # Open Tender
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender':
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 OPEN.append(json.loads(output_json))
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['Status'] == 'New':
-                output_json = json.dumps(tender)
-                OPEN_A.append(json.loads(output_json))
             # Restricted Tenders
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Restricted Tender':
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender" and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 RES.append(json.loads(output_json))
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Restricted Tender' and tender['Status'] == 'New':
-                output_json = json.dumps(tender)
-                RES_A.append(json.loads(output_json))
             # RFP
-            if tender['Process_Type'] == 'RFP':
+            if tender['Process_Type'] == 'RFP' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 RFP.append(json.loads(output_json))
-            if tender['Process_Type'] == 'RFP' and tender['Status'] == 'New':
-                output_json = json.dumps(tender)
-                RFP_A.append(json.loads(output_json))
             # RFQ
-            if tender['Process_Type'] == 'RFQ':
+            if tender['Process_Type'] == 'RFQ' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 RFQ.append(json.loads(output_json))
-            if tender['Process_Type'] == 'RFQ' and tender['Status'] == 'New':
-                output_json = json.dumps(tender)
-                RFQ_A.append(json.loads(output_json))
             # EOI
-            if tender['Process_Type'] == 'EOI':
+            if tender['Process_Type'] == 'EOI' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 EOI.append(json.loads(output_json))
-            if tender['Process_Type'] == 'EOI' and tender['Status'] == 'New':
-                output_json = json.dumps(tender)
-                EOI_A.append(json.loads(output_json))
             # All
             if tender['Status'] == 'Archived':
                 output_json = json.dumps(tender)
@@ -83,6 +70,22 @@ def dashboard(request):
             if tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 Active.append(json.loads(output_json))
+        for tender in responses['value']:
+            if tender['Type'] == 'EOI' and tender['Vendor_No'] == request.session['vendorNo']:
+                output_json = json.dumps(tender)
+                EOI_A.append(json.loads(output_json))
+            if tender['Type'] == 'RFQ' and tender['Vendor_No'] == request.session['vendorNo']:
+                output_json = json.dumps(tender)
+                RFQ_A.append(json.loads(output_json))
+            if tender['Type'] == 'RFP' and tender['Vendor_No'] == request.session['vendorNo']:
+                output_json = json.dumps(tender)
+                RFP_A.append(json.loads(output_json))
+            if tender['Type'] == 'Restricted' and tender['Vendor_No'] == request.session['vendorNo']:
+                output_json = json.dumps(tender)
+                RES_A.append(json.loads(output_json))
+            if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['vendorNo']:
+                output_json = json.dumps(tender)
+                OPEN_A.append(json.loads(output_json))
         All_O = len(OPEN)
         Active_O = len(OPEN_A)
         RES_Count = len(RES)
