@@ -127,7 +127,7 @@ def FnResetPassword(request):
                         response = config.CLIENT.service.FnResetPassword(
                             emailAddress, password, verificationToken)
                         print(response)
-                        messages.error(
+                        messages.success(
                             request, "Reset was successful, now login")
                         return redirect('login')
                     except Exception as e:
@@ -144,7 +144,7 @@ def FnResetPassword(request):
                         response = config.CLIENT.service.FnResetPassword(
                             emailAddress, password, verificationToken)
                         print(response)
-                        messages.error(
+                        messages.success(
                             request, "Reset was successful, now login")
                         return redirect('login')
                     except Exception as e:

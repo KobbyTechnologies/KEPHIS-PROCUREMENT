@@ -25,14 +25,14 @@ body {
 
 /* Alerts */
 .alert-warn {
-    background: var(--red-color);
-    border-color: var(--red-color);
+    background: red;
+    border-color: red;
     color: white;
 }
 
 .alert-success {
-    background: var(--green-color);
-    border-color: var(--green-color);
+    background: #134326;
+    border-color: #134326;
     color: white;
 }
 
