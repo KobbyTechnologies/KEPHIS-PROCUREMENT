@@ -58,6 +58,18 @@ def login_request(request):
                     request.session['vendorNo'] = applicant['No']
                     vendorNo = request.session['vendorNo']
                     state = "Vendor"
+                    cipher_suite = Fernet(config.ENCRYPT_KEY)
+                    try:
+                        decoded_text = cipher_suite.decrypt(
+                            Portal_Password).decode("ascii")
+                    except Exception as e:
+                        print(e)
+                    if decoded_text == password:
+                        return redirect('dashboard')
+                    else:
+                        messages.error(
+                            request, "Invalid Credentials. Please reset your password else create a new account")
+                        return redirect('login')
             for applicant in res['value']:
                 if applicant['Verification_Token'] and applicant['Email'] == email:
                     Portal_Password = base64.urlsafe_b64decode(
@@ -65,23 +77,24 @@ def login_request(request):
                     request.session['vendorNo'] = applicant['No']
                     vendorNo = request.session['vendorNo']
                     state = "Prospect"
+                    cipher_suite = Fernet(config.ENCRYPT_KEY)
+                    try:
+                        decoded_text = cipher_suite.decrypt(
+                            Portal_Password).decode("ascii")
+                    except Exception as e:
+                        print(e)
+                    if decoded_text == password:
+                        return redirect('dashboard')
+                    else:
+                        messages.error(
+                            request, "Invalid Credentials. Please reset your password else create a new account")
+                        return redirect('login')
 
         except requests.exceptions.ConnectionError as e:
             messages.error(
                 request, "If you are a vendor please reset your password else create a new account")
             print(e)
-        cipher_suite = Fernet(config.ENCRYPT_KEY)
-        try:
-            decoded_text = cipher_suite.decrypt(
-                Portal_Password).decode("ascii")
-        except Exception as e:
-            print(e)
-        if decoded_text == password:
-            return redirect('dashboard')
-        else:
-            messages.error(
-                request, "Invalid Credentials. If you are a vendor please reset your password else create a new account")
-            return redirect('login')
+
     ctx = {"year": year}
     return render(request, 'login.html', ctx)
 
