@@ -7,4 +7,8 @@ urlpatterns = [
     path('restrictedTenders', views.Restricted_tenders, name='restricted'),
     path('Odetails/<str:pk>', views.Open_Details, name="Odetails"),
     path('DocResponse/<str:pk>', views.DocResponse, name="DocResponse"),
+    path('UploadAttachedDocument/<str:pk>',
+         views.UploadAttachedDocument, name="UploadAttachedDocument"),
+
+    path('submitted/<str:pk>', views.submitted, name="submit"),
 ]

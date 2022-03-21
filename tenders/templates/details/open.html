@@ -2,6 +2,9 @@
 {% load bootstrap5 %}
 {% load static %}
 {% block main %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <section class="dash2">
     <div class="content-wrapper" style="padding-bottom: 3rem;">
         <div class="d-xl-flex justify-content-between align-items-start">
@@ -242,43 +245,150 @@
 
                         </div>
                     </div>
-                    <div class="modal fade" id="dynamic{{res.No}}" data-bs-backdrop="static" data-bs-keyboard="false"
-                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Response -
-                                        {{res.No}}
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="post" action="{% url 'DocResponse' res.No %}"
-                                        class="myForm needs-validation" novalidate>
-                                        {% csrf_token %}
-                                        <div>
-                                            <label for="recipient-name" class="col-form-label">Amount:</label>
-                                            <input type="text" class="form-control" name="amount" id="recipient-name"
-                                                placeholder="Ksh" required>
-                                            <div class="invalid-feedback">
-                                                Please provide the amount.
-                                            </div>
-                                        </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-                                        id="hey">Discard</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<div class="modal fade" id="dynamic{{res.No}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel">Financial Requirement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="" class="myForm needs-validation" id="amountForm" novalidate>
+                    {% csrf_token %}
+                    <div>
+                        <label class="form-label">Amount:</label>
+                        <input type="text" class="form-control" name="amount" id="amount" placeholder="Ksh" required>
+                        <div class="invalid-feedback">
+                            Please provide the amount.
+                        </div>
+                    </div>
+                    <button type="submit" id="submit-button" class="btn btn-primary my-3">Submit</button>
+                    <div class="result py-3">
+                        <p id="innerReslts" style="color:#196F3D;font-weight:bold"></p>
+                    </div>
+                </form>
 
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
+                    data-bs-dismiss="modal">Next <i class="las la-angle-double-right"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel2">Upload attachments</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'UploadAttachedDocument' res.No %}" id="attachForm" method="post" class="myForm"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <p class="text-dark">Select and Upload the following Attachments at once. </p>
+                    {% for docs in docs %}
+                    <div class="card doc-card mt-4 p-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <i class="las la-file-upload" style="color: red;font-size:1.5rem"></i>
+                            </div>
+                            <div class="col-md-9">
+                                <strong class="text-dark">{{docs.DocumentName}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="card doc-card mt-4 p-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <i class="las la-file-upload" style="color: red;font-size:1.5rem"></i>
+                            </div>
+                            <div class="col-md-9">
+                                <strong class="text-dark">{{res.Title}} Checklist</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" mb-3">
+                        <label class="form-label">Attachments</label>
+                        <input class="form-control" name="attachment" type="file" multiple>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(window).on('load', function () {
+        $('#instructionsss').modal('show');
+    });
+    $("#submit-button").submit(function (e) {
+        $('#registration').modal('show');
+        return false;
+    });
+    $(document).on('submit', '#amountForm', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'DocResponse' res.No %}",
+            data: {
+                amount: $("#amount").val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function () {
+                document.getElementById("innerReslts").innerHTML =
+                    "Successfully Sent. Click Proceed To Attach Any Document"
+            }
+        })
+    });
+</script>
+<!-- Modal -->
+<div class="modal fade" id="instructions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{res.Title}} Instructions</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-dark">General Instructions</h4>
+                <ul>
+                    <li>
+                        Make sure you check your proposal carefully before submitting it. Use a checklist to make sure
+                        your
+                        bid meets all the requirements.
+                    </li>
+                    <li>
+                        To Download Checklist Click on the Download checklist Button on Top of the Tender Details Page
+                    </li>
+                    <li>
+                        Click on the respond Button to submit your financial bid and required Attachments
+                    </li>
+                    <li>
+                        Re-Upload Your Checklist by clicking 'upload checklist button'
+                    </li>
+                </ul>
+                <h4 class="text-dark">{{res.Title}} Instructions</h4>
+                {{instruct}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

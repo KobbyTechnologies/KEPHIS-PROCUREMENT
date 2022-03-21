@@ -8,6 +8,7 @@ from django.conf import settings as config
 import datetime
 from requests.adapters import HTTPAdapter
 from django.contrib import messages
+import base64
 
 # Create your views here.
 
@@ -35,7 +36,6 @@ def open_tenders(request):
 
     except requests.exceptions.ConnectionError as e:
         print(e)
-    print(request.session['vendorNo'])
     count = len(open)
     counter = len(Submitted)
     # Get Timezone
@@ -54,9 +54,12 @@ def Open_Details(request, pk):
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
     lines = config.O_DATA.format("/ProcurementMethodLines")
+    Access_File = config.O_DATA.format("/QyDocumentAttachments")
 
     res = ''
     State = ''
+    instruct = ""
+    files = ""
     try:
         r = session.get(Access2, timeout=7).json()
         response = session.get(Access_Point, timeout=8).json()
@@ -76,6 +79,7 @@ def Open_Details(request, pk):
                 for my_tender in responses:
                     if my_tender['No'] == pk:
                         res = my_tender
+                        instruct = my_tender['Instructions']
                     if my_tender['Status'] == "New":
                         State = 1
         for docs in r['value']:
@@ -85,12 +89,42 @@ def Open_Details(request, pk):
 
     except requests.exceptions.ConnectionError as e:
         print(e)
+    try:
+        res_file = session.get(Access_File, timeout=10).json()
+        for tender in res_file['value']:
+            if tender['No_'] == pk:
+                request.session['attachmentID'] = tender['AuxiliaryIndex3']
+                attachmentID = request.session['attachmentID']
+                request.session['File_Name'] = tender['File_Name']
+                File_Name = request.session['File_Name']
+                request.session['File_Extension'] = tender['File_Extension']
+                File_Extension = request.session['File_Extension']
+    except Exception as e:
+        print(e)
 
-    print(request.session['vendorNo'])
+    docNo = pk
+    attachmentID = request.session['attachmentID']
+    tableID = 52177763
+
+    try:
+        response = config.CLIENT.service.FnGetDocumentAttachment(
+            docNo, attachmentID, tableID)
+        if response:
+            base64_bytes = response.encode('utf-8')
+            File_Name = request.session['File_Name']
+            File_Extension = request.session['File_Extension']
+            with open(f'{File_Name}.{File_Extension}', 'wb') as file_to_save:
+                decoded_data = base64.decodebytes(base64_bytes)
+                file_to_save.write(decoded_data)
+    except Exception as e:
+        messages.error(request, e)
+        print(e)
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,
-           "docs": Doc, "state": State, "line": Lines, "year": year}
+           "docs": Doc, "state": State,
+           "line": Lines, "year": year,
+           "instruct": instruct, "file": files}
     return render(request, "details/open.html", ctx)
 
 
@@ -136,7 +170,12 @@ def DocResponse(request, pk):
             if vendNo != '':
                 result = config.CLIENT.service.FnCreateProspectiveSupplier(
                     vendNo, procurementMethod, docNo, unitPrice)
+                if result:
+                    request.session['ProNumber'] = result
+                    ProNumber = request.session['ProNumber']
+
                 if result == True:
+
                     messages.success(
                         request, f"You have successfully Applied for Doc number {docNo}")
                     return redirect('Odetails', pk=docNo)
@@ -176,3 +215,55 @@ def Restricted_tenders(request):
     ctx = {"today": todays_date, "res": Restrict,
            "count": count, "sub": Submitted, "counter": counter, "year": year}
     return render(request, 'restrictedTenders.html', ctx)
+
+
+def UploadAttachedDocument(request, pk):
+    docNo = request.session['ProNumber']
+    response = ""
+    fileName = ""
+    attachment = ""
+    # tableID = 52177763 get checklist
+    tableID = 52177788
+
+    if request.method == "POST":
+        try:
+            attach = request.FILES.getlist('attachment')
+        except Exception as e:
+            print("Not Working")
+            return redirect('Odetails', pk=pk)
+        for files in attach:
+            fileName = request.FILES['attachment'].name
+            attachment = base64.b64encode(files.read())
+            try:
+                response = config.CLIENT.service.FnUploadAttachedDocument(
+                    docNo, fileName, attachment, tableID)
+            except Exception as e:
+                messages.error(request, e)
+                print(e)
+        if response == True:
+            messages.success(request, "Successfully Sent !!")
+            return redirect('Odetails', pk=pk)
+        else:
+            messages.error(request, "Not Sent !!")
+            return redirect('Odetails', pk=pk)
+
+    return redirect('Odetails', pk=pk)
+
+
+def submitted(request, pk):
+    session = requests.Session()
+    session.auth = config.AUTHS
+    year = request.session['years']
+    Access = config.O_DATA.format("/QyProspectiveSupplierTender")
+    responses = " "
+    try:
+        response = session.get(Access, timeout=8).json()
+        Submitted = []
+        for tender in response['value']:
+            if tender['No'] == pk:
+                output_json = json.dumps(tender)
+                Submitted.append(json.loads(output_json))
+                responses = Submitted
+    except requests.exceptions.ConnectionError as e:
+        print(e)
+    return render(request, "submitted.html")
