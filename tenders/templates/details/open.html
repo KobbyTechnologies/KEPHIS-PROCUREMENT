@@ -10,10 +10,15 @@
         <div class="d-xl-flex justify-content-between align-items-start">
             <h2 class="text-dark font-weight-bold mb-2"> {{res.Title}} Details
                 {% if state == 1 %}
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dynamic{{res.No}}"> <i
-                        class="las la-plus"></i> Respond To
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dynamic{{res.No}}"
+                    style="display:inline-block;"> <i class="las la-plus"></i> Respond To
                     {{res.Process_Type}}
                 </button>
+                <form action="{% url 'Odetails' res.No %}" method="post" style="display:inline-block;">
+                    {% csrf_token %}
+                    <button class="btn btn-info" type="submit"><i class="fa fa-download"></i> Download
+                        Checklist</button>
+                </form>
                 {% endif %}
             </h2>
             <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
@@ -358,7 +363,7 @@
 <!-- Modal -->
 <div class="modal fade" id="instructions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen modal-xl">
+    <div class="modal-dialog modal-fullscreen " style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">{{res.Title}} Instructions</h5>
@@ -366,20 +371,24 @@
             </div>
             <div class="modal-body">
                 <h4 class="text-dark">General Instructions</h4>
-                <ul>
+                <ul class="inst-text">
                     <li>
                         Make sure you check your proposal carefully before submitting it. Use a checklist to make sure
                         your
                         bid meets all the requirements.
                     </li>
                     <li>
-                        To Download Checklist Click on the Download checklist Button on Top of the Tender Details Page
+                        Use a checklist to make sure
+                        your
+                        bid meets all the requirements.
                     </li>
                     <li>
-                        Click on the respond Button to submit your financial bid and required Attachments
+                        To Download Checklist Click on the Download checklist Button on Top of the {{res.Title}} Details
+                        Page
                     </li>
                     <li>
-                        Re-Upload Your Checklist by clicking 'upload checklist button'
+                        Click on the respond Button to submit your financial bid and upload all Attachments at once
+                        (including checklist)
                     </li>
                 </ul>
                 <h4 class="text-dark">{{res.Title}} Instructions</h4>

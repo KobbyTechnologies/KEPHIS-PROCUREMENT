@@ -9,6 +9,8 @@ import datetime
 from requests.adapters import HTTPAdapter
 from django.contrib import messages
 import base64
+from django.http import HttpResponse
+import io as BytesIO
 
 # Create your views here.
 
@@ -109,16 +111,25 @@ def Open_Details(request, pk):
     try:
         response = config.CLIENT.service.FnGetDocumentAttachment(
             docNo, attachmentID, tableID)
-        if response:
-            base64_bytes = response.encode('utf-8')
-            File_Name = request.session['File_Name']
-            File_Extension = request.session['File_Extension']
-            with open(f'{File_Name}.{File_Extension}', 'wb') as file_to_save:
-                decoded_data = base64.decodebytes(base64_bytes)
-                file_to_save.write(decoded_data)
+        filenameFromApp = request.session['File_Name'] + \
+            "." + request.session['File_Extension']
+
     except Exception as e:
         messages.error(request, e)
         print(e)
+    if request.method == 'POST':
+        try:
+            buffer = BytesIO.BytesIO()
+            content = base64.b64decode(response)
+            buffer.write(content)
+            responses = HttpResponse(
+                buffer.getvalue(),
+                content_type="application/ms-excel",
+            )
+            responses['Content-Disposition'] = f'inline;filename={filenameFromApp}'
+            return responses
+        except Exception as e:
+            print(e)
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": res,

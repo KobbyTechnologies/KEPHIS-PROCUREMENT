@@ -156,3 +156,7 @@ button:hover {
     font-family: var(--primary-font);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+.inst-text {
+    color: #2C3E50;
+}
