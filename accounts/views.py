@@ -16,7 +16,7 @@ from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from . models import Users
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_text, force_str, DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
 import secrets
 import string
 from cryptography.fernet import Fernet
@@ -186,7 +186,7 @@ class EmailThread(threading.Thread):
 
 def activate_user(request, uidb64):
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = "Enock"
     except Exception as e:
         user = None
