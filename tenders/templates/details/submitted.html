@@ -1,0 +1,152 @@
+{% extends 'offcanvas.html' %}
+{% load bootstrap5 %}
+{% load static %}
+{% block main %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<section class="dash2">
+    <div class="content-wrapper" style="padding-bottom: 3rem;">
+        <div class="d-xl-flex justify-content-between align-items-start">
+            <h2 class="text-dark font-weight-bold mb-2"> Submitted {{res.Type}} Details
+
+            </h2>
+            <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
+                <div class="dropdown ml-0 ml-md-4 mt-2 mt-lg-0">
+                    <button class="btn bg-white dropdown-toggle p-3 d-flex align-items-center" type="button"
+                        id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+                            class="mdi mdi-calendar mr-1"></i>{{today}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-md-3">
+                <div class="card l-bg-cherry statCard h-100">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0"> Sent for Evaluation</h5>
+                        </div>
+                        <div class="row align-items-center mb-2 d-flex">
+                            <div class="col-md-12">
+                                <h2 class="d-flex align-items-center mb-0">
+                                    {{res.Sent_for_Evaluation}}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card l-bg-blue-dark statCard h-100">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0">Tender Status</h5>
+                        </div>
+                        <div class="row align-items-center mb-2 d-flex">
+                            <div class="col-md-12">
+                                <h2 class="d-flex align-items-center mb-0">
+                                    {{res.Tender_Status}}
+                                </h2>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card l-bg-green-dark statCard h-100">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0">{{res.Type}} Quotation Deadline</h5>
+                        </div>
+                        <div class="row align-items-center mb-2 d-flex">
+                            <div class="col-md-12">
+                                <h2 class="d-flex align-items-center mb-0">
+                                    {{res.Quotation_Deadline}}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card l-bg-orange-dark statCard h-100">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large"><i class="fas fa-calendar-times"></i></div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0">{{res.Type}} Expected Closing Time</h5>
+                        </div>
+                        <div class="row align-items-center mb-2 d-flex">
+                            <div class="col-md-12">
+                                <h2 class="d-flex align-items-center mb-0">
+                                    {{res.Expected_Closing_Time}}
+                                </h2>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">{{res.Type}} Number</label>
+                        <input type="text" class="form-control" placeholder="{{res.Tender_No_}}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Vendor No</label>
+                        <input type="text" class="form-control" placeholder="{{res.Vendor_No}}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Type</label>
+                        <input type="text" class="form-control" placeholder="{{res.Type}}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" placeholder="{{res.Title}}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Creation Date</label>
+                        <input type="text" class="form-control" placeholder="{{res.Creation_Date}}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Quotation Deadline</label>
+                        <input type="text" class="form-control" placeholder="{{res.Quotation_Deadline}}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Tender Opening Date</label>
+                        <input type="text" class="form-control" placeholder="{{res.TenderOpeningDate}}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Tender Closing Date</label>
+                        <input type="text" class="form-control" placeholder="{{res.TenderClosingDate}}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Tender Status</label>
+                        <input type="text" class="form-control" placeholder="{{res.Tender_Status}}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Sent for Evaluation</label>
+                        <input type="text" class="form-control" placeholder="{{res.Sent_for_Evaluation}}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Expected Closing Time</label>
+                        <input type="text" class="form-control" placeholder="{{res.Expected_Closing_Time}}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" placeholder="{{res.Name}}" readonly>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

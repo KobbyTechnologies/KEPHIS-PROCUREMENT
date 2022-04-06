@@ -171,32 +171,66 @@ def DocResponse(request, pk):
     except requests.exceptions.ConnectionError as e:
         print(e)
 
-    vendNo = request.session['vendorNo']
-    docNo = pk
-    unitPrice = ''
+    if request.session['state'] == 'Vendor':
 
-    if request.method == "POST":
-        try:
-            unitPrice = float(request.POST.get('amount'))
-        except ValueError:
-            messages.error(request, "Invalid Amount, Try Again!!")
-            return redirect('Odetails', pk=docNo)
-        try:
-            if vendNo != '':
-                result = config.CLIENT.service.FnCreateProspectiveSupplier(
-                    vendNo, procurementMethod, docNo, unitPrice)
-                if result:
-                    request.session['ProNumber'] = result
-                    ProNumber = request.session['ProNumber']
+        vendNo = request.session['vendorNo']
+        docNo = pk
+        unitPrice = ''
 
-                if result == True:
+        if request.method == "POST":
+            try:
+                unitPrice = float(request.POST.get('amount'))
+            except ValueError:
+                messages.error(request, "Invalid Amount, Try Again!!")
+                return redirect('Odetails', pk=docNo)
+            try:
+                if vendNo != '':
+                    result = config.CLIENT.service.FnCreateProspectiveSupplier(
+                        vendNo, procurementMethod, docNo, unitPrice)
+                    print(result)
+                    if result:
+                        request.session['ProNumber'] = result
 
-                    messages.success(
-                        request, f"You have successfully Applied for Doc number {docNo}")
-                    return redirect('Odetails', pk=docNo)
-        except Exception as e:
-            messages.error(request, e)
-            print(e)
+                        ProNumber = request.session['ProNumber']
+
+                    if result == True:
+
+                        messages.success(
+                            request, f"You have successfully Applied for Doc number {docNo}")
+                        return redirect('Odetails', pk=docNo)
+            except Exception as e:
+                messages.error(request, e)
+                print(e)
+    if request.session['state'] == 'Prospect':
+
+        vendNo = request.session['ProspectNo']
+        docNo = pk
+        unitPrice = ''
+
+        if request.method == "POST":
+            try:
+                unitPrice = float(request.POST.get('amount'))
+            except ValueError:
+                messages.error(request, "Invalid Amount, Try Again!!")
+                return redirect('Odetails', pk=docNo)
+            try:
+                if vendNo != '':
+                    result = config.CLIENT.service.FnCreateProspectiveSupplier(
+                        vendNo, procurementMethod, docNo, unitPrice)
+                    print(result)
+                    if result:
+                        request.session['ProNumber'] = result
+
+                        ProNumber = request.session['ProNumber']
+
+                    if result == True:
+
+                        messages.success(
+                            request, f"You have successfully Applied for Doc number {docNo}")
+                        return redirect('Odetails', pk=docNo)
+            except Exception as e:
+                messages.error(request, e)
+                print(e)
     return redirect('Odetails', pk=docNo)
 
 
@@ -257,7 +291,7 @@ def UploadAttachedDocument(request, pk):
                 print(e)
         if response == True:
             messages.success(request, "Successfully Sent !!")
-            return redirect('Odetails', pk=pk)
+            return redirect('submit', pk=pk)
         else:
             messages.error(request, "Not Sent !!")
             return redirect('Odetails', pk=pk)
@@ -270,15 +304,15 @@ def submitted(request, pk):
     session.auth = config.AUTHS
     year = request.session['years']
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
-    responses = " "
+    res = " "
     try:
         response = session.get(Access, timeout=8).json()
-        Submitted = []
         for tender in response['value']:
-            if tender['No'] == pk:
-                output_json = json.dumps(tender)
-                Submitted.append(json.loads(output_json))
-                responses = Submitted
+            if tender['Tender_No_'] == pk and tender['Vendor_No'] == request.session['vendorNo']:
+                res = tender
     except requests.exceptions.ConnectionError as e:
         print(e)
-    return render(request, "submitted.html")
+    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    ctx = {"res": res, "year": year,
+           "today": todays_date}
+    return render(request, "details/submitted.html", ctx)

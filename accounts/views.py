@@ -77,8 +77,8 @@ def login_request(request):
                 if applicant['Verification_Token'] and applicant['Email'] == email:
                     Portal_Password = base64.urlsafe_b64decode(
                         applicant['SerialID'])
-                    request.session['vendorNo'] = applicant['No']
-                    vendorNo = request.session['vendorNo']
+                    request.session['ProspectNo'] = applicant['No']
+                    ProspectNo = request.session['ProspectNo']
                     state = "Prospect"
                     cipher_suite = Fernet(config.ENCRYPT_KEY)
                     try:
