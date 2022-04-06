@@ -9,15 +9,12 @@ import datetime
 # Create your views here.
 
 
-# def canvas(request):
-#     if request.method == 'POST':
-#         images = request.FILES.getlist('images')
-#         for image in images:
-#             photo = Photo.objects.create(
-#                 image=image,
-#             )
-#         return redirect('main')
-#     return render(request, 'offcanvas.html')
+def canvas(request):
+    state = request.session['state']
+
+    ctx = {"state": state}
+
+    return render(request, 'offcanvas.html', ctx)
 
 
 def dashboard(request):
@@ -100,6 +97,7 @@ def dashboard(request):
         Actives = len(Active)
     except requests.exceptions.ConnectionError as e:
         print(e)
+    states = request.session['state']
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date,
            "All_T": All_O, "Active_O": Active_O,
@@ -108,5 +106,7 @@ def dashboard(request):
            "RFP": RFP_Count, "RFP_A": RFP_Active,
            "RFQ": RFQ_Count, "RFQ_A": RFQ_Active,
            "EOI": EOI_Count, "EOI_A": EOI_Active,
-           "Close": Close, "Actives": Actives, "year": year}
+           "Close": Close, "Actives": Actives, "year": year,
+           "states": states
+           }
     return render(request, 'main/dashboard.html', ctx)

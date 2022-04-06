@@ -25,6 +25,142 @@
                 </div>
             </div>
         </div>
+
+        {% if states == 'Prospect' %}
+        <div class="row my-4">
+            <div class="col-md-6">
+                <div class="card text-white h-100 d-card"
+                    style="background: linear-gradient(to right, #373b44, #144a85) !important;border:none">
+                    <div class="card-body">
+                        <span>
+                            <i class="las la-box-open fill-white" style="font-size:2rem;"></i>
+                            <a href="{% url 'open' %}"
+                                style="float: right; color:rgb(255, 255, 255);font-weight: bold;  text-shadow: 0 1px 0 #144a85;">View
+                                <i class="las la-arrow-right"></i></a>
+                        </span>
+                        <h3 class="card-title mt-3 mb-0">{{All_T}}</h3>
+                        <p class="card-text" style="text-shadow: 0 1px 0 #144a85;">Open Tenders</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-white h-100 d-card"
+                    style=" background: linear-gradient(to right, #a86008, #c18b39) !important;border:none">
+                    <div class="card-body">
+                        <span>
+                            <i class="las la-edit fill-white" style="font-size:2rem;"></i>
+                            <a href="{% url 'interest' %}"
+                                style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #c18b39;">View
+                                <i class="las la-arrow-right"></i></a>
+                        </span>
+                        <h3 class="card-title mt-3 mb-0">{{EOI}}</h3>
+                        <p class="card-text" style="text-shadow: 0 1px 0 #c18b39;">Expression Of Interest</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-md-6">
+                <div class="card h-100" id="d-card">
+                    <div class="card-title">
+                        <h6>
+                            All Tenders
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="card p-3 h-100" style="background: #CCCCFF;">
+                            <canvas id="ChartPros"></canvas>
+                            <script>
+                                const labelPros = [
+                                    'Closed Tenders',
+                                    'Open Tenders',
+                                ];
+                                // chart variables
+                                var Close = "{{Close}}"
+                                var Actives = "{{Actives}}"
+                                const dataPros = {
+                                    labels: labelPros,
+                                    datasets: [{
+                                        label: 'Distribution of Tenders ',
+                                        // backgroundColor: 
+                                        backgroundColor: [
+                                            '#ff5e6c',
+                                            '#8076a3',
+                                        ],
+                                        borderColor: '#ff5e6c',
+                                        data: [Close, Actives],
+                                    }]
+                                };
+
+                                const configPros = {
+                                    type: 'line',
+                                    data: dataPros,
+                                    options: {}
+                                };
+                            </script>
+                            <script>
+                                const myChartPros = new Chart(
+                                    document.getElementById('ChartPros'),
+                                    configPros
+                                );
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100" id="d-card">
+                    <div class="card-title">
+                        <h6>
+                            Submitted Tender Notices
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="card p-3 h-100" style="background: #ebc9a6;">
+                            <canvas id="allChartPros"></canvas>
+                            <script>
+                                const mylabelsPros = [
+                                    'Open Tenders',
+                                    'Expression of Interest',
+                                ];
+                                // chart variables
+                                var open = "{{Active_O}}"
+                                var EOI = "{{EOI_A}}"
+                                const datasPros = {
+                                    labels: mylabelsPros,
+                                    datasets: [{
+                                        label: 'Active Tenders ',
+                                        // backgroundColor: 
+                                        backgroundColor: [
+                                            '#ff5e6c',
+                                            '#8076a3',
+                                            '#ffde22',
+                                            'rgb(54, 162, 235)',
+                                            '#101357'
+                                        ],
+                                        borderColor: '#ff5e6c',
+                                        data: [open, EOI],
+                                    }]
+                                };
+
+                                const configsPros = {
+                                    type: 'bar',
+                                    data: datasPros,
+                                    options: {}
+                                };
+                            </script>
+                            <script>
+                                const myChartsPros = new Chart(
+                                    document.getElementById('allChartPros'),
+                                    configsPros
+                                );
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
         <div class="row my-4">
             <div class="col-md-3">
                 <div class="card text-white h-100 d-card"
@@ -194,6 +330,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 </section>
 

@@ -43,8 +43,10 @@ def open_tenders(request):
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    states = request.session['state']
     ctx = {"today": todays_date, "res": open,
-           "count": count, "counter": counter, "sub": Submitted, "year": year}
+           "count": count, "counter": counter, "sub": Submitted, "year": year,
+           "states": states}
     return render(request, 'openTenders.html', ctx)
 
 
@@ -132,10 +134,12 @@ def Open_Details(request, pk):
             print(e)
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    states = request.session['state']
     ctx = {"today": todays_date, "res": res,
            "docs": Doc, "state": State,
            "line": Lines, "year": year,
-           "instruct": instruct, "file": files}
+           "instruct": instruct, "file": files,
+           "states": states}
     return render(request, "details/open.html", ctx)
 
 

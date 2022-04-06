@@ -39,7 +39,9 @@ def interest_request(request):
     # Get Timezone
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    states = request.session['state']
     ctx = {"today": todays_date, "res": OpenEOI,
            "count": count, "sub": Submitted,
-           "year": year, "counter": counter}
+           "year": year, "counter": counter,
+           "states": states}
     return render(request, 'interest.html', ctx)

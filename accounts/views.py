@@ -57,6 +57,7 @@ def login_request(request):
                         applicant['SerialID'])
                     request.session['vendorNo'] = applicant['No']
                     vendorNo = request.session['vendorNo']
+
                     state = "Vendor"
                     cipher_suite = Fernet(config.ENCRYPT_KEY)
                     try:
@@ -65,6 +66,8 @@ def login_request(request):
                     except Exception as e:
                         print(e)
                     if decoded_text == password:
+                        request.session['state'] = state
+                        states = request.session['state']
                         return redirect('dashboard')
                     else:
                         messages.error(
@@ -84,6 +87,8 @@ def login_request(request):
                     except Exception as e:
                         print(e)
                     if decoded_text == password:
+                        request.session['state'] = state
+                        states = request.session['state']
                         return redirect('dashboard')
                     else:
                         messages.error(
