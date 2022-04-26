@@ -94,33 +94,26 @@ def Open_Details(request, pk):
     except requests.exceptions.ConnectionError as e:
         print(e)
     try:
+        allFiles = []
         res_file = session.get(Access_File, timeout=10).json()
         for tender in res_file['value']:
             if tender['No_'] == pk:
-                request.session['attachmentID'] = tender['AuxiliaryIndex3']
-                attachmentID = request.session['attachmentID']
-                request.session['File_Name'] = tender['File_Name']
-                File_Name = request.session['File_Name']
-                request.session['File_Extension'] = tender['File_Extension']
-                File_Extension = request.session['File_Extension']
+                output_json = json.dumps(tender)
+                allFiles.append(json.loads(output_json))
     except Exception as e:
-        print(e)
-
-    docNo = pk
-    attachmentID = request.session['attachmentID']
-    tableID = 52177763
-
-    try:
-        response = config.CLIENT.service.FnGetDocumentAttachment(
-            docNo, attachmentID, tableID)
-        filenameFromApp = request.session['File_Name'] + \
-            "." + request.session['File_Extension']
-
-    except Exception as e:
-        messages.error(request, e)
         print(e)
     if request.method == 'POST':
+        docNo = pk
+        attachmentID = request.POST.get('attachmentID')
+        File_Name = request.POST.get('File_Name')
+        File_Extension = request.POST.get('File_Extension')
+        tableID = 52177763
+          
         try:
+            response = config.CLIENT.service.FnGetDocumentAttachment(
+                docNo, attachmentID, tableID)
+            
+            filenameFromApp = File_Name + "." + File_Extension
             buffer = BytesIO.BytesIO()
             content = base64.b64decode(response)
             buffer.write(content)
@@ -131,14 +124,16 @@ def Open_Details(request, pk):
             responses['Content-Disposition'] = f'inline;filename={filenameFromApp}'
             return responses
         except Exception as e:
+            messages.error(request, e)
             print(e)
+        return redirect('Odetails', pk=docNo)
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     states = request.session['state']
     ctx = {"today": todays_date, "res": res,
            "docs": Doc, "state": State,
            "line": Lines, "year": year,
-           "instruct": instruct, "file": files,
+           "instruct": instruct, "file": allFiles,
            "states": states}
     return render(request, "details/open.html", ctx)
 
@@ -176,7 +171,7 @@ def DocResponse(request, pk):
         vendNo = request.session['vendorNo']
         docNo = pk
         unitPrice = ''
-
+        userType = 'vendor'
         if request.method == "POST":
             try:
                 unitPrice = float(request.POST.get('amount'))
@@ -186,7 +181,7 @@ def DocResponse(request, pk):
             try:
                 if vendNo != '':
                     result = config.CLIENT.service.FnCreateProspectiveSupplier(
-                        vendNo, procurementMethod, docNo, unitPrice)
+                        vendNo, procurementMethod, docNo, unitPrice,userType)
                     print(result)
                     if result:
                         request.session['ProNumber'] = result
@@ -206,6 +201,7 @@ def DocResponse(request, pk):
         vendNo = request.session['ProspectNo']
         docNo = pk
         unitPrice = ''
+        userType ='prospect'
 
         if request.method == "POST":
             try:
@@ -216,7 +212,7 @@ def DocResponse(request, pk):
             try:
                 if vendNo != '':
                     result = config.CLIENT.service.FnCreateProspectiveSupplier(
-                        vendNo, procurementMethod, docNo, unitPrice)
+                        vendNo, procurementMethod, docNo, unitPrice,userType)
                     print(result)
                     if result:
                         request.session['ProNumber'] = result
@@ -313,6 +309,7 @@ def submitted(request, pk):
     except requests.exceptions.ConnectionError as e:
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    states = request.session['state']
     ctx = {"res": res, "year": year,
-           "today": todays_date}
+           "today": todays_date,"states": states}
     return render(request, "details/submitted.html", ctx)

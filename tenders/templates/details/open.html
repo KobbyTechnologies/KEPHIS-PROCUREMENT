@@ -14,11 +14,15 @@
                     style="display:inline-block;"> <i class="las la-plus"></i> Respond To
                     {{res.Process_Type}}
                 </button>
-                <form action="{% url 'Odetails' res.No %}" method="post" style="display:inline-block;">
+                {% for res in file %}
+                <form action="{% url 'Odetails' res.No_ %}" method="post" style="display:inline-block;">
                     {% csrf_token %}
-                    <button class="btn btn-info" type="submit"><i class="fa fa-download"></i> Download
-                        Checklist</button>
+                    <input type="hidden" name="attachmentID" value="{{res.AuxiliaryIndex3}}">
+                    <input type="hidden" name="File_Name" value="{{res.File_Name}}">
+                    <input type="hidden" name="File_Extension" value="{{res.File_Extension}}">
+                    <button class="btn btn-info" type="submit"><i class="fa fa-download"></i> {{res.File_Name}}</button>
                 </form>
+                {% endfor %}
                 {% endif %}
             </h2>
             <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
