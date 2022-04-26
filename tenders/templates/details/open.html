@@ -56,6 +56,29 @@
         {% endif %}
         {% endfor %}
         {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Disclaimer</h4>
+                    <li>
+                        Make sure you check your proposal carefully before submitting it.
+                    </li>
+                    <li>
+                        Download Checklist by Clicking on the Download checklist Button on Top of the {{res.Title}}
+                        Details Page.
+                    </li>
+                    <li>
+                        Use checklist to make sure your bid meets all the requirements.
+                    </li>
+                    <hr>
+                    <p class="mb-0">Click on the Respond To
+                        {{res.Process_Type}} Button to submit your financial bid and upload all Attachments
+                        at once
+                        (including checklist)
+                    </p>
+                </div>
+            </div>
+        </div>
         <div class="row my-3">
             <div class="col-md-3">
                 <div class="card l-bg-cherry statCard h-100">
@@ -364,44 +387,5 @@
         })
     });
 </script>
-<!-- Modal -->
-<div class="modal fade" id="instructions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen " style="width: 1000px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">{{res.Title}} Instructions</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h4 class="text-dark">General Instructions</h4>
-                <ul class="inst-text">
-                    <li>
-                        Make sure you check your proposal carefully before submitting it. Use a checklist to make sure
-                        your
-                        bid meets all the requirements.
-                    </li>
-                    <li>
-                        Use a checklist to make sure
-                        your
-                        bid meets all the requirements.
-                    </li>
-                    <li>
-                        To Download Checklist Click on the Download checklist Button on Top of the {{res.Title}} Details
-                        Page
-                    </li>
-                    <li>
-                        Click on the respond Button to submit your financial bid and upload all Attachments at once
-                        (including checklist)
-                    </li>
-                </ul>
-                <h4 class="text-dark">{{res.Title}} Instructions</h4>
-                {{instruct}}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 {% endblock %}
