@@ -5,13 +5,15 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)
 })
 
-$(document).ready(function () {
-    var table = $('#example').DataTable({
-        responsive: true
-    });
-    // new $.fn.dataTable.FixedHeader(table);
-});
+// $(document).ready(function () {
+//     var table = $('#example').DataTable({
+//         responsive: true
+//     });
 
+// });
+$(document).ready(function () {
+    $('table.display').DataTable();
+});
 const nxtBtn = document.querySelector('#submitBtn');
 const form1 = document.querySelector('#form1');
 const form2 = document.querySelector('#form2');

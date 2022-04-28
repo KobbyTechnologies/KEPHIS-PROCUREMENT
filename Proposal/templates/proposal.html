@@ -2,6 +2,7 @@
 {% load bootstrap5 %}
 {% load static %}
 {% block main %}
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <section class="dash2">
     <div class="content-wrapper general-bg" style="padding-bottom: 5rem;">
         <div class="d-xl-flex justify-content-between align-items-start">
@@ -34,14 +35,13 @@
                                 <h4 class="mt-2 text-dark">New Request For Proposal List</h4>
                                 <div class="card-body">
                                     <table id="example"
-                                        class="table table-striped table-bordered dt-responsive table-responsive-lg"
+                                        class="display table table-striped table-bordered dt-responsive table-responsive-lg"
                                         style="width:100%">
                                         <thead>
                                             <tr id="tops">
                                                 <th id="long">Tender No</th>
                                                 <th>Title</th>
                                                 <th>Tender Opening Date</th>
-                                                <th>Tender Closing Date</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -70,7 +70,7 @@
                                 <h4 class="mt-2">Submitted Request For Proposal List</h4>
                                 <div class="card-body">
                                     <table id="example"
-                                        class="table table-striped table-bordered dt-responsive table-responsive-lg"
+                                        class="display table table-striped table-bordered dt-responsive table-responsive-lg"
                                         style="width:100%">
                                         <thead>
                                             <tr id="tops">
@@ -110,5 +110,6 @@
         </div>
     </div>
 </section>
+<script src="../../static/js/main.js"></script>
 
 {% endblock %}

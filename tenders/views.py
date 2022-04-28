@@ -201,7 +201,7 @@ def DocResponse(request, pk):
         vendNo = request.session['ProspectNo']
         docNo = pk
         unitPrice = ''
-        userType ='prospect'
+        userType ='prospective'
 
         if request.method == "POST":
             try:
@@ -209,18 +209,18 @@ def DocResponse(request, pk):
             except ValueError:
                 messages.error(request, "Invalid Amount, Try Again!!")
                 return redirect('Odetails', pk=docNo)
+            print(vendNo)
+            print(docNo)
+            print(unitPrice)
+            print(userType)
             try:
                 if vendNo != '':
                     result = config.CLIENT.service.FnCreateProspectiveSupplier(
                         vendNo, procurementMethod, docNo, unitPrice,userType)
-                    print(result)
+                    print("result",result)
                     if result:
                         request.session['ProNumber'] = result
-
-                        ProNumber = request.session['ProNumber']
-
                     if result == True:
-
                         messages.success(
                             request, f"You have successfully Applied for Doc number {docNo}")
                         return redirect('Odetails', pk=docNo)
