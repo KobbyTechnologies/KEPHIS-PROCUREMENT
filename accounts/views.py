@@ -279,3 +279,10 @@ def register_request(request):
             print(e)
     ctx = {"year": year, "country": country, }
     return render(request, "register.html", ctx)
+def logout(request):
+    try:
+        del request.session['state'] 
+        messages.success(request,'Logged out successfully')
+    except KeyError:
+        print(False)
+    return redirect('login')
