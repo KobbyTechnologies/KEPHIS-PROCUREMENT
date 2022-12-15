@@ -123,9 +123,7 @@ class reset_request(UserObjectMixin,View):
 
                 myPassword = self.pass_encrypt(password)
                 
-                response = self.zeep_client().service.FnResetPassword(email, myPassword,self.get_secret_code())
-                print(response)
-
+                response = self.zeep_client().service.FnResetVendorPassword(email, myPassword,self.get_secret_code())
                 if response == True:
                     messages.success(request,"Reset successful")
                     del request.session['resetMail']
