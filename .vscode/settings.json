@@ -3,5 +3,6 @@
         "csrfmiddlewaretoken",
         "messagess",
         "ntlm"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }

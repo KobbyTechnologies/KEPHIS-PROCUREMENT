@@ -29,6 +29,8 @@ def dashboard(request):
         try:
             response = session.get(Access_Point, timeout=10).json()
             responses = session.get(Access, timeout=10).json()
+            
+
             OPEN = []
             OPEN_A = []
             RES = []
@@ -42,33 +44,43 @@ def dashboard(request):
             Closed = []
             Active = []
             for tender in response['value']:
+
                 # Open Tender
                 if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                     output_json = json.dumps(tender)
                     OPEN.append(json.loads(output_json))
+
                 # Restricted Tenders
                 if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender" and tender['Status'] == 'New':
                     output_json = json.dumps(tender)
                     RES.append(json.loads(output_json))
+
                 # RFP
                 if tender['Process_Type'] == 'RFP' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                     output_json = json.dumps(tender)
                     RFP.append(json.loads(output_json))
+
                 # RFQ
                 if tender['Process_Type'] == 'RFQ' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                     output_json = json.dumps(tender)
                     RFQ.append(json.loads(output_json))
+
                 # EOI
                 if tender['Process_Type'] == 'EOI' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                     output_json = json.dumps(tender)
                     EOI.append(json.loads(output_json))
+
                 # All
                 if tender['Status'] == 'Archived':
                     output_json = json.dumps(tender)
                     Closed.append(json.loads(output_json))
+
                 if tender['Status'] == 'New':
                     output_json = json.dumps(tender)
                     Active.append(json.loads(output_json))
+
+
+
             for tender in responses['value']:
                 if tender['Type'] == 'EOI' and tender['Vendor_No'] == request.session['vendorNo']:
                     output_json = json.dumps(tender)
@@ -85,6 +97,8 @@ def dashboard(request):
                 if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['vendorNo']:
                     output_json = json.dumps(tender)
                     OPEN_A.append(json.loads(output_json))
+
+
             All_O = len(OPEN)
             Active_O = len(OPEN_A)
             RES_Count = len(RES)
@@ -101,7 +115,8 @@ def dashboard(request):
             print(e)
         states = request.session['state']
         todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-        ctx = {"today": todays_date,
+        ctx = {
+            "today": todays_date,
             "All_T": All_O, "Active_O": Active_O,
             "RES": RES_Count,
             "RES_A": RES_Active,
@@ -111,7 +126,8 @@ def dashboard(request):
             "Close": Close, "Actives": Actives, "year": year,
             "states": states
             }
-    except KeyError:
+    except KeyError as e:
+        print(e)
         messages.error(request,"Session has expired, Login Again")
         return redirect('login')
     return render(request, 'main/dashboard.html', ctx)

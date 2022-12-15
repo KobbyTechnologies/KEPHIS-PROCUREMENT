@@ -34,67 +34,79 @@ def login_request(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
-    Access_Point = config.O_DATA.format("/VendorDetails")
-    Access = config.O_DATA.format("/ProspectiveSupplier")
-    decoded_text = ''
-    vendorNo = ""
-    state = ""
-    ProspectNo = ""
+   
+    # decoded_text = ''
+    # vendorNo = ""
+    # state = ""
+    # ProspectNo = ""
     request.session['years'] = year
     if request.method == 'POST':
         try:
             email = request.POST.get('email')
             password = request.POST.get('password')
-        except ValueError:
-            print("Invalid credentials, try again")
-            return redirect('login')
-        try:
+
+            print(email, password)
+            
+            Access_Point = config.O_DATA.format(f"/VendorDetails?$filter=EMail%20eq%20%27{email}%27")
             response = session.get(Access_Point, timeout=10).json()
-            res = session.get(Access, timeout=10).json()
+
             for applicant in response['value']:
                 if applicant['EMail'] == email:
                     Portal_Password = base64.urlsafe_b64decode(
                         applicant['SerialID'])
                     request.session['vendorNo'] = applicant['No']
-                    vendorNo = request.session['vendorNo']
+                   
+
+                    # vendorNo = request.session['vendorNo']
 
                     state = "Vendor"
                     cipher_suite = Fernet(config.ENCRYPT_KEY)
                     try:
-                        decoded_text = cipher_suite.decrypt(
-                            Portal_Password).decode("ascii")
+                        decoded_text = cipher_suite.decrypt(Portal_Password).decode("ascii")
+                        print(decoded_text)
                     except Exception as e:
                         print(e)
                     if decoded_text == password:
                         request.session['state'] = state
-                        states = request.session['state']
-                        return redirect('dashboard')
+                        # states = request.session['state']
+                        print(request.session['vendorNo'])
+                        print(state)
+                        
+                        return redirect('login')
+                    
                     else:
                         messages.error(
                             request, "Invalid Credentials. Please reset your password else create a new account")
                         return redirect('login')
-            for applicant in res['value']:
-                if applicant['Verification_Token'] and applicant['Email'] == email:
-                    Portal_Password = base64.urlsafe_b64decode(
-                        applicant['SerialID'])
-                    request.session['ProspectNo'] = applicant['No']
-                    ProspectNo = request.session['ProspectNo']
-                    state = "Prospect"
-                    cipher_suite = Fernet(config.ENCRYPT_KEY)
-                    try:
-                        decoded_text = cipher_suite.decrypt(
-                            Portal_Password).decode("ascii")
-                    except Exception as e:
-                        print(e)
-                    if decoded_text == password:
-                        request.session['state'] = state
-                        states = request.session['state']
-                        return redirect('dashboard')
-                    else:
-                        messages.error(
-                            request, "Invalid Credentials. Please reset your password else create a new account")
-                        return redirect('login')
-
+                    
+                Access = config.O_DATA.format(f"/ProspectiveSupplier?$filter=Email%20eq%20%27{email}%27")
+                res = session.get(Access, timeout=10).json()
+                
+                for applicant in res['value']:
+                    if applicant['Verification_Token'] and applicant['Email'] == email:
+                        Portal_Password = base64.urlsafe_b64decode(
+                            applicant['SerialID'])
+                        request.session['ProspectNo'] = applicant['No']
+                        
+                        state = "Prospect"
+                        cipher_suite = Fernet(config.ENCRYPT_KEY)
+                        try:
+                            decoded_text = cipher_suite.decrypt(
+                                Portal_Password).decode("ascii")
+                        except Exception as e:
+                            print(e)
+                        if decoded_text == password:
+                            request.session['state'] = state
+                            
+                            print(request.session['ProspectNo'])
+                            print(state)
+                            return redirect('login')
+                        else:
+                            messages.error(
+                                request, "Invalid Credentials. Please reset your password else create a new account")
+                            return redirect('login')
+                messages.error(request, "User not Registered")
+                return redirect('login')
         except requests.exceptions.ConnectionError as e:
             messages.error(
                 request, "If you are a vendor please reset your password else create a new account")
@@ -105,72 +117,69 @@ def login_request(request):
 
 
 def FnResetPassword(request):
-    alphabet = string.ascii_letters + string.digits
-    SecretCode = ''.join(secrets.choice(alphabet) for i in range(5))
-    session = requests.Session()
-    session.auth = config.AUTHS
-
-    Access_Point = config.O_DATA.format("/VendorDetails")
-    Access = config.O_DATA.format("/ProspectiveSupplier")
-
-    emailAddress = ""
-    password = ""
-    confirm_password = ''
-    verificationToken = SecretCode
     if request.method == 'POST':
         try:
+            alphabet = string.ascii_letters + string.digits
+            verificationToken = ''.join(secrets.choice(alphabet) for i in range(5))
+            session = requests.Session()
+            session.auth = config.AUTHS
+        
             emailAddress = request.POST.get('emailAddress')
             password = request.POST.get('password')
             confirm_password = request.POST.get('confirm_password')
-        except ValueError:
-            print("Invalid credentials, try again")
-            return redirect('login')
-        if len(password) < 6:
-            messages.error(request, "Password should be at least 6 characters")
-            return redirect('login')
-        if password != confirm_password:
-            messages.error(request, "Password mismatch")
-            return redirect('login')
-        try:
+            
+            
+            if len(password) < 6:
+                messages.error(request, "Password should be at least 6 characters")
+                return redirect('login')
+            if password != confirm_password:
+                messages.error(request, "Password mismatch")
+                return redirect('login')
+        
+            Access_Point = config.O_DATA.format(f"/VendorDetails?$filter=EMail%20eq%20%27{emailAddress}%27")
             response = session.get(Access_Point, timeout=10).json()
-            res = session.get(Access, timeout=10).json()
+            
             for applicant in response['value']:
                 if applicant['EMail'] == emailAddress:
-                    cipher_suite = Fernet(config.ENCRYPT_KEY)
-                    try:
-                        encrypted_text = cipher_suite.encrypt(
-                            password.encode('ascii'))
-                        password = base64.urlsafe_b64encode(
-                            encrypted_text).decode("ascii")
-                        response = config.CLIENT.service.FnResetPassword(
-                            emailAddress, password, verificationToken)
-                        print(response)
-                        messages.success(
-                            request, "Reset was successful, now login")
-                        return redirect('login')
-                    except Exception as e:
-                        messages.error(request, e)
-                        return redirect('login')
-            for applicant in res['value']:
-                if applicant['Email'] == emailAddress:
-                    cipher_suite = Fernet(config.ENCRYPT_KEY)
-                    try:
-                        encrypted_text = cipher_suite.encrypt(
-                            password.encode('ascii'))
-                        password = base64.urlsafe_b64encode(
-                            encrypted_text).decode("ascii")
-                        response = config.CLIENT.service.FnResetPassword(
-                            emailAddress, password, verificationToken)
-                        print(response)
-                        messages.success(
-                            request, "Reset was successful, now login")
-                        return redirect('login')
-                    except Exception as e:
-                        messages.error(request, e)
-                        return redirect('login')
-        except requests.exceptions.ConnectionError as e:
-            messages.error(
-                request, "If you are a vendor please reset your password else create a new account")
+                    
+                    f = Fernet(config.ENCRYPT_KEY)
+                    encrypted_text = f.encrypt(password.encode('ascii'))
+                    password = base64.urlsafe_b64encode(encrypted_text).decode("ascii")
+                    response = config.CLIENT.service.FnResetPassword(
+                        emailAddress, password, verificationToken)
+                    print(response)
+                messages.error(request, 'The email does not exist')
+                return redirect('login')
+                    
+            #         # cipher_suite = Fernet(config.ENCRYPT_KEY)
+                   
+                    
+                    
+            #         messages.success(
+            #             request, "Reset was successful, now login")
+            #         print(f)
+            #         return redirect('login')
+                    
+                
+                
+            # Access = config.O_DATA.format("/ProspectiveSupplier")
+            # res = session.get(Access, timeout=10).json()
+            # for applicant in res['value']:
+            #     if applicant['Email'] == emailAddress:
+            #         cipher_suite = Fernet(config.ENCRYPT_KEY)
+                    
+            #         encrypted_text = cipher_suite.encrypt(
+            #             password.encode('ascii'))
+            #         password = base64.urlsafe_b64encode(
+            #             encrypted_text).decode("ascii")
+            #         response = config.CLIENT.service.FnResetPassword(
+            #             emailAddress, password, verificationToken)
+            #         print(response)
+            #         messages.success(
+            #             request, "Reset was successful, now login")
+            #         return redirect('login')
+                    
+        except Exception as e:
             print(e)
     return redirect('login')
 
@@ -279,6 +288,8 @@ def register_request(request):
             print(e)
     ctx = {"year": year, "country": country, }
     return render(request, "register.html", ctx)
+
+    
 def logout(request):
     try:
         del request.session['state'] 

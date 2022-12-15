@@ -12,13 +12,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
 import dj_database_url
 from decouple import config, Csv
 import requests
 from requests import Session
 from requests_ntlm import HttpNtlmAuth
-from zeep import Client
+from zeep.client import Client
 from zeep.transports import Transport
 from requests.auth import HTTPBasicAuth
 
@@ -50,7 +49,7 @@ if config('MODE') == "dev":
 else:
     DATABASES = {
         'default': dj_database_url.config(
-            default=config('DATABASE_URL')
+            default = config('DATABASE_URL')
         )
     }
 
@@ -150,7 +149,7 @@ USE_TZ = True
 
 # Send Email Settings
 # Fernet Encryption
-ENCRYPT_KEY = b'BpKKQvJ4-Zm1lxSlVZ2jJk1605X7r7Wvi3UHQS-j1Ko='
+ENCRYPT_KEY = b'8zUwJvYZKzgecbudNa7zjhsjTDW-79fwwtUHQn8YCos='
 
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 EMAIL_BACKEND = config('EMAIL_BACKEND')
@@ -181,11 +180,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTHS = Session()
 
-WEB_SERVICE_PWD = 'Password@123'
-BASE_URL = 'http://20.121.189.145:7047/KMPDC/WS/KMPDC/Codeunit/WebPortal'
-O_DATA = "http://20.121.189.145:7048/KMPDC/ODataV4/Company(%27KMPDC%27){}"
-AUTHS.auth = HTTPBasicAuth('WINNIE', WEB_SERVICE_PWD)
+WEB_SERVICE_PWD = 'W3C0d3@llD@y'
+O_DATA = "http://20.231.15.166:7048/BC140/ODataV4/Company('CRONUS%20International%20Ltd.'){}"
+BASE_URL = 'http://20.231.15.166:7047/BC140/WS/CRONUS%20International%20Ltd./Codeunit/Webportal'
+AUTHS.auth = HTTPBasicAuth('COKUNE', WEB_SERVICE_PWD)
 
 CLIENT = Client(BASE_URL, transport=Transport(session=AUTHS))
-AUTHS = HTTPBasicAuth('WINNIE', WEB_SERVICE_PWD)
-django_heroku.settings(locals())
+AUTHS = HTTPBasicAuth('COKUNE', WEB_SERVICE_PWD)
+# django_heroku.settings(zzzzlocals())
