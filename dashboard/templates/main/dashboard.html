@@ -29,7 +29,7 @@
                                 style="float: right; color:rgb(255, 255, 255);font-weight: bold;  text-shadow: 0 1px 0 #144a85;">View
                                 <i class="las la-arrow-right"></i></a>
                         </span>
-                        <h3 class="card-title mt-3 mb-0">{{All_T}}</h3>
+                        <h3 class="card-title mt-3 mb-0">{{open_tenders|length}}</h3>
                         <p class="card-text" style="text-shadow: 0 1px 0 #144a85;">Open Tenders</p>
                     </div>
                 </div>
@@ -115,8 +115,8 @@
                                     'Expression of Interest',
                                 ];
                                 // chart variables
-                                var open = "{{Active_O}}"
-                                var EOI = "{{EOI_A}}"
+                                var open = "{{Active_O|length}}"
+                                var EOI = "{{EOI_A|length}}"
                                 const datasPros = {
                                     labels: mylabelsPros,
                                     datasets: [{
@@ -163,7 +163,7 @@
                                 style="float: right; color:rgb(255, 255, 255);font-weight: bold;  text-shadow: 0 1px 0 #144a85;">View
                                 <i class="las la-arrow-right"></i></a>
                         </span>
-                        <h3 class="card-title mt-3 mb-0">{{All_T}}</h3>
+                        <h3 class="card-title mt-3 mb-0">{{open_tenders|length}}</h3>
                         <p class="card-text" style="text-shadow: 0 1px 0 #144a85;">Open Tenders</p>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                                 style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #e51e25;">View
                                 <i class="las la-arrow-right"></i></a>
                         </span>
-                        <h3 class="card-title mt-3 mb-0">{{RES}}</h3>
+                        <h3 class="card-title mt-3 mb-0">{{restricted_tenders|length}}</h3>
                         <p class="card-text" style="text-shadow: 0 1px 0 #e51e25;">Restricted Tenders</p>
                     </div>
                 </div>
@@ -193,7 +193,7 @@
                                 style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #134326;">View
                                 <i class="las la-arrow-right"></i></a>
                         </span>
-                        <h3 class="card-title mt-3 mb-0">{{RFQ}}</h3>
+                        <h3 class="card-title mt-3 mb-0">{{rfq|length}}</h3>
                         <p class="card-text" style="text-shadow: 0 1px 0 #134326;">Request For Quotation</p>
                     </div>
                 </div>
@@ -208,7 +208,7 @@
                                 style="float: right; color:white;font-weight: bold;  text-shadow: 0 1px 0 #c18b39;">View
                                 <i class="las la-arrow-right"></i></a>
                         </span>
-                        <h3 class="card-title mt-3 mb-0">{{EOI}}</h3>
+                        <h3 class="card-title mt-3 mb-0">{{eoi|length}}</h3>
                         <p class="card-text" style="text-shadow: 0 1px 0 #c18b39;">Expression Of Interest</p>
                     </div>
                 </div>
@@ -282,11 +282,11 @@
                                     'Expression of Interest',
                                 ];
                                 // chart variables
-                                var open = "{{Active_O}}"
-                                var restTender = "{{RES_A}}"
-                                var RFP = "{{RFP_A}}"
-                                var RFQ = "{{RFQ_A}}"
-                                var EOI = "{{EOI_A}}"
+                                var open = "{{Active_O|length}}"
+                                var restTender = "{{RES_A|length}}"
+                                var RFP = "{{RFP_A|length}}"
+                                var RFQ = "{{RFQ_A|length}}"
+                                var EOI = "{{EOI_A|length}}"
                                 const datas = {
                                     labels: mylabels,
                                     datasets: [{

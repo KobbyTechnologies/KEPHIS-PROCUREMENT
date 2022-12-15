@@ -1,0 +1,12 @@
+{% autoescape off %}
+
+
+Hi {{user}},
+
+Use the link below to Reset your password.
+
+
+url: http://{{domain}}{% url 'reset_request' %}
+
+
+{% endautoescape %}

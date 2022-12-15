@@ -1,13 +1,14 @@
-{% autoescape  off %}
+{% autoescape off %}
 
 
-Hi {{user}}
+Hi {{user}},
+
+Please use the link and Secret Code below to verify your account.
+
+Secret Code: {{Secret}}
 
 
-Please use the link bellow to login and verify your account.
-
-http://{{domain}}{% url 'activate' uidb64=uid %}
-
+website url: http://{{domain}}{% url 'verify' %}
 
 
 {% endautoescape %}

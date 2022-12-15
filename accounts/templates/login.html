@@ -84,6 +84,32 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="l-form">
+                                <!--alert -->
+                    {% if messages %}
+                    {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    <div class="alert alert-success d-flex align-items-center alert-dismissible alert-success"
+                        role="alert">
+                        <i class="las la-check-double" style="color: white;font-size: 2rem"></i>
+                        <div class="a-icon mx-2">
+                            {{message}}
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                    </div>
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <div class="alert alert-danger d-flex align-items-center alert-dismissible alert-warn"
+                        role="alert">
+                        <i class="las la-exclamation-triangle" style="color: white;font-size: 2rem"></i>
+                        <div class="a-icon mx-2">
+                            {{message}}
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
                                 <div class="login-form">
                                     <form action="{% url 'login' %}" method="post">
                                         {% csrf_token %}
@@ -108,32 +134,7 @@
                                             </p>
                                         </div>
                                     </form>
-                                    <!--alert -->
-                                    {% if messages %}
-                                    {% for message in messages %}
-                                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                                    <div class="alert alert-success d-flex align-items-center alert-dismissible alert-success"
-                                        role="alert">
-                                        <i class="las la-check-double" style="color: white;font-size: 2rem"></i>
-                                        <div class="a-icon mx-2">
-                                            {{message}}
-                                        </div>
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                                    <div class="alert alert-danger d-flex align-items-center alert-dismissible alert-warn"
-                                        role="alert">
-                                        <i class="las la-exclamation-triangle" style="color: white;font-size: 2rem"></i>
-                                        <div class="a-icon mx-2">
-                                            {{message}}
-                                        </div>
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    {% endif %}
-                                    {% endfor %}
-                                    {% endif %}
+                                    
                                 </div>
                             </div>
                         </div>
@@ -170,19 +171,6 @@
                                     required>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label class="form-label">New Password</label>
-                                <input type="password" class="form-control" name="password" placeholder="New Password"
-                                    required="required">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" name="confirm_password"
-                                    placeholder="Confirm Password" required="required">
-                            </div>
-                        </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Reset Password</button>

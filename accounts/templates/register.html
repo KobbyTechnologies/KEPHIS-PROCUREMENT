@@ -39,8 +39,7 @@
                     <div class="row">
                         <div class="col-md-12 mx-auto text-center">
                             <div class="brand">
-                                <h2 class="n-brand">E-PROCUREMENT PORTAL</br> <span class="br-brand"> SCOTT CHRISTIAN
-                                        UNIVERSITY</span></h2>
+                                <h2 class="n-brand">E-PROCUREMENT PORTAL</br> <span class="br-brand">KEPHIS</span></h2>
                             </div>
                         </div>
                     </div>
@@ -64,15 +63,6 @@
                             <div class="l-image mx-auto text-center mb-3">
                                 <img src='../../static/img/logo/gok_logo.png' class="img-fluid" alt="brand image"
                                     srcset="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="f-text">
-                                <p>
-                                    © {{year}} Kenya Medical Practitioners and Dentists Council
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -176,92 +166,11 @@
                                                     placeholder="Confirm Password" required="required">
                                             </div>
                                         </div>
+                                        <input type="hidden" name="prospNo" value="">
+                                        <input type="hidden" name="myAction" value="insert">
                                         <button type="submit" class="btn btn-primary my-3">Sign Up</button>
 
                                     </form>
-                                    <!-- <form method="post" action="{% url 'register' %}">
-                                        {% csrf_token %}
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i
-                                                                class="fa fa-user"></i></span>
-                                                        <input type="text" class="form-control" name="supplierName"
-                                                            placeholder="Supplier Name" required="required">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i
-                                                                class="fa fa-user"></i></span>
-                                                        <input type="email" class="form-control" name="supplierMail"
-                                                            placeholder="Supplier Email" required="required">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i
-                                                                class="fa fa-user"></i></span>
-                                                        <select class="form-select" aria-label="Default select example">
-                                                            <option selected>Open this select menu</option>
-                                                            <option value="1">One</option>
-                                                            <option value="2">Two</option>
-                                                            <option value="3">Three</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i
-                                                                class="fa fa-user"></i></span>
-                                                        <input type="email" class="form-control" name="supplierMail"
-                                                            placeholder="Supplier Email" required="required">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
-                                                <input type="email" class="form-control" name="email"
-                                                    placeholder="Email Address" required="required">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                                <input type="password" class="form-control" name="password"
-                                                    placeholder="Password" required="required">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-lock"></i>
-                                                    <i class="fa fa-check"></i>
-                                                </span>
-                                                <input type="password" class="form-control" name="confirm_password"
-                                                    placeholder="Confirm Password" required="required">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-block btn-lg">Sign
-                                                Up</button>
-                                        </div>
-                                        <p class="small">By clicking the Sign Up button, you agree to our <br><a
-                                                href="#">Terms &amp; Conditions</a>, and <a href="#">Privacy Policy</a>.
-                                        </p>
-                                    </form> -->
-                                    <!--alert -->
                                     {% if messages %}
                                     {% for message in messages %}
                                     {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}

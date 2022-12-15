@@ -1,25 +1,10 @@
-import base64
-import threading
-from django.http import response
-from django.shortcuts import redirect, render, HttpResponse
+
+from django.shortcuts import redirect, render
 from django.conf import settings as config
-import json
 import requests
-from requests import Session
-from requests_ntlm import HttpNtlmAuth
-import datetime
-from django.urls import reverse
-from datetime import date
-from django.core.mail import EmailMessage
-from django.template.loader import render_to_string
 from django.contrib import messages
-from django.contrib.sites.shortcuts import get_current_site
-from . models import Users
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
-import secrets
-import string
-from cryptography.fernet import Fernet
+from  myRequest.views import UserObjectMixin
+from django.views import View
 # Create your views here.
 
 
@@ -28,272 +13,220 @@ def profile_request(request):
     return render(request, 'profile.html')
 
 
-def login_request(request):
-    todays_date = date.today()
-    year = todays_date.year
-    session = requests.Session()
-    session.auth = config.AUTHS
+class login_request(UserObjectMixin,View):
+    def get(self, request):
+        ctx = {}
+        return render(request, 'login.html', ctx)
+    def post(self,request):
+        if request.method == 'POST':
+            try:
+                email = request.POST.get('email')
+                password = request.POST.get('password')
 
-   
-    # decoded_text = ''
-    # vendorNo = ""
-    # state = ""
-    # ProspectNo = ""
-    request.session['years'] = year
-    if request.method == 'POST':
-        try:
-            email = request.POST.get('email')
-            password = request.POST.get('password')
+                vendors = self.one_filter("/VendorDetails","EMail","eq",email)
 
-            print(email, password)
-            
-            Access_Point = config.O_DATA.format(f"/VendorDetails?$filter=EMail%20eq%20%27{email}%27")
-            response = session.get(Access_Point, timeout=10).json()
-
-            for applicant in response['value']:
-                if applicant['EMail'] == email:
-                    Portal_Password = base64.urlsafe_b64decode(
-                        applicant['SerialID'])
-                    request.session['vendorNo'] = applicant['No']
-                   
-
-                    # vendorNo = request.session['vendorNo']
-
-                    state = "Vendor"
-                    cipher_suite = Fernet(config.ENCRYPT_KEY)
-                    try:
-                        decoded_text = cipher_suite.decrypt(Portal_Password).decode("ascii")
-                        print(decoded_text)
-                    except Exception as e:
-                        print(e)
-                    if decoded_text == password:
-                        request.session['state'] = state
-                        # states = request.session['state']
-                        print(request.session['vendorNo'])
-                        print(state)
-                        
+                for vendor in vendors[1]:
+                    if vendor['EMail'] == email:
+                        print("Vendor")
+                        if self.pass_decrypt(vendor['Password']) == password:
+                            request.session['UserId'] = vendor['No']
+                            request.session['state'] = "Vendor"                            
+                            return redirect('dashboard')
+                        messages.error(request, "Invalid Credentials. Please reset your password else create a new account")
                         return redirect('login')
-                    
-                    else:
-                        messages.error(
-                            request, "Invalid Credentials. Please reset your password else create a new account")
-                        return redirect('login')
-                    
-                Access = config.O_DATA.format(f"/ProspectiveSupplier?$filter=Email%20eq%20%27{email}%27")
-                res = session.get(Access, timeout=10).json()
-                
-                for applicant in res['value']:
-                    if applicant['Verification_Token'] and applicant['Email'] == email:
-                        Portal_Password = base64.urlsafe_b64decode(
-                            applicant['SerialID'])
-                        request.session['ProspectNo'] = applicant['No']
                         
-                        state = "Prospect"
-                        cipher_suite = Fernet(config.ENCRYPT_KEY)
-                        try:
-                            decoded_text = cipher_suite.decrypt(
-                                Portal_Password).decode("ascii")
-                        except Exception as e:
-                            print(e)
-                        if decoded_text == password:
-                            request.session['state'] = state
-                            
-                            print(request.session['ProspectNo'])
-                            print(state)
-                            return redirect('login')
-                        else:
-                            messages.error(
-                                request, "Invalid Credentials. Please reset your password else create a new account")
-                            return redirect('login')
+                prospect = self.one_filter("/ProspectiveSupplier","Email","eq",email) 
+                    
+                for prospect in prospect[1]:
+                    if prospect['Email'] == email and prospect['Verified'] == True:
+                        print("Prospect")
+                        if self.pass_decrypt(prospect['Password']) == password:
+                            request.session['UserId'] = prospect['No']
+                            request.session['state'] = "Prospect"
+                            return redirect('dashboard')
+                        messages.error(request, "Invalid Credentials. Please reset your password else create a new account")
+                        return redirect('login')
                 messages.error(request, "User not Registered")
                 return redirect('login')
-        except requests.exceptions.ConnectionError as e:
-            messages.error(
-                request, "If you are a vendor please reset your password else create a new account")
-            print(e)
-
-    ctx = {"year": year}
-    return render(request, 'login.html', ctx)
-
-
-def FnResetPassword(request):
-    if request.method == 'POST':
-        try:
-            alphabet = string.ascii_letters + string.digits
-            verificationToken = ''.join(secrets.choice(alphabet) for i in range(5))
-            session = requests.Session()
-            session.auth = config.AUTHS
-        
-            emailAddress = request.POST.get('emailAddress')
-            password = request.POST.get('password')
-            confirm_password = request.POST.get('confirm_password')
-            
-            
-            if len(password) < 6:
-                messages.error(request, "Password should be at least 6 characters")
+            except Exception as e:
+                messages.error(request, f"{e}")
+                print(e)
                 return redirect('login')
-            if password != confirm_password:
-                messages.error(request, "Password mismatch")
-                return redirect('login')
-        
-            Access_Point = config.O_DATA.format(f"/VendorDetails?$filter=EMail%20eq%20%27{emailAddress}%27")
-            response = session.get(Access_Point, timeout=10).json()
-            
-            for applicant in response['value']:
-                if applicant['EMail'] == emailAddress:
-                    
-                    f = Fernet(config.ENCRYPT_KEY)
-                    encrypted_text = f.encrypt(password.encode('ascii'))
-                    password = base64.urlsafe_b64encode(encrypted_text).decode("ascii")
-                    response = config.CLIENT.service.FnResetPassword(
-                        emailAddress, password, verificationToken)
-                    print(response)
-                messages.error(request, 'The email does not exist')
-                return redirect('login')
-                    
-            #         # cipher_suite = Fernet(config.ENCRYPT_KEY)
-                   
-                    
-                    
-            #         messages.success(
-            #             request, "Reset was successful, now login")
-            #         print(f)
-            #         return redirect('login')
-                    
-                
-                
-            # Access = config.O_DATA.format("/ProspectiveSupplier")
-            # res = session.get(Access, timeout=10).json()
-            # for applicant in res['value']:
-            #     if applicant['Email'] == emailAddress:
-            #         cipher_suite = Fernet(config.ENCRYPT_KEY)
-                    
-            #         encrypted_text = cipher_suite.encrypt(
-            #             password.encode('ascii'))
-            #         password = base64.urlsafe_b64encode(
-            #             encrypted_text).decode("ascii")
-            #         response = config.CLIENT.service.FnResetPassword(
-            #             emailAddress, password, verificationToken)
-            #         print(response)
-            #         messages.success(
-            #             request, "Reset was successful, now login")
-            #         return redirect('login')
-                    
-        except Exception as e:
-            print(e)
-    return redirect('login')
-
-
-class EmailThread(threading.Thread):
-    def __init__(self, email):
-        self.email = email
-        threading.Thread.__init__(self)
-
-    def run(self):
-        self.email.send()
-
-
-def activate_user(request, uidb64):
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = "Enock"
-    except Exception as e:
-        user = None
-    if user:
-        messages.success(
-            request, "Email verified, you can now login")
-        return redirect(reverse('login'))
-    return render(request, 'activate-failed.html')
-
-
-def register_request(request):
-    todays_date = date.today()
-    year = todays_date.year
-    session = requests.Session()
-    session.auth = config.AUTHS
-
-    citizenship = config.O_DATA.format("/CountryRegion")
-    try:
-        response = session.get(citizenship, timeout=10).json()
-        country = response['value']
-    except requests.exceptions.ConnectionError as e:
-        print(e)
-    alphabet = string.ascii_letters + string.digits
-    SecretCode = ''.join(secrets.choice(alphabet) for i in range(5))
-
-    prospNo = ""
-    supplierName = " "
-    supplierMail = ""
-    countryRegionCode = ""
-    postalAddress = ""
-    postCode = ""
-    city = ""
-    contactPersonName = ""
-    contactPhoneNo = ""
-    contactMail = ""
-    myPassword = ""
-    confirm_password = ''
-    verificationToken = SecretCode
-    myAction = "insert"
-
-    if request.method == "POST":
-        try:
-            supplierName = request.POST.get('supplierName')
-            supplierMail = request.POST.get('supplierMail')
-            countryRegionCode = request.POST.get('countryRegionCode')
-            postalAddress = request.POST.get('postalAddress')
-            postCode = request.POST.get('postCode')
-            city = request.POST.get('city')
-            contactPersonName = request.POST.get('contactPersonName')
-            contactPhoneNo = request.POST.get('contactPhoneNo')
-            contactMail = request.POST.get('contactMail')
-            Password = str(request.POST.get('myPassword'))
-            confirm_password = str(request.POST.get('confirm_password'))
-        except ValueError:
-            messages.error(request, "Invalid credentials, try again")
-            return redirect('register')
-        if len(Password) < 6:
-            messages.error(request, "Password should be at least 6 characters")
-            return redirect('register')
-        if Password != confirm_password:
-            messages.error(request, "Password mismatch")
-            return redirect('register')
-        cipher_suite = Fernet(config.ENCRYPT_KEY)
-
-        encrypted_text = cipher_suite.encrypt(Password.encode('ascii'))
-        myPassword = base64.urlsafe_b64encode(encrypted_text).decode("ascii")
-        try:
-            response = config.CLIENT.service.FnProspectiveSupplierSignup(
-                prospNo, supplierName, supplierMail, countryRegionCode, postalAddress, postCode, city, contactPersonName, contactPhoneNo, contactMail, myPassword, verificationToken, myAction)
-            print(response)
-            if response == True:
-                current_site = get_current_site(request)
-                email_subject = 'Activate your account'
-                email_body = render_to_string('activate.html', {
-                    "user": supplierName,
-                    "domain": current_site,
-                    'uid': urlsafe_base64_encode(force_bytes(supplierName)),
-                })
-                email = EmailMessage(subject=email_subject, body=email_body,
-                                     from_email=config.EMAIL_HOST_USER, to=[supplierMail])
-                EmailThread(email).start()
-                messages.success(
-                    request, "We sent you an email to verify your account")
-                return redirect('login')
-            else:
-                messages.error(
-                    request, "Email not sent")
-                return redirect('register')
-        except Exception as e:
-            print(e)
-    ctx = {"year": year, "country": country, }
-    return render(request, "register.html", ctx)
+        return redirect('login')
 
     
+
+
+class FnResetPassword(UserObjectMixin,View):
+    def post(self,request):
+        if request.method == 'POST':
+            try:            
+                emailAddress = request.POST.get('emailAddress')
+                vendors = self.one_filter("/VendorDetails","EMail","eq",emailAddress)
+                for users in vendors[1]:
+                    if users['EMail'] == emailAddress:
+                        request.session['resetMail'] = users['EMail']
+                        email_subject = 'Password Reset'
+                        email_template = 'resetMail.html'
+                        recipient = users['Name']
+                        recipient_email = users['EMail']
+                        token = self.get_secret_code()
+                        send_rest_mail = self.send_mail(request,email_subject,email_template,
+                                            recipient,recipient_email,token)
+                        if send_rest_mail == True:
+                            messages.success(request, "We sent you an email to reset your password'")
+                            return redirect('login')
+                        messages.error(request, 'Reset failed contact admin')
+                        return redirect('login')
+                prospects =self.one_filter("/ProspectiveSupplier","Email","eq",emailAddress)
+                print(prospects)
+                for applicant in prospects[1]:
+                    if applicant['Verified']==True:
+                        request.session['resetMail'] = applicant['Email']
+                        email_subject = 'Password Reset'
+                        email_template = 'resetMail.html'
+                        recipient = applicant['Name']
+                        recipient_email = applicant['Email']
+                        token = self.get_secret_code()
+                        send_reset_mail = self.send_mail(request,email_subject,email_template,
+                                            recipient,recipient_email,token)
+                        if send_reset_mail == True:
+                            messages.success(request, 'We sent you an email to reset your password')
+                            return redirect('login')
+                        messages.error(request, 'Reset failed contact admin')
+                        return redirect('login')
+                    messages.error(request, 'Reset failed, email not verified')
+                    return redirect('login')
+                messages.error(request, 'Reset failed, email not registered')
+                return redirect('login')
+            except Exception as e:
+                print(e)
+                messages.error(request,f'{e}')
+        return redirect('login')
+
+class reset_request(UserObjectMixin,View):
+    def get(self, request):
+        return render(request,'reset.html')
+    def post(self, request):
+        if request.method == 'POST':
+            try:
+                email = request.session['resetMail']
+                password = request.POST.get('password')
+                password2 = request.POST.get('password2')
+            
+                if len(password) < 6:
+                    messages.error(request, "Password should be at least 6 characters")
+                    return redirect('reset_request')
+                if password != password2:
+                    messages.error(request, "Password mismatch")
+                    return redirect('reset_request')  
+
+                myPassword = self.pass_encrypt(password)
+                
+                response = self.zeep_client().service.FnResetPassword(email, myPassword,self.get_secret_code())
+                print(response)
+
+                if response == True:
+                    messages.success(request,"Reset successful")
+                    del request.session['resetMail']
+                    return redirect('login')
+                messages.error(request,f"{response}")
+                return redirect('reset_request')
+
+            except Exception as e:
+                messages.info(request, f'{e}')
+                print(e)
+                return redirect('reset_request')
+        return redirect('reset_request')
+class  verify_user(UserObjectMixin,View):
+    def get(self, request):
+        return render(request, 'verify.html')
+    def post(self,request):
+        if request.method == 'POST':
+            try:
+                email = request.POST.get('email')
+                secret = request.POST.get('secret')
+                verified = True
+                prospect_users = self.one_filter("/ProspectiveSupplier",
+                                        "Email","eq",email)
+                for user in prospect_users[1]:
+                    if user['Verification_Token'] == secret:
+                        response = self.zeep_client().service.FnVerifiedProspectiveSupplier(verified,email)
+                        if response == True:
+                            messages.success(request,"Verification Successful")
+                            return redirect('login')
+                        messages.error(request,"Verification Failed")
+                        return redirect('verify')
+                    messages.error(request,"Wrong Secret Code")
+                    return redirect('verify')
+                messages.error(request,"Wrong Email")
+                return redirect('verify')
+            except  Exception as e:
+                print(e)
+                messages.error(request,f"{e}")
+                return redirect('verify')
+        return redirect('verify')
+
+
+class  register_request(UserObjectMixin,View):
+    def get(self, request):
+        try:
+            session = requests.Session()
+            session.auth = config.AUTHS
+            citizenship = config.O_DATA.format("/CountryRegion")
+            response = self.get_object(citizenship)
+            country = response['value']
+            ctx = {"country":country}
+        except Exception as e:
+            print(e)
+            messages.error(request, f"{e}")
+            return redirect('register')
+        return render(request, "register.html", ctx)
+    def post(self, request):
+        if request.method == 'POST':
+            try:
+                prospNo = request.POST.get('prospNo')
+                supplierName = request.POST.get('supplierName')
+                supplierMail = request.POST.get('supplierMail')
+                countryRegionCode = request.POST.get('countryRegionCode')
+                postalAddress = request.POST.get('postalAddress')
+                postCode = request.POST.get('postCode')
+                city = request.POST.get('city')
+                contactPersonName = request.POST.get('contactPersonName')
+                contactPhoneNo = request.POST.get('contactPhoneNo')
+                contactMail = request.POST.get('contactMail')
+                Password = request.POST.get('myPassword')
+                confirm_password = request.POST.get('confirm_password')
+                myAction = request.POST.get('myAction')
+
+                if len(Password) < 6:
+                    messages.error(request, "Password should be at least 6 characters")
+                    return redirect('register')
+                if Password != confirm_password:
+                    messages.error(request, "Password mismatch")
+                    return redirect('register')
+                token = self.get_secret_code()
+                response = self.zeep_client().service.FnProspectiveSupplierSignup(prospNo, supplierName, 
+                                supplierMail, countryRegionCode, postalAddress, postCode, city, 
+                                contactPersonName, contactPhoneNo, contactMail, self.pass_encrypt(Password),
+                                token, myAction)
+                if response == True:
+                    email_subject = 'Activate your account'
+                    email_template = 'activate.html'
+                    recipient = supplierName
+                    recipient_email = supplierMail
+                    token = token
+                    send_verification_mail = self.send_mail(request,email_subject,email_template,
+                                            recipient,recipient_email,token)
+                    if send_verification_mail == True:
+                        messages.success(request, "We sent you an email to verify your account")
+                        return redirect('login')
+            except Exception as e:
+                print(e)
+                messages.error(request, f'{e}')
+                return redirect('register')
+
 def logout(request):
-    try:
-        del request.session['state'] 
-        messages.success(request,'Logged out successfully')
-    except KeyError:
-        print(False)
+    request.session.flush()
+    messages.success(request,'Logged out successfully')
     return redirect('login')

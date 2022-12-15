@@ -1,8 +1,10 @@
 {
     "cSpell.words": [
         "csrfmiddlewaretoken",
+        "fernet",
         "messagess",
-        "ntlm"
+        "ntlm",
+        "operater"
     ],
     "python.analysis.typeCheckingMode": "basic"
 }
