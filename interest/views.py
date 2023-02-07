@@ -24,7 +24,7 @@ def interest_request(request):
         OpenEOI = []
         Submitted = []
         for tender in response['value']:
-            if tender['Process_Type'] == 'EOI' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
+            if tender['Process_Type'] == 'EOI' and tender['SubmittedToPortal'] == True and tender['Status'] == 'Approved':
                 output_json = json.dumps(tender)
                 OpenEOI.append(json.loads(output_json))
 

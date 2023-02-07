@@ -25,14 +25,18 @@ def open_tenders(request):
     try:
         response = session.get(Access_Point, timeout=10).json()
         responses = session.get(Access, timeout=10).json()
+        
+
 
         open = []
         Submitted = []
 
         for tender in response['value']:
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['SubmittedToPortal'] == True and tender['Status'] == 'Approved':
                 output_json = json.dumps(tender)
                 open.append(json.loads(output_json))
+
+                print(open)
 
         # for tender in responses['value']:
         #     if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['vendorNo']:
