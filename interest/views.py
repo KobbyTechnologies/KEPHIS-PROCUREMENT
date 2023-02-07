@@ -15,7 +15,7 @@ def interest_request(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
-    year = request.session['years']
+
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
     try:
@@ -27,10 +27,12 @@ def interest_request(request):
             if tender['Process_Type'] == 'EOI' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 OpenEOI.append(json.loads(output_json))
-        for tender in responses['value']:
-            if tender['Type'] == 'EOI' and tender['Vendor_No'] == request.session['vendorNo']:
-                output_json = json.dumps(tender)
-                Submitted.append(json.loads(output_json))
+
+        # for tender in responses['value']:
+        #     if tender['Type'] == 'EOI' and tender['Vendor_No'] == request.session['vendorNo']:
+        #         output_json = json.dumps(tender)
+        #         Submitted.append(json.loads(output_json))
+
     except requests.exceptions.ConnectionError as e:
         print(e)
 
@@ -42,6 +44,6 @@ def interest_request(request):
     states = request.session['state']
     ctx = {"today": todays_date, "res": OpenEOI,
            "count": count, "sub": Submitted,
-           "year": year, "counter": counter,
+           "counter": counter,
            "states": states}
     return render(request, 'interest.html', ctx)

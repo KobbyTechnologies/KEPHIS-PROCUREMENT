@@ -14,8 +14,7 @@ from django.contrib import messages
 def proposal_request(request):
     session = requests.Session()
     session.auth = config.AUTHS
-
-    year = request.session['years']
+   
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
     try:
@@ -27,10 +26,11 @@ def proposal_request(request):
             if tender['Process_Type'] == 'RFP' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 OpenRFP.append(json.loads(output_json))
-        for tender in res['value']:
-            if tender['Type'] == 'RFP' and tender['Vendor_No'] == request.session['vendorNo']:
-                output_json = json.dumps(tender)
-                Submitted.append(json.loads(output_json))
+
+        # for tender in res['value']:
+        #     if tender['Type'] == 'RFP' and tender['Vendor_No'] == request.session['vendorNo']:
+        #         output_json = json.dumps(tender)
+        #         Submitted.append(json.loads(output_json))
     except requests.exceptions.ConnectionError as e:
         print(e)
 
@@ -41,5 +41,5 @@ def proposal_request(request):
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": OpenRFP,
            "count": count, "counter": counter,
-           "year": year, "sub": Submitted}
+           "sub": Submitted}
     return render(request, 'proposal.html', ctx)

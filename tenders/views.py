@@ -18,23 +18,26 @@ import io as BytesIO
 def open_tenders(request):
     session = requests.Session()
     session.auth = config.AUTHS
-    year = request.session['years']
+    
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
 
     try:
         response = session.get(Access_Point, timeout=10).json()
         responses = session.get(Access, timeout=10).json()
+
         open = []
         Submitted = []
+
         for tender in response['value']:
             if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['SubmittedToPortal'] == True and tender['Status'] == 'New':
                 output_json = json.dumps(tender)
                 open.append(json.loads(output_json))
-        for tender in responses['value']:
-            if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['vendorNo']:
-                output_json = json.dumps(tender)
-                Submitted.append(json.loads(output_json))
+
+        # for tender in responses['value']:
+        #     if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['vendorNo']:
+        #         output_json = json.dumps(tender)
+        #         Submitted.append(json.loads(output_json))
 
     except requests.exceptions.ConnectionError as e:
         print(e)
@@ -45,7 +48,7 @@ def open_tenders(request):
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     states = request.session['state']
     ctx = {"today": todays_date, "res": open,
-           "count": count, "counter": counter, "sub": Submitted, "year": year,
+           "count": count, "counter": counter, "sub": Submitted,
            "states": states}
     return render(request, 'openTenders.html', ctx)
 
@@ -53,8 +56,6 @@ def open_tenders(request):
 def Open_Details(request, pk):
     session = requests.Session()
     session.auth = config.AUTHS
-
-    year = request.session['years']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
     lines = config.O_DATA.format("/ProcurementMethodLines")
@@ -132,7 +133,7 @@ def Open_Details(request, pk):
     states = request.session['state']
     ctx = {"today": todays_date, "res": res,
            "docs": Doc, "state": State,
-           "line": Lines, "year": year,
+           "line": Lines, 
            "instruct": instruct, "file": allFiles,
            "states": states}
     return render(request, "details/open.html", ctx)
@@ -233,7 +234,7 @@ def DocResponse(request, pk):
 def Restricted_tenders(request):
     session = requests.Session()
     session.auth = config.AUTHS
-    year = request.session['years']
+    
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
 
@@ -258,7 +259,7 @@ def Restricted_tenders(request):
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": Restrict,
-           "count": count, "sub": Submitted, "counter": counter, "year": year}
+           "count": count, "sub": Submitted, "counter": counter}
     return render(request, 'restrictedTenders.html', ctx)
 
 
@@ -298,7 +299,6 @@ def UploadAttachedDocument(request, pk):
 def submitted(request, pk):
     session = requests.Session()
     session.auth = config.AUTHS
-    year = request.session['years']
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
     res = " "
     try:
@@ -310,6 +310,6 @@ def submitted(request, pk):
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     states = request.session['state']
-    ctx = {"res": res, "year": year,
+    ctx = {"res": res,
            "today": todays_date,"states": states}
     return render(request, "details/submitted.html", ctx)
