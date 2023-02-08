@@ -3,7 +3,7 @@
 :root {
     --first-color: #02a552;
     --first-color-light: #6c8aaf;
-    --green-color: #134326;
+    --green-color: #f79621;
     --red-color: #e51e25;
     --sand-tan: #e1b382;
     --dark-color: #444a4a;
@@ -158,7 +158,7 @@ div.dataTables_filter input {
 }
 
 #dt-card .detail {
-    background: var(--green-color);
+    background: #02a552;
     padding: 1rem;
     color: #fff;
     font-family: var(--third-font);
