@@ -9,7 +9,8 @@
     <div class="content-wrapper" style="padding-bottom: 3rem;">
         <div class="d-xl-flex justify-content-between align-items-start">
             <h2 class="text-dark font-weight-bold mb-2"> {{res.Title}} Details
-                {% if state == 1 %}
+               
+                {% if Status == Approved %}
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dynamic{{res.No}}"
                     style="display:inline-block;"> <i class="las la-plus"></i> Respond To
                     {{res.Process_Type}}
@@ -104,7 +105,7 @@
                         <div class="mb-4">
                             <h5 class="card-title mb-0">Tender Status</h5>
                         </div>
-                        {% if res.Status == "New" %}
+                        {% if res.Status == "Approved" %}
                         <div class="row align-items-center mb-2 d-flex">
                             <div class="col-md-12">
                                 <h2 class="d-flex align-items-center mb-0">
@@ -189,14 +190,14 @@
                         <label class="form-label">Ref No</label>
                         <input type="text" class="form-control" placeholder="{{res.RefNo}}" readonly>
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <label class="form-label">Submitted To Portal</label>
                         <input type="text" class="form-control" placeholder="{{res.SubmittedToPortal}}" readonly>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Process Type</label>
                         <input type="text" class="form-control" placeholder="{{res.Process_Type}}" readonly>
-                    </div>
+                    </div> -->
                 </form>
             </div>
         </div>

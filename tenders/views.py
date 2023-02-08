@@ -36,12 +36,12 @@ def open_tenders(request):
                 output_json = json.dumps(tender)
                 open.append(json.loads(output_json))
 
-                print(open)
+                # print(open)
 
-        # for tender in responses['value']:
-        #     if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['vendorNo']:
-        #         output_json = json.dumps(tender)
-        #         Submitted.append(json.loads(output_json))
+        for tender in responses['value']:
+            if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['UserId']:
+                output_json = json.dumps(tender)
+                Submitted.append(json.loads(output_json))
 
     except requests.exceptions.ConnectionError as e:
         print(e)
@@ -51,6 +51,8 @@ def open_tenders(request):
     # creating date object
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     states = request.session['state']
+    print(states)
+
     ctx = {"today": todays_date, "res": open,
            "count": count, "counter": counter, "sub": Submitted,
            "states": states}
@@ -171,9 +173,9 @@ def DocResponse(request, pk):
     except requests.exceptions.ConnectionError as e:
         print(e)
 
-    if request.session['state'] == 'Vendor':
+    # if request.session['state'] == 'Vendor':
 
-        vendNo = request.session['vendorNo']
+        vendNo = request.session['UserId']
         docNo = pk
         unitPrice = ''
         userType = 'vendor'
@@ -252,7 +254,7 @@ def Restricted_tenders(request):
                 output_json = json.dumps(tender)
                 Restrict.append(json.loads(output_json))
         for tender in responses['value']:
-            if tender['Type'] == 'Restricted' and tender['Vendor_No'] == request.session['vendorNo']:
+            if tender['Type'] == 'Restricted' and tender['Vendor_No'] == request.session['UserId']:
                 output_json = json.dumps(tender)
                 Submitted.append(json.loads(output_json))
     except requests.exceptions.ConnectionError as e:
@@ -268,7 +270,7 @@ def Restricted_tenders(request):
 
 
 def UploadAttachedDocument(request, pk):
-    docNo = request.session['ProNumber']
+    
     response = ""
     fileName = ""
     attachment = ""
@@ -286,7 +288,7 @@ def UploadAttachedDocument(request, pk):
             attachment = base64.b64encode(files.read())
             try:
                 response = config.CLIENT.service.FnUploadAttachedDocument(
-                    docNo, fileName, attachment, tableID)
+                    pk, fileName, attachment, tableID)
             except Exception as e:
                 messages.error(request, e)
                 print(e)
@@ -308,7 +310,7 @@ def submitted(request, pk):
     try:
         response = session.get(Access, timeout=8).json()
         for tender in response['value']:
-            if tender['Tender_No_'] == pk and tender['Vendor_No'] == request.session['vendorNo']:
+            if tender['Tender_No_'] == pk and tender['Vendor_No'] == request.session['UserId']:
                 res = tender
     except requests.exceptions.ConnectionError as e:
         print(e)

@@ -28,10 +28,10 @@ def requestQuote(request):
                 output_json = json.dumps(tender)
                 OpenRFQ.append(json.loads(output_json))
 
-        # for tender in responses['value']:
-        #     if tender['Type'] == 'RFQ' and tender['Vendor_No'] == request.session['vendorNo']:
-        #         output_json = json.dumps(tender)
-        #         Submitted.append(json.loads(output_json))
+        for tender in responses['value']:
+            if tender['Type'] == 'RFQ' and tender['Vendor_No'] == request.session['UserId']:
+                output_json = json.dumps(tender)
+                Submitted.append(json.loads(output_json))
     except requests.exceptions.ConnectionError as e:
         print(e)
 
