@@ -18,16 +18,13 @@ import io as BytesIO
 def open_tenders(request):
     session = requests.Session()
     session.auth = config.AUTHS
-    
+
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
 
     try:
         response = session.get(Access_Point, timeout=10).json()
         responses = session.get(Access, timeout=10).json()
-        
-
-
         open = []
         Submitted = []
 
@@ -36,8 +33,6 @@ def open_tenders(request):
                 output_json = json.dumps(tender)
                 open.append(json.loads(output_json))
 
-                # print(open)
-
         for tender in responses['value']:
             if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['UserId']:
                 output_json = json.dumps(tender)
@@ -45,6 +40,7 @@ def open_tenders(request):
 
     except requests.exceptions.ConnectionError as e:
         print(e)
+
     count = len(open)
     counter = len(Submitted)
     # Get Timezone
@@ -82,6 +78,7 @@ def Open_Details(request, pk):
             if lines['RequisitionNo'] == pk:
                 output_json = json.dumps(lines)
                 Lines.append(json.loads(output_json))
+                print(Lines)
         for tender in response['value']:
             if tender['No'] == pk:
                 output_json = json.dumps(tender)
@@ -109,17 +106,18 @@ def Open_Details(request, pk):
                 allFiles.append(json.loads(output_json))
     except Exception as e:
         print(e)
+
     if request.method == 'POST':
         docNo = pk
         attachmentID = request.POST.get('attachmentID')
         File_Name = request.POST.get('File_Name')
         File_Extension = request.POST.get('File_Extension')
         tableID = 52177763
-          
+
         try:
             response = config.CLIENT.service.FnGetDocumentAttachment(
                 docNo, attachmentID, tableID)
-            
+
             filenameFromApp = File_Name + "." + File_Extension
             buffer = BytesIO.BytesIO()
             content = base64.b64decode(response)
@@ -139,7 +137,7 @@ def Open_Details(request, pk):
     states = request.session['state']
     ctx = {"today": todays_date, "res": res,
            "docs": Doc, "state": State,
-           "line": Lines, 
+           "line": Lines,
            "instruct": instruct, "file": allFiles,
            "states": states}
     return render(request, "details/open.html", ctx)
@@ -173,27 +171,30 @@ def DocResponse(request, pk):
     except requests.exceptions.ConnectionError as e:
         print(e)
 
-    # if request.session['state'] == 'Vendor':
+    if request.session['state'] == 'Vendor':
 
         vendNo = request.session['UserId']
         docNo = pk
         unitPrice = ''
         userType = 'vendor'
+
         if request.method == "POST":
             try:
+                myAction = request.POST.get('myAction')
+                responseNo = request.POST.get('responseNo')
                 unitPrice = float(request.POST.get('amount'))
             except ValueError:
                 messages.error(request, "Invalid Amount, Try Again!!")
                 return redirect('Odetails', pk=docNo)
             try:
                 if vendNo != '':
-                    result = config.CLIENT.service.FnCreateProspectiveSupplier(
-                        vendNo, procurementMethod, docNo, unitPrice,userType)
+                    result = config.CLIENT.service.FnCreateProspectiveSupplier(myAction, responseNo,
+                                                                               vendNo, procurementMethod, docNo, unitPrice, userType)
                     print(result)
-                    if result:
-                        request.session['ProNumber'] = result
+                    # if result:
+                    #     request.session['ProNumber'] = result
 
-                        ProNumber = request.session['ProNumber']
+                    #     ProNumber = request.session['ProNumber']
 
                     if result == True:
 
@@ -203,15 +204,18 @@ def DocResponse(request, pk):
             except Exception as e:
                 messages.error(request, e)
                 print(e)
+
     if request.session['state'] == 'Prospect':
 
-        vendNo = request.session['ProspectNo']
+        vendNo = request.session['UserId']
         docNo = pk
         unitPrice = ''
-        userType ='prospective'
+        userType = 'prospective'
 
         if request.method == "POST":
             try:
+                myAction = request.POST.get('myAction')
+                responseNo = request.POST.get('responseNo')
                 unitPrice = float(request.POST.get('amount'))
             except ValueError:
                 messages.error(request, "Invalid Amount, Try Again!!")
@@ -222,11 +226,11 @@ def DocResponse(request, pk):
             print(userType)
             try:
                 if vendNo != '':
-                    result = config.CLIENT.service.FnCreateProspectiveSupplier(
-                        vendNo, procurementMethod, docNo, unitPrice,userType)
-                    print("result",result)
-                    if result:
-                        request.session['ProNumber'] = result
+                    result = config.CLIENT.service.FnCreateProspectiveSupplier(myAction, responseNo,
+                                                                               vendNo, procurementMethod, docNo, unitPrice, userType)
+                    print("result", result)
+                    # if result:
+                    #     request.session['ProNumber'] = result
                     if result == True:
                         messages.success(
                             request, f"You have successfully Applied for Doc number {docNo}")
@@ -237,10 +241,41 @@ def DocResponse(request, pk):
     return redirect('Odetails', pk=docNo)
 
 
+def fnInsertSuppliersToProcurementMethod(request, pk):
+    session = requests.Session()
+    session.auth = config.AUTHS
+    Access_Point = config.O_DATA.format("/ProcurementMethods")
+
+    try:
+        response = session.get(Access_Point, timeout=8).json()
+
+        if request.method == 'POST':
+            try:
+                referenceNo = request.POST.get('referenceNo')
+                supplierCode = request.session['UserId']
+
+                response = config.CLIENT.service.fnInsertSuppliersToProcurementMethod(
+                    referenceNo, supplierCode
+                )
+                if response == True:
+                    messages.success(request, "Submitted successfully for review")
+                    return redirect('Odetails', pk=pk)
+                else:
+                    messages.error(request, "Failed, Try Again")
+                    return redirect('Odetails', pk=pk)
+            except Exception as e:
+                messages.error(request, e)
+                redirect('Odetails', pk=pk)
+    except Exception as e:
+        messages.error(request, e)
+        redirect('Odetails', pk=pk)
+        
+    return redirect('Odetails', pk=pk)
+
 def Restricted_tenders(request):
     session = requests.Session()
     session.auth = config.AUTHS
-    
+
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
 
@@ -270,8 +305,9 @@ def Restricted_tenders(request):
 
 
 def UploadAttachedDocument(request, pk):
-    
-    response = ""
+
+    session = requests.Session()
+    response = request.session['UserId']
     fileName = ""
     attachment = ""
     # tableID = 52177763 get checklist
@@ -317,5 +353,5 @@ def submitted(request, pk):
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     states = request.session['state']
     ctx = {"res": res,
-           "today": todays_date,"states": states}
+           "today": todays_date, "states": states}
     return render(request, "details/submitted.html", ctx)

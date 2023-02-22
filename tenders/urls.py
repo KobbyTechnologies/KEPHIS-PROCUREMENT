@@ -11,4 +11,7 @@ urlpatterns = [
          views.UploadAttachedDocument, name="UploadAttachedDocument"),
 
     path('submitted/<str:pk>', views.submitted, name="submit"),
+
+    path('fnInsertSuppliersToProcurementMethod/<str:pk>', 
+         views.fnInsertSuppliersToProcurementMethod, name='fnInsertSuppliersToProcurementMethod'),
 ]

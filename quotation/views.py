@@ -8,7 +8,6 @@ from django.conf import settings as config
 import datetime
 from django.contrib import messages
 
-
 # Create your views here.
 
 
@@ -23,6 +22,7 @@ def requestQuote(request):
         responses = session.get(Access, timeout=10).json()
         OpenRFQ = []
         Submitted = []
+
         for tender in response['value']:
             if tender['Process_Type'] == 'RFQ' and tender['SubmittedToPortal'] == True and tender['Status'] == 'Approved':
                 output_json = json.dumps(tender)
@@ -32,6 +32,7 @@ def requestQuote(request):
             if tender['Type'] == 'RFQ' and tender['Vendor_No'] == request.session['UserId']:
                 output_json = json.dumps(tender)
                 Submitted.append(json.loads(output_json))
+                
     except requests.exceptions.ConnectionError as e:
         print(e)
 

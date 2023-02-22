@@ -15,7 +15,6 @@ def interest_request(request):
     session = requests.Session()
     session.auth = config.AUTHS
 
-
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
     try:
