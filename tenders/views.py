@@ -342,7 +342,7 @@ def fnCreateProspectiveTenderLine(request, pk):
             print('tenderNo', tenderNo)
             print('Amount:', amount)
 
-            response = config.CLIENT.service.fnCreateprospectiveSupplierTender(
+            response = config.CLIENT.service.fnCreateProspectiveTenderLine(
                 prospectNo, vendorNo, tenderNo, amount)
 
             if response == True:
@@ -377,17 +377,23 @@ def fnModifyProspectiveTenderLine(request, pk):
             lineNo = request.POST.get('lineNo')
             tenderNo = request.POST.get('tenderNo')
 
-            response = config.CLIENT.service.fnCreateprospectiveSupplierTender(
-                prospectNo, vendorNo, lineNo, tenderNo, amount)
+            print('prospectNo;', prospectNo)
+            print("vendorNo:", vendorNo)
+            print('tenderNo', tenderNo)
+            print('lineNo:', lineNo)
+            print('Amount:', amount)
+            
+            response = config.CLIENT.service.fnModifyProspectiveTenderLine(
+                prospectNo, vendorNo, tenderNo, lineNo, amount)
             if response == True:
                 messages.success(
                     request, f'successful proceed to add your quoted amount')
                 return redirect('Odetails', pk=pk)
             elif response == False:
-                messages.error(request, f'Something went wrong! Try again.')
+                messages.error(request, f'{response}')
                 return redirect('Odetails', pk=pk)
             else:
-                messages.error(request, f'Something went wrong! Try again.')
+                messages.error(request, f'{response}')
                 return redirect('Odetails', pk=pk)
         except Exception as e:
             messages.error(request, f'{e}')

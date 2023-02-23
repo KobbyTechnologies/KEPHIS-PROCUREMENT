@@ -259,6 +259,10 @@
                                                                 data-bs-target="#line{{res.LineNo}}"
                                                                 style="display:inline-block;">Add Quotation Amount
                                                             </button>
+                                                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                                                data-bs-target="#lineMod{{res.LineNo}}"
+                                                                style="display:inline-block;">Edit
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                     <div class="modal fade" id="line{{res.LineNo}}" tabindex="-1"
@@ -298,6 +302,48 @@
                                                                         </div> -->
                                                                     </form>
                                                                 </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade" id="lineMod{{res.LineNo}}" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                                        LIne No. {{res.LineNo}}</h1>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form
+                                                                        action="{% url 'fnModifyProspectiveTenderLine' res.RequisitionNo %}"
+                                                                        class="needs-validation" id="" method="post">
+                                                                        {% csrf_token %}
+                                                                        <input type="hidden" name="tenderNo"
+                                                                            value="{{res.RequisitionNo}}">
+                                                                        <input type="text" name="lineNo"
+                                                                            value="{{res.LineNo}}" hidden>
+                                                                        <label class="form-label">Amount:</label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="amount" id="amount" placeholder="Ksh"
+                                                                            required>
+                                                                        <div class="invalid-feedback">
+                                                                            Please provide the Unit price of the
+                                                                            product.
+                                                                        </div>
+                                                                        <button type="submit" id="submit-button"
+                                                                            class="btn btn-primary my-3">Submit</button>
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <!-- <div class="result py-3">
+                                                                            <p id="innerReslts" style="color:#196F3D;font-weight:bold"></p>
+                                                                        </div> -->
+                                                                    </form>
+                                                                </div>
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>
