@@ -11,10 +11,20 @@
             <h2 class="text-dark font-weight-bold mb-2"> {{res.Title}} Details
 
                 {% if Status == Approved %}
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dynamic{{res.No}}"
+                <form action="{% url 'fnCreateprospectiveSupplierTender' res.No %}" method="post" style="display:inline-block;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="hidden" name="tenderNo" value="{{res.No}}">
+                        <input type="hidden" name="procurementMethod" value="0">
+                        <input type="hidden" name="myAction" value="insert">
+                    </div>
+                    <button type="submit" id="submit-button" class="btn btn-primary my-3">Respond to
+                        {{res.Process_Type}}</button>
+                </form>
+                <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dynamic{{res.No}}"
                     style="display:inline-block;"> <i class="las la-plus"></i> Respond To
                     {{res.Process_Type}}
-                </button>
+                </button> -->
                 {% for res in file %}
                 <form action="{% url 'Odetails' res.No_ %}" method="post" style="display:inline-block;">
                     {% csrf_token %}
@@ -263,11 +273,14 @@
                                                                         aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form action="{% url 'DocResponse' res.RequisitionNo %}"
-                                                                        class="needs-validation" id=""
-                                                                        method="post">
+                                                                    <form
+                                                                        action="{% url 'fnCreateProspectiveTenderLine' res.RequisitionNo %}"
+                                                                        class="needs-validation" id="" method="post">
                                                                         {% csrf_token %}
-
+                                                                        <input type="hidden" name="tenderNo"
+                                                                            value="{{res.RequisitionNo}}">
+                                                                        <input type="text" name="lineNo"
+                                                                            value="{{res.LineNo}}" hidden>
                                                                         <label class="form-label">Amount:</label>
                                                                         <input type="text" class="form-control"
                                                                             name="amount" id="amount" placeholder="Ksh"
@@ -276,8 +289,6 @@
                                                                             Please provide the Unit price of the
                                                                             product.
                                                                         </div>
-                                                                        <input type="text" name="myAction" value="modify" hidden>
-                                                                        <input type="text" name="responseNo" value="{{res.LineNo}}" hidden>
                                                                         <button type="submit" id="submit-button"
                                                                             class="btn btn-primary my-3">Submit</button>
                                                                         <button type="button" class="btn btn-secondary"
@@ -317,6 +328,13 @@
                                                 </div>
                                             </div>
                                             {% endfor %}
+                                            <div class="row justify-content-end text-end">
+                                                <div class="col-md-3">
+                                                    <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#addAttachment" style="display:inline-block;">Add
+                                                        Attachments</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -325,9 +343,9 @@
                                     <div class="mb-3">
                                         <input type="hidden" name="referenceNo" value="{{res.No}}">
                                     </div>
-                                    <button type="submit" id="submit-button"
-                                    class="btn btn-primary my-3">Submit for Review</button>
-                                </form>    
+                                    <button type="submit" id="submit-button" class="btn btn-primary my-3">Submit for
+                                        Review</button>
+                                </form>
                             </div>
 
                         </div>
@@ -349,8 +367,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="" class="myForm needs-validation"
-                    id="amountForm" novalidate>
+                <form method="post" action="" class="myForm needs-validation" id="amountForm" novalidate>
                     {% csrf_token %}
                     <div>
                         <label class="form-label">Amount:</label>
@@ -382,7 +399,43 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" id="attachForm" method="post" class="myForm"
+                <form action="" id="attachForm" method="post" class="myForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <p class="text-dark">Select and Upload the following Attachments at once. </p>
+                    <ol>
+                        {% for docs in docs %}
+                        <li>
+                            {{docs.DocumentName}}
+                        </li>
+                        {% endfor %}
+                        <li>
+                            {{res.Title}} Checklist
+                        </li>
+                    </ol>
+                    <div class=" mb-3">
+                        <label class="form-label">Attachments</label>
+                        <input class="form-control" name="attachment" type="file" multiple>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Attachment -->
+<div class="modal fade" id="addAttachment" aria-hidden="true" aria-labelledby="addAttachmentLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAttachmentLabel">Upload attachments</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'UploadAttachedDocument' res.No %}" id="attachForm" method="post" class="myForm"
                     enctype="multipart/form-data">
                     {% csrf_token %}
                     <p class="text-dark">Select and Upload the following Attachments at once. </p>
@@ -409,6 +462,7 @@
         </div>
     </div>
 </div>
+
 {% endblock %}
 <script type="text/javascript">
     $(window).on('load', function () {

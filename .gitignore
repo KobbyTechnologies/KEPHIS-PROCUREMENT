@@ -5,3 +5,4 @@ venv/
 runs.py
 Pipfile
 Pipfile.lock
+rinfo.py
