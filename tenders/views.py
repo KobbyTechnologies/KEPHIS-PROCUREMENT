@@ -23,10 +23,12 @@ def open_tenders(request):
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
     open = ''
     Submitted = ''
+    interest = ''
     try:
         response = session.get(Access_Point, timeout=10).json()
         responses = session.get(Access, timeout=10).json()
         open = []
+        interest = []
         Submitted = []
 
         for tender in response['value']:
@@ -39,10 +41,16 @@ def open_tenders(request):
                 output_json = json.dumps(tender)
                 Submitted.append(json.loads(output_json))
 
+        for tender in responses['value']:
+            if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['UserId']:
+                output_json = json.dumps(tender)
+                interest.append(json.loads(output_json))
+        # print(interest)
     except requests.exceptions.ConnectionError as e:
         print(e)
 
     count = len(open)
+    interestCount= len(interest)
     counter = len(Submitted)
     # Get Timezone
     # creating date object
@@ -52,7 +60,7 @@ def open_tenders(request):
 
     ctx = {"today": todays_date, "res": open,
            "count": count, "counter": counter, "sub": Submitted,
-           "states": states}
+           "states": states, 'interestCount': interestCount, 'interest': interest}
     return render(request, 'openTenders.html', ctx)
 
 
@@ -145,6 +153,108 @@ def Open_Details(request, pk):
            "instruct": instruct, "file": allFiles,
            "states": states}
     return render(request, "details/open.html", ctx)
+
+
+def Eval_Details(request, pk):
+    session = requests.Session()
+    UserId = request.session['UserId']
+    session.auth = config.AUTHS
+    Access_Point = config.O_DATA.format("/QyProspectiveSupplierTender")
+    Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
+    lines = config.O_DATA.format(
+        f"/QyProspectiveTenderLines?$filter=Response_No%20eq%20%27{UserId}%27")
+    lines2 = config.O_DATA.format("/ProcurementMethodLines")
+    Access_File = config.O_DATA.format("/QyDocumentAttachments")
+
+    res = ''
+    State = ''
+    instruct = ""
+    files = ""
+    Doc = ''
+    Lines = ''
+    LinesData = ''
+    allFiles = ''
+    try:
+        r = session.get(Access2, timeout=7).json()
+        response = session.get(Access_Point, timeout=8).json()
+        lines_res = session.get(lines, timeout=8).json()
+        lines_data = session.get(lines2, timeout=8).json()
+        Open = []
+        Doc = []
+        Lines = []
+        LinesData = []
+        for lines in lines_res['value']:
+            if lines['Tender_No_'] == pk:
+                output_json = json.dumps(lines)
+                Lines.append(json.loads(output_json))
+
+        for data in lines_data['value']:
+            if data['RequisitionNo'] == pk:
+                output_json = json.dumps(data)
+                LinesData.append(json.loads(output_json))
+                print(LinesData)
+        for tender in response['value']:
+            if tender['Tender_No_'] == pk:
+                output_json = json.dumps(tender)
+                Open.append(json.loads(output_json))
+                responses = Open
+                for my_tender in responses:
+                    if my_tender['Tender_No_'] == pk:
+                        res = my_tender
+                        # instruct = my_tender['Instructions']
+                    if my_tender['Tender_Status'] == "Open":
+                        State = 1
+        for docs in r['value']:
+            if docs['QuoteNo'] == pk:
+                output_json = json.dumps(docs)
+                Doc.append(json.loads(output_json))
+
+    except requests.exceptions.ConnectionError as e:
+        print(e)
+    try:
+        allFiles = []
+        res_file = session.get(Access_File, timeout=10).json()
+        for tender in res_file['value']:
+            if tender['No_'] == pk:
+                output_json = json.dumps(tender)
+                allFiles.append(json.loads(output_json))
+    except Exception as e:
+        print(e)
+
+    # if request.method == 'POST':
+    #     docNo = pk
+    #     attachmentID = request.POST.get('attachmentID')
+    #     File_Name = request.POST.get('File_Name')
+    #     File_Extension = request.POST.get('File_Extension')
+    #     tableID = 52177788
+
+    #     try:
+    #         response = config.CLIENT.service.FnGetDocumentAttachment(
+    #             docNo, attachmentID, tableID)
+
+    #         filenameFromApp = File_Name + "." + File_Extension
+    #         buffer = BytesIO.BytesIO()
+    #         content = base64.b64decode(response)
+    #         buffer.write(content)
+    #         responses = HttpResponse(
+    #             buffer.getvalue(),
+    #             content_type="application/ms-excel",
+    #         )
+    #         responses['Content-Disposition'] = f'inline;filename={filenameFromApp}'
+    #         return responses
+    #     except Exception as e:
+    #         messages.error(request, f'{e}')
+    #         print(e)
+    #     return redirect('Odetails', pk=docNo)
+
+    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+    states = request.session['state']
+    ctx = {"today": todays_date, "res": res,
+           "docs": Doc, "state": State,
+           "line": Lines, 'data':LinesData,
+           "instruct": instruct, "file": allFiles,
+           "states": states}
+    return render(request, "details/evaluation.html", ctx)
 
 
 def DocResponse(request, pk):
@@ -309,18 +419,18 @@ def fnCreateprospectiveSupplierTender(request, pk):
             if response == True:
                 messages.success(
                     request, f'successful proceed to add your quoted amount')
-                return redirect('Odetails', pk=pk)
+                return redirect('evaluation', pk=pk)
             elif response == False:
                 messages.error(request, f'Something went wrong! Try again.')
-                return redirect('Odetails', pk=pk)
+                return redirect('evaluation', pk=pk)
             else:
                 messages.error(request, f'Something went wrong! Try again.')
-                return redirect('Odetails', pk=pk)
+                return redirect('evaluation', pk=pk)
         except Exception as e:
-            messages.error(request, f'{e}')
-            redirect('Odetails', pk=pk)
+            messages.error(request, f'You have already chosen the option')
+            redirect('submit', pk=pk)
 
-    return redirect('Odetails', pk=pk)
+    return redirect('evaluation', pk=pk)
 
 
 def fnCreateProspectiveTenderLine(request, pk):
@@ -335,7 +445,7 @@ def fnCreateProspectiveTenderLine(request, pk):
                 vendorNo = request.session('UserId')
 
             tenderNo = request.POST.get('tenderNo')
-            amount = request.POST.get('amount')
+            amount = float(request.POST.get('amount'))
 
             print('prospectNo;', prospectNo)
             print("vendorNo:", vendorNo)
@@ -344,22 +454,23 @@ def fnCreateProspectiveTenderLine(request, pk):
 
             response = config.CLIENT.service.fnCreateProspectiveTenderLine(
                 prospectNo, vendorNo, tenderNo, amount)
+            print(response)
 
             if response == True:
                 messages.success(
-                    request, f'successful proceed to add your quoted amount')
-                return redirect('Odetails', pk=pk)
+                    request, f'successfully Edited quoted Amount')
+                return redirect('evaluation', pk=pk)
             elif response == False:
                 messages.error(request, f'Something went wrong! Try again.')
-                return redirect('Odetails', pk=pk)
+                return redirect('evaluation', pk=pk)
             else:
                 messages.error(request, f'Something went wrong! Try again.')
-                return redirect('Odetails', pk=pk)
+                return redirect('evaluation', pk=pk)
         except Exception as e:
             messages.error(request, f'{e}')
-            redirect('Odetails', pk=pk)
+            redirect('submit', pk=pk)
 
-    return redirect('Odetails', pk=pk)
+    return redirect('evaluation', pk=pk)
 
 
 def fnModifyProspectiveTenderLine(request, pk):
@@ -373,7 +484,7 @@ def fnModifyProspectiveTenderLine(request, pk):
             elif request.session['state'] == 'Vendor':
                 vendorNo = request.session('UserId')
 
-            amount = request.POST.get('amount')
+            amount = float(request.POST.get('amount'))
             lineNo = request.POST.get('lineNo')
             tenderNo = request.POST.get('tenderNo')
 
@@ -382,57 +493,59 @@ def fnModifyProspectiveTenderLine(request, pk):
             print('tenderNo', tenderNo)
             print('lineNo:', lineNo)
             print('Amount:', amount)
-            
+
             response = config.CLIENT.service.fnModifyProspectiveTenderLine(
                 prospectNo, vendorNo, tenderNo, lineNo, amount)
+            print(response)
             if response == True:
                 messages.success(
-                    request, f'successful proceed to add your quoted amount')
-                return redirect('Odetails', pk=pk)
+                    request, f'successfully Edited quoted Amount')
+                return redirect('evaluation', pk=pk)
             elif response == False:
                 messages.error(request, f'{response}')
-                return redirect('Odetails', pk=pk)
+                return redirect('evaluation', pk=pk)
             else:
                 messages.error(request, f'{response}')
-                return redirect('Odetails', pk=pk)
+                return redirect('evaluation', pk=pk)
         except Exception as e:
             messages.error(request, f'{e}')
-            redirect('Odetails', pk=pk)
+            redirect('evaluation', pk=pk)
 
-    return redirect('Odetails', pk=pk)
+    return redirect('evaluation', pk=pk)
 
 
 def fnInsertSuppliersToProcurementMethod(request, pk):
     session = requests.Session()
     session.auth = config.AUTHS
-    Access_Point = config.O_DATA.format("/ProcurementMethods")
+    Access_Point = config.O_DATA.format("/QyProspectiveSupplierTender")
 
     try:
         response = session.get(Access_Point, timeout=8).json()
 
         if request.method == 'POST':
             try:
-                referenceNo = request.POST.get('referenceNo')
+                referenceNo = pk
                 supplierCode = request.session['UserId']
 
                 response = config.CLIENT.service.fnInsertSuppliersToProcurementMethod(
                     referenceNo, supplierCode
                 )
+                print(pk)
                 if response == True:
                     messages.success(
                         request, "Submitted successfully for review")
-                    return redirect('Odetails', pk=pk)
+                    return redirect('evaluation', pk=pk)
                 else:
                     messages.error(request, "Failed, Try Again")
-                    return redirect('Odetails', pk=pk)
+                    return redirect('evaluation', pk=pk)
             except Exception as e:
                 messages.error(request, f'{e}')
-                redirect('Odetails', pk=pk)
+                redirect('submit', pk=pk)
     except Exception as e:
         messages.error(request, f'{e}')
-        redirect('Odetails', pk=pk)
+        redirect('submit', pk=pk)
 
-    return redirect('Odetails', pk=pk)
+    return redirect('evaluation', pk=pk)
 
 
 def Restricted_tenders(request):
@@ -484,7 +597,7 @@ def UploadAttachedDocument(request, pk):
             attach = request.FILES.getlist('attachment')
         except Exception as e:
             print("Not Working")
-            return redirect('Odetails', pk=pk)
+            return redirect('evaluation', pk=pk)
         for files in attach:
             fileName = request.FILES['attachment'].name
             attachment = base64.b64encode(files.read())
@@ -497,12 +610,12 @@ def UploadAttachedDocument(request, pk):
                 print(e)
         if response == True:
             messages.success(request, "Successfully Sent !!")
-            return redirect('Odetails', pk=pk)
+            return redirect('evaluation', pk=pk)
         else:
             messages.error(request, "Not Sent !!")
-            return redirect('Odetails', pk=pk)
+            return redirect('evaluation', pk=pk)
 
-    return redirect('Odetails', pk=pk)
+    return redirect('evaluation', pk=pk)
 
 
 def submitted(request, pk):
