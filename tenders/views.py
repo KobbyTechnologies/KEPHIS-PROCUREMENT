@@ -192,7 +192,7 @@ def Eval_Details(request, pk):
             if data['RequisitionNo'] == pk:
                 output_json = json.dumps(data)
                 LinesData.append(json.loads(output_json))
-                print(LinesData)
+                # print(LinesData)
         for tender in response['value']:
             if tender['Tender_No_'] == pk:
                 output_json = json.dumps(tender)
@@ -407,15 +407,15 @@ def fnCreateprospectiveSupplierTender(request, pk):
 
             tenderNo = request.POST.get('tenderNo')
 
-            print('prospectNo;', prospectNo)
-            print("vendorNo:", vendorNo)
-            print('procurementMethod:', procurementMethod)
-            print('tenderNo', tenderNo)
-            print('myAction:', myAction)
+            # print('prospectNo;', prospectNo)
+            # print("vendorNo:", vendorNo)
+            # print('procurementMethod:', procurementMethod)
+            # print('tenderNo', tenderNo)
+            # print('myAction:', myAction)
 
             response = config.CLIENT.service.fnCreateprospectiveSupplierTender(
                 myAction, prospectNo, procurementMethod, tenderNo, vendorNo)
-
+            print(response)
             if response == True:
                 messages.success(
                     request, f'successful proceed to add your quoted amount')
@@ -530,7 +530,9 @@ def fnInsertSuppliersToProcurementMethod(request, pk):
                 response = config.CLIENT.service.fnInsertSuppliersToProcurementMethod(
                     referenceNo, supplierCode
                 )
-                print(pk)
+
+                # print(response)
+
                 if response == True:
                     messages.success(
                         request, "Submitted successfully for review")

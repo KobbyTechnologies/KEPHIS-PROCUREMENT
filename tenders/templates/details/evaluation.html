@@ -446,9 +446,7 @@
                                 <form action="{% url 'fnInsertSuppliersToProcurementMethod' res.Tender_No_ %}"
                                     method="post">
                                     {% csrf_token %}
-                                    <div class="mb-3">
-                                        <input type="hidden" name="referenceNo" value="{{res.Tender_No_}}">
-                                    </div>
+                                    
                                     <button type="submit" id="submit-button" class="btn btn-primary my-3">Submit for
                                         Review</button>
                                 </form>

@@ -230,7 +230,7 @@
                     <form action="{% url 'fnCreateprospectiveSupplierTender' res.No %}" method="post" style="display:inline-block;" >
                         {% csrf_token %}
                         <div class="mb-3">
-                            <input type="hidden" name="tenderNo" value="{{res.Tender_No_}}">
+                            <input type="hidden" name="tenderNo" value="{{res.No}}">
                             <input type="hidden" name="procurementMethod" value="0">
                             <input type="hidden" name="myAction" value="insert">
                         </div>
