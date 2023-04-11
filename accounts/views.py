@@ -33,6 +33,8 @@ class login_request(UserObjectMixin, View):
                             request.session['UserId'] = vendor['No']
                             request.session['state'] = "Vendor"
                             return redirect('dashboard')
+                        messages.success(request, 'Logged in Succesfully')
+                        
                         messages.error(
                             request, "Invalid Credentials. Please reset your password else create a new account")
                         return redirect('login')
@@ -66,6 +68,7 @@ class FnResetPassword(UserObjectMixin, View):
                 emailAddress = request.POST.get('emailAddress')
                 vendors = self.one_filter(
                     "/VendorDetails", "EMail", "eq", emailAddress)
+                print(vendors)
                 for users in vendors[1]:
                     if users['EMail'] == emailAddress:
                         request.session['resetMail'] = users['EMail']

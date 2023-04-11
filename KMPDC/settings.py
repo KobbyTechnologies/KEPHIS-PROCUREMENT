@@ -134,13 +134,13 @@ ENCRYPT_KEY = b'8zUwJvYZKzgecbudNa7zjhsjTDW-79fwwtUHQn8YCos='
 # EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 # EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
+DEFAULT_FROM_EMAIL ='info.motanya@gmail.com'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'francismotanya@gmail.com'
-EMAIL_HOST_PASSWORD = 'Frymn_324'
-DEFAULT_FROM_EMAIL ='francismotanya@gmail.com'
+EMAIL_HOST_USER = 'info.motanya@gmail.com'
+EMAIL_HOST_PASSWORD = 'zccmeinohtrlfpyp'
 
 
 # Static files (CSS, JavaScript, Images)

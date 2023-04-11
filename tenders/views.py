@@ -20,7 +20,7 @@ def open_tenders(request):
     session.auth = config.AUTHS
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
-    Access = config.O_DATA.format("/QyProspectiveSupplierTender")
+    Access = config.O_DATA.format(f"/QyProspectiveSupplierTender")
     open = ''
     Submitted = ''
     interest = ''
@@ -45,7 +45,8 @@ def open_tenders(request):
             if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['UserId']:
                 output_json = json.dumps(tender)
                 interest.append(json.loads(output_json))
-        # print(interest)
+                
+        print(interest)
     except requests.exceptions.ConnectionError as e:
         print(e)
 
@@ -595,21 +596,7 @@ def UploadAttachedDocument(request, pk):
     tableID = 52177788
 
     if request.method == "POST":
-        try:
-            attach = request.FILES.getlist('attachment')
-        except Exception as e:
-            print("Not Working")
-            return redirect('evaluation', pk=pk)
-        for files in attach:
-            fileName = request.FILES['attachment'].name
-            attachment = base64.b64encode(files.read())
-
-            try:
-                response = config.CLIENT.service.FnUploadProspectiveLineAttachedDocument(
-                    pk, fileName, attachment, tableID, myUserId, vendorNo, pk)
-            except Exception as e:
-                messages.error(request, f"{e}")
-                print(e)
+        
         if response == True:
             messages.success(request, "Successfully Sent !!")
             return redirect('evaluation', pk=pk)
