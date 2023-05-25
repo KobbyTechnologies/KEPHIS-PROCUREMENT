@@ -11,58 +11,53 @@ from django.contrib import messages
 import base64
 from django.http import HttpResponse
 import io as BytesIO
-
+from myRequest.views import UserObjectMixin
+from django.views import View
 # Create your views here.
 
 
-def open_tenders(request):
-    session = requests.Session()
-    session.auth = config.AUTHS
+class OppenTenders(UserObjectMixin, View):
+    def get(self, request):
+        try:
+            UserId = request.session['UserId']
+            todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+            states = request.session['state']
+            vendor_status = ''
+            print(UserId)
+            print(states)
 
-    Access_Point = config.O_DATA.format("/ProcurementMethods")
-    Access = config.O_DATA.format(f"/QyProspectiveSupplierTender")
-    open = ''
-    Submitted = ''
-    interest = ''
-    try:
-        response = session.get(Access_Point, timeout=10).json()
-        responses = session.get(Access, timeout=10).json()
-        open = []
-        interest = []
-        Submitted = []
+            Access_Point = config.O_DATA.format(
+                f"/ProcurementMethods?$filter=Process_Type%20eq%20%27Tender%27%20and%20SubmittedToPortal%20eq%20true%20and%20Status%20eq%20%27Approved%27")
+            openTender = self.get_object(Access_Point)
+            open = [x for x in openTender['value']]
 
-        for tender in response['value']:
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == 'Open Tender' and tender['SubmittedToPortal'] == True and tender['Status'] == 'Approved':
-                output_json = json.dumps(tender)
-                open.append(json.loads(output_json))
+            Access = config.O_DATA.format(
+                f"/QyProspectiveSupplierTender?$filter=Type%20eq%20%27Tender%27")
+            submittedTender = self.get_object(Access)
+            if vendor_status == states:
+                Submitted = [x for x in submittedTender['value'] if x['Vendor_No']
+                             == UserId and x['Sent_for_Evaluation'] == True]
+                interest = [x for x in submittedTender['value'] if x['Vendor_No']
+                            == UserId and x['Sent_for_Evaluation'] == False]
+            else:
+                Submitted = [x for x in submittedTender['value'] if x['Prospect_No_']
+                             == UserId and x['Sent_for_Evaluation'] == True]
+                interest = [x for x in submittedTender['value'] if x['Prospect_No_']
+                            == UserId and x['Sent_for_Evaluation'] == False]
 
-        for tender in responses['value']:
-            if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['UserId']:
-                output_json = json.dumps(tender)
-                Submitted.append(json.loads(output_json))
+            count = len(open)
+            interestCount = len(interest)
+            counter = len(Submitted)
 
-        for tender in responses['value']:
-            if tender['Type'] == 'Tender' and tender['Vendor_No'] == request.session['UserId']:
-                output_json = json.dumps(tender)
-                interest.append(json.loads(output_json))
-                
-        print(interest)
-    except requests.exceptions.ConnectionError as e:
-        print(e)
+        except Exception as e:
+            print(e)
+            messages.error(request, "Wrong UserID")
+            return redirect('openTenders')
 
-    count = len(open)
-    interestCount= len(interest)
-    counter = len(Submitted)
-    # Get Timezone
-    # creating date object
-    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    states = request.session['state']
-    print(states)
-
-    ctx = {"today": todays_date, "res": open,
-           "count": count, "counter": counter, "sub": Submitted,
-           "states": states, 'interestCount': interestCount, 'interest': interest}
-    return render(request, 'openTenders.html', ctx)
+        ctx = {"today": todays_date, "res": open,
+               "count": count, "counter": counter, "sub": Submitted,
+               "states": states, 'interestCount': interestCount, 'interest': interest}
+        return render(request, 'openTenders.html', ctx)
 
 
 def Open_Details(request, pk):
@@ -156,106 +151,61 @@ def Open_Details(request, pk):
     return render(request, "details/open.html", ctx)
 
 
-def Eval_Details(request, pk):
-    session = requests.Session()
-    UserId = request.session['UserId']
-    session.auth = config.AUTHS
-    Access_Point = config.O_DATA.format("/QyProspectiveSupplierTender")
-    Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
-    lines = config.O_DATA.format(
-        f"/QyProspectiveTenderLines?$filter=Response_No%20eq%20%27{UserId}%27")
-    lines2 = config.O_DATA.format("/ProcurementMethodLines")
-    Access_File = config.O_DATA.format("/QyDocumentAttachments")
+class EvaluationDetails(UserObjectMixin, View):
+    def get(self, request, pk):
+        try:
+            UserId = request.session['UserId']
+            todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
+            states = request.session['state']
+            print(states)
+            print(UserId)
+            print ('PK:', pk)
+            res = {}
 
-    res = ''
-    State = ''
-    instruct = ""
-    files = ""
-    Doc = ''
-    Lines = ''
-    LinesData = ''
-    allFiles = ''
-    try:
-        r = session.get(Access2, timeout=7).json()
-        response = session.get(Access_Point, timeout=8).json()
-        lines_res = session.get(lines, timeout=8).json()
-        lines_data = session.get(lines2, timeout=8).json()
-        Open = []
-        Doc = []
-        Lines = []
-        LinesData = []
-        for lines in lines_res['value']:
-            if lines['Tender_No_'] == pk:
-                output_json = json.dumps(lines)
-                Lines.append(json.loads(output_json))
+            Access_Point = config.O_DATA.format(
+                f"/QyProspectiveSupplierTender?$filter=Tender_No_%20eq%20%27{pk}%27%20and%20Prospect_No_%20eq%20%27{UserId}%27")
+            response = self.get_object(Access_Point)
 
-        for data in lines_data['value']:
-            if data['RequisitionNo'] == pk:
-                output_json = json.dumps(data)
-                LinesData.append(json.loads(output_json))
-                # print(LinesData)
-        for tender in response['value']:
-            if tender['Tender_No_'] == pk:
-                output_json = json.dumps(tender)
-                Open.append(json.loads(output_json))
-                responses = Open
-                for my_tender in responses:
-                    if my_tender['Tender_No_'] == pk:
-                        res = my_tender
-                        # instruct = my_tender['Instructions']
-                    if my_tender['Tender_Status'] == "Open":
-                        State = 1
-        for docs in r['value']:
-            if docs['QuoteNo'] == pk:
-                output_json = json.dumps(docs)
-                Doc.append(json.loads(output_json))
+            for tender in response['value']:
+                res = tender
 
-    except requests.exceptions.ConnectionError as e:
-        print(e)
-    try:
-        allFiles = []
-        res_file = session.get(Access_File, timeout=10).json()
-        for tender in res_file['value']:
-            if tender['No_'] == pk:
-                output_json = json.dumps(tender)
-                allFiles.append(json.loads(output_json))
-    except Exception as e:
-        print(e)
+            Access2 = config.O_DATA.format(
+                f"/ProcurementRequiredDocs?$filter=QuoteNo%20eq%20%27{pk}%27")
+            Proc_Files = self.get_object(Access2)
+            Doc = [x for x in Proc_Files['value']]
 
-    # if request.method == 'POST':
-    #     docNo = pk
-    #     attachmentID = request.POST.get('attachmentID')
-    #     File_Name = request.POST.get('File_Name')
-    #     File_Extension = request.POST.get('File_Extension')
-    #     tableID = 52177788
+            lines = config.O_DATA.format(
+                f"/QyProspectiveTenderLines?$filter=Tender_No_%20eq%20%27{pk}%27")
+            ProcLines = self.get_object(lines)
+            Lines = [x for x in ProcLines['value']]
+            print(Lines)
 
-    #     try:
-    #         response = config.CLIENT.service.FnGetDocumentAttachment(
-    #             docNo, attachmentID, tableID)
+            Access_File = config.O_DATA.format(
+                f"/QyDocumentAttachments?$filter=No_%20eq%20%27{pk}%27")
+            attachment = self.get_object(Access_File)
+            allFiles = [x for x in attachment['value']]
 
-    #         filenameFromApp = File_Name + "." + File_Extension
-    #         buffer = BytesIO.BytesIO()
-    #         content = base64.b64decode(response)
-    #         buffer.write(content)
-    #         responses = HttpResponse(
-    #             buffer.getvalue(),
-    #             content_type="application/ms-excel",
-    #         )
-    #         responses['Content-Disposition'] = f'inline;filename={filenameFromApp}'
-    #         return responses
-    #     except Exception as e:
-    #         messages.error(request, f'{e}')
-    #         print(e)
-    #     return redirect('Odetails', pk=docNo)
+            lines2 = config.O_DATA.format(
+                f"/ProcurementMethodLines?$filter=RequisitionNo%20eq%20%27{pk}%27")
+            lines_data = self.get_object(lines2)
+            LinesData = [x for x in lines_data['value']]
 
-    todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    states = request.session['state']
-    ctx = {"today": todays_date, "res": res,
-           "docs": Doc, "state": State,
-           "line": Lines, 'data':LinesData,
-           "instruct": instruct, "file": allFiles,
-           "states": states}
-    return render(request, "details/evaluation.html", ctx)
+            # print(res)
+        except Exception as e:
+            print(e)
+            messages.error(request, "Wrong UserID")
+            return redirect('evaluation', pk=pk)
+        ctx = {
+            "today": todays_date,
+            "res": res,
+            "docs": Doc,
+            "line": Lines,
+            'data': LinesData,
+            "file": allFiles,
+            "states": states
+        }
+
+        return render(request, "details/evaluation.html", ctx)
 
 
 def DocResponse(request, pk):
@@ -408,11 +358,12 @@ def fnCreateprospectiveSupplierTender(request, pk):
 
             tenderNo = request.POST.get('tenderNo')
 
-            # print('prospectNo;', prospectNo)
-            # print("vendorNo:", vendorNo)
-            # print('procurementMethod:', procurementMethod)
-            # print('tenderNo', tenderNo)
-            # print('myAction:', myAction)
+            print('prospectNo:', prospectNo)
+            print("vendorNo:", vendorNo)
+            print('procurementMethod:', procurementMethod)
+            print('tenderNo', tenderNo)
+            print('myAction:', myAction)
+            
 
             response = config.CLIENT.service.fnCreateprospectiveSupplierTender(
                 myAction, prospectNo, procurementMethod, tenderNo, vendorNo)
@@ -439,6 +390,7 @@ def fnCreateProspectiveTenderLine(request, pk):
         try:
             prospectNo = ''
             vendorNo = ''
+            Type = 1
             if request.session['state'] == 'Prospect':
                 prospectNo = request.session['UserId']
 
@@ -454,7 +406,7 @@ def fnCreateProspectiveTenderLine(request, pk):
             print('Amount:', amount)
 
             response = config.CLIENT.service.fnCreateProspectiveTenderLine(
-                prospectNo, vendorNo, tenderNo, amount)
+                Type, prospectNo, tenderNo, amount)
             print(response)
 
             if response == True:
@@ -532,21 +484,21 @@ def fnInsertSuppliersToProcurementMethod(request, pk):
                     referenceNo, supplierCode
                 )
 
-                # print(response)
+                print(response)
 
                 if response == True:
                     messages.success(
                         request, "Submitted successfully for review")
-                    return redirect('evaluation', pk=pk)
+                    return redirect('submit', pk=pk)
                 else:
                     messages.error(request, "Failed, Try Again")
                     return redirect('evaluation', pk=pk)
             except Exception as e:
-                messages.error(request, f'{e}')
-                redirect('submit', pk=pk)
+                messages.info(request, f'{e}')
+                redirect('evaluation', pk=pk)
     except Exception as e:
         messages.error(request, f'{e}')
-        redirect('submit', pk=pk)
+        redirect('evaluation', pk=pk)
 
     return redirect('evaluation', pk=pk)
 
@@ -584,26 +536,33 @@ def Restricted_tenders(request):
     return render(request, 'restrictedTenders.html', ctx)
 
 
-def UploadAttachedDocument(request, pk):
 
-    session = requests.Session()
-    response = request.session['UserId']
-    fileName = ""
-    attachment = ""
-    vendorNo = response
-    myUserId = response
-    # tableID = 52177763 get checklist
-    tableID = 52177788
-
+def FnUploadProspectiveLineAttachedDocument(request, pk):
+    UserId = request.session['UserId']
+    states = request.session['state']
+    response = ''
     if request.method == "POST":
-        
+        try:
+            docNo = pk
+            vendNo =  UserId
+            tenderNo = pk
+            attach = request.FILES.getlist('attachment')
+            tableID = 52177788
+        except Exception as e:
+            return redirect('evaluation', pk=pk)
+        for files in attach:
+            fileName = request.FILES['attachment'].name
+            attachment = base64.b64encode(files.read())
+            
+            response = config.CLIENT.service.FnUploadProspectiveLineAttachedDocument(
+                docNo, fileName, attachment, tableID, UserId, vendNo, tenderNo )
+           
         if response == True:
-            messages.success(request, "Successfully Sent !!")
+            messages.success(request, "File(s) Upload Successful")
             return redirect('evaluation', pk=pk)
         else:
-            messages.error(request, "Not Sent !!")
+            messages.error(request, "Failed, Try Again")
             return redirect('evaluation', pk=pk)
-
     return redirect('evaluation', pk=pk)
 
 

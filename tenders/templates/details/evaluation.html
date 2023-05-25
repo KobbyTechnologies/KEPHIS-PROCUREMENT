@@ -16,16 +16,7 @@
                     style="display:inline-block;"> <i class="las la-plus"></i> Respond To
                     {{res.Process_Type}}
                 </button> -->
-                {% for res in file %}
-                <form action="{% url 'evaluation' res.No_ %}" method="post" style="display:inline-block;">
-                    {% csrf_token %}
-                    <input type="hidden" name="attachmentID" value="{{res.AuxiliaryIndex3}}">
-                    <input type="hidden" name="File_Name" value="{{res.File_Name}}">
-                    <input type="hidden" name="File_Extension" value="{{res.File_Extension}}">
-                    <button class="btn btn-info" type="submit"><i class="fa fa-download"></i> {{res.File_Name}}</button>
-                </form>
-                {% endfor %}
-                {% endif %}
+                
             </h2>
             <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
                 <div class="dropdown ml-0 ml-md-4 mt-2 mt-lg-0">
@@ -140,41 +131,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card l-bg-green-dark statCard h-100">
-                    <div class="card-statistic-3 p-4">
-                        <div class="card-icon card-icon-large"><i class="fas fa-calendar-alt"></i></div>
-                        <div class="mb-4">
-                            <h5 class="card-title mb-0">{{res.Process_Type}} Opening Date</h5>
-                        </div>
-                        <div class="row align-items-center mb-2 d-flex">
-                            <div class="col-md-12">
-                                <h2 class="d-flex align-items-center mb-0">
-                                    {{res.TenderOpeningDate}}
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card l-bg-orange-dark statCard h-100">
-                    <div class="card-statistic-3 p-4">
-                        <div class="card-icon card-icon-large"><i class="fas fa-calendar-times"></i></div>
-                        <div class="mb-4">
-                            <h5 class="card-title mb-0">{{res.Process_Type}} Closing Date</h5>
-                        </div>
-                        <div class="row align-items-center mb-2 d-flex">
-                            <div class="col-md-12">
-                                <h2 class="d-flex align-items-center mb-0">
-                                    {{res.TenderClosingDate}}
-                                </h2>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -191,14 +147,6 @@
                         <label class="form-label">Ref No</label>
                         <input type="text" class="form-control" placeholder="{{res.RefNo}}" readonly>
                     </div>
-                    <!-- <div class="col-md-4">
-                        <label class="form-label">Submitted To Portal</label>
-                        <input type="text" class="form-control" placeholder="{{res.SubmittedToPortal}}" readonly>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Process Type</label>
-                        <input type="text" class="form-control" placeholder="{{res.Process_Type}}" readonly>
-                    </div> -->
                 </form>
             </div>
         </div>
@@ -207,11 +155,7 @@
                 <div class="card p-3" id="dt-card">
                     <div class="row">
                         <div class="col-md-12">
-                            <!-- <div class="detail my-2">
-                                <h5>
-                                    {{res.Process_Type}} No: <span style="color: black;">{{res.Tender_No_}}</span> Lines
-                                </h5>
-                            </div> -->
+                            
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card" id="d-card">
@@ -239,7 +183,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% if line %}
+                                                   
                                                     {% for res in line %}
                                                     <tr>
                                                         <!-- <td id="rap">{{res.ProcurementPlan}}</td> -->
@@ -264,7 +208,7 @@
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                        LIne No. {{res.No}}</h1>
+                                                                        Line No. {{res.No}}</h1>
                                                                     <button type="button" class="btn-close"
                                                                         data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
@@ -342,70 +286,7 @@
                                                         </div>
                                                     </div>
                                                     {% endfor %}
-                                                    {%else%}
-                                                    {% for res in data %}
-                                                    <tr>
-
-                                                        <td>{{res.Description}}</td>
-                                                        <td>{{res.Unit_of_Measure}}</td>
-                                                        <td>{{res.Quantity}}</td>
-                                                        <td>{{res.Unit_Price}}</td>
-                                                        <td>{{res.Amount}}</td>
-                                                        <td>
-                                                            <button class="btn btn-info fw-bolder"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#line{{res.AuxiliaryIndex1}}"
-                                                                style="display:inline-block;"> Add Quotations
-                                                            </button>
-                                                            
-                                                        </td>
-                                                    </tr>
-                                                    <div class="modal fade" id="line{{res.AuxiliaryIndex1}}"
-                                                        tabindex="-1" aria-labelledby="exampleModalLabel"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                        LIne No. {{res.No}}</h1>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
-                                                                        aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form
-                                                                        action="{% url 'fnCreateProspectiveTenderLine' res.RequisitionNo %}"
-                                                                        class="needs-validation" id="" method="post">
-                                                                        {% csrf_token %}
-                                                                        <input type="hidden" name="tenderNo"
-                                                                            value="{{res.RequisitionNo}}">
-                                                                        <input type="text" name="lineNo"
-                                                                            value="{{res.LineNo}}" hidden>
-                                                                        <label class="form-label">Amount:</label>
-                                                                        <input type="text" class="form-control"
-                                                                            name="amount" id="amount" placeholder="Ksh"
-                                                                            required>
-                                                                        <div class="invalid-feedback">
-                                                                            Please provide the Unit price of the
-                                                                            product.
-                                                                        </div>
-                                                                        <button type="submit" id="submit-button"
-                                                                            class="btn btn-primary my-3">Submit</button>
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                            data-bs-dismiss="modal">Close</button>
-                                                                        <!-- <div class="result py-3">
-                                                                            <p id="innerReslts" style="color:#196F3D;font-weight:bold"></p>
-                                                                        </div> -->
-                                                                    </form>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     
-                                                    {% endfor %}
-
-                                                    {% endif %}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -440,15 +321,61 @@
                                                         Attachments</button>
                                                 </div>
                                             </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="row my-2 py-3">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title mb-4">
+                                                            My Attachments
+                                                        </h4>
+                                                        <div class="row">
+                                                            {% for data in file %}
+                                                            <div class="col-lg-4 col-xl-3">
+                                                                <div class="file-man-box">
+                                                                    {% if res.Status == 'Open' %}
+                                                                    <form action="{% url 'DeleteImprestAttachment' data.No_  %}" method="POST">
+                                                                        {% csrf_token %}
+                                                                        <input type="hidden" name="docID" value="{{data.AuxiliaryIndex2}}">
+                                                                        <input type="hidden" name="tableID" value="{{data.Table_ID}}">
+                                                                        <button class="file-close" id="file-close"><i
+                                                                                class="fa fa-times-circle"></i></button>
+                                                                    </form>
+                                                                    {% endif %}
+                                                                    <div class="file-img-box"><img src="../../static/img/logo/f1.png" alt="icon" width="100px"></div>
+                                                                    <form action="" method="POST">
+                                                                        {% csrf_token %}
+                                                                        <input type="hidden" name="attachmentID" value="{{data.AuxiliaryIndex2}}">
+                                                                        <input type="hidden" name="File_Name" value="{{data.File_Name}}">
+                                                                        <input type="hidden" name="File_Extension" value="{{data.File_Extension}}">
+                                                                        
+                                                                    </form>
+                                                                    <div class="file-man-title">
+                                                                        <h5 class="mb-0 text-overflow">
+                                                                            {{data.File_Name}}.{{data.File_Extension}}</h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {% empty %}
+                                                            <p class="text-danger">
+                                                                You have not uploaded any attachments <i class="las la-file-download"></i>
+                                                            </p>
+                                                            {% endfor %}
+                                                        </div>
+                                
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <form action="{% url 'fnInsertSuppliersToProcurementMethod' res.Tender_No_ %}"
                                     method="post">
                                     {% csrf_token %}
                                     
-                                    <button type="submit" id="submit-button" class="btn btn-primary my-3">Submit for
-                                        Review</button>
+                                    <button type="submit" id="submit-button" class="btn btn-primary my-3">Submit Bid</button>
                                 </form>
 
                             </div>
@@ -472,7 +399,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="" class="myForm needs-validation" id="amountForm" novalidate>
+                <form method="post" action="{% url 'fnCreateprospectiveSupplierTender' res.Tender_No_ %}" class="myForm needs-validation" id="amountForm" novalidate>
                     {% csrf_token %}
                     <div>
                         <label class="form-label">Amount:</label>
@@ -504,7 +431,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" id="attachForm" method="post" class="myForm" enctype="multipart/form-data">
+                <form action="{% url 'FnUploadProspectiveLineAttachedDocument' res.Tender_No_ %}" id="attachForm" method="post" class="myForm" enctype="multipart/form-data">
                     {% csrf_token %}
                     <p class="text-dark">Select and Upload the following Attachments at once. </p>
                     <ol>
@@ -540,7 +467,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{% url 'UploadAttachedDocument' res.Tender_No_ %}" id="attachForm" method="post"
+                <form action="{% url 'FnUploadProspectiveLineAttachedDocument' res.Tender_No_ %}" id="attachForm" method="post"
                     class="myForm" enctype="multipart/form-data">
                     {% csrf_token %}
                     <p class="text-dark">Select and Upload the following Attachments at once. </p>

@@ -3,13 +3,11 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-     path('openTenders', views.open_tenders, name="open"),
-     path('openTenders-supplier/<str:pk>', views.Eval_Details, name="evaluation"),
+     path('openTenders', views.OppenTenders.as_view(), name="open"),
+     path('openTenders-supplier/<str:pk>', views.EvaluationDetails.as_view(), name="evaluation"),
      path('restrictedTenders', views.Restricted_tenders, name='restricted'),
      path('Odetails/<str:pk>', views.Open_Details, name="Odetails"),
      path('DocResponse/<str:pk>', views.DocResponse, name="DocResponse"),
-     path('UploadAttachedDocument/<str:pk>',
-         views.UploadAttachedDocument, name="UploadAttachedDocument"),
 
      path('submitted/<str:pk>', views.submitted, name="submit"),
 
@@ -18,6 +16,9 @@ urlpatterns = [
     
      path('fnCreateprospectiveSupplierTender/<str:pk>', 
          views.fnCreateprospectiveSupplierTender, name='fnCreateprospectiveSupplierTender'),
+
+     path('FnUploadProspectiveLineAttachedDocument/<str:pk>', 
+         views.FnUploadProspectiveLineAttachedDocument, name='FnUploadProspectiveLineAttachedDocument'),
 
      path('fnCreateProspectiveTenderLine/<str:pk>', views.fnCreateProspectiveTenderLine, name='fnCreateProspectiveTenderLine'),
      path('fnModifyProspectiveTenderLine/<str:pk>', views.fnModifyProspectiveTenderLine, name='fnModifyProspectiveTenderLine'),
