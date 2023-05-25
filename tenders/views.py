@@ -175,7 +175,7 @@ class EvaluationDetails(UserObjectMixin, View):
             Doc = [x for x in Proc_Files['value']]
 
             lines = config.O_DATA.format(
-                f"/QyProspectiveTenderLines?$filter=Tender_No_%20eq%20%27{pk}%27")
+                f"/QyProspectiveTenderLines?$filter=Response_No%20eq%20%27{UserId}%27%20and%20Tender_No_%20eq%20%27{pk}%27")
             ProcLines = self.get_object(lines)
             Lines = [x for x in ProcLines['value']]
             print(Lines)
@@ -517,7 +517,7 @@ def Restricted_tenders(request):
         Restrict = []
         Submitted = []
         for tender in response['value']:
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender" and tender['Status'] == 'New':
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender" and tender['Status'] == 'Approved':
                 output_json = json.dumps(tender)
                 Restrict.append(json.loads(output_json))
         for tender in responses['value']:
