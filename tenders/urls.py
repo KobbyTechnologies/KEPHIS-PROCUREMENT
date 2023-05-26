@@ -20,6 +20,8 @@ urlpatterns = [
      path('FnUploadProspectiveLineAttachedDocument/<str:pk>', 
          views.FnUploadProspectiveLineAttachedDocument, name='FnUploadProspectiveLineAttachedDocument'),
 
+    path('DeleteDocumentttachment/<str:pk>', views.DeleteDocumentttachment, name='DeleteDocumentttachment'),
+
      path('fnCreateProspectiveTenderLine/<str:pk>', views.fnCreateProspectiveTenderLine, name='fnCreateProspectiveTenderLine'),
      path('fnModifyProspectiveTenderLine/<str:pk>', views.fnModifyProspectiveTenderLine, name='fnModifyProspectiveTenderLine'),
 ]

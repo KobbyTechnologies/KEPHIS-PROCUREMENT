@@ -28,7 +28,7 @@ class OppenTenders(UserObjectMixin, View):
             print(states)
 
             Access_Point = config.O_DATA.format(
-                f"/ProcurementMethods?$filter=Process_Type%20eq%20%27Tender%27%20and%20SubmittedToPortal%20eq%20true%20and%20Status%20eq%20%27Approved%27")
+                f"/ProcurementMethods?$filter=Process_Type%20eq%20%27Tender%27%20and%20SubmittedToPortal%20eq%20true%20and%20Status%20eq%20%27Approved%27%20and%20TenderType%20eq%20%27Open%20Tender%27")
             openTender = self.get_object(Access_Point)
             open = [x for x in openTender['value']]
 
@@ -567,6 +567,24 @@ def FnUploadProspectiveLineAttachedDocument(request, pk):
             messages.error(request, "Failed, Try Again")
             return redirect('evaluation', pk=pk)
     return redirect('evaluation', pk=pk)
+
+
+def DeleteDocumentttachment(request, pk):
+    if request.method == "POST":
+        docID = int(request.POST.get('docID'))
+        tableID = int(request.POST.get('tableID'))
+        try:
+            response = config.CLIENT.service.FnDeleteDocumentAttachment(
+                pk, docID, tableID)
+            print(response)
+            if response == True:
+                messages.success(request, "Document Deleted Successfully ")
+                return redirect('evaluation', pk=pk)
+        except Exception as e:
+            messages.error(request, f'{e}')
+            print(e)
+    return redirect('evaluation', pk=pk)
+
 
 
 def submitted(request, pk):
