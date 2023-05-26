@@ -14,7 +14,7 @@ from django.contrib import messages
 def interest_request(request):
     session = requests.Session()
     session.auth = config.AUTHS
-
+    name=request.session['FullName']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
     try:
@@ -43,6 +43,6 @@ def interest_request(request):
     states = request.session['state']
     ctx = {"today": todays_date, "res": OpenEOI,
            "count": count, "sub": Submitted,
-           "counter": counter,
+           "counter": counter,'fullname': name,
            "states": states}
     return render(request, 'interest.html', ctx)

@@ -17,6 +17,7 @@ def canvas(request):
 class dashboard(UserObjectMixin,View):
     def get(self, request):
         try:
+            name=request.session['FullName']
             state = request.session['state']
             proc_methods =self.logical_triple_filter("/ProcurementMethods","Status","eq","New")
             open_tenders = [x for x in proc_methods[1] if x['TenderType'] == 'Open Tender']
@@ -42,6 +43,7 @@ class dashboard(UserObjectMixin,View):
                 "rfq":rfq,"eoi":eoi,"Close":closed[0], "Actives": new[0],
                 "RES_A": RES_Active,"RFP_A": RFP_Active, "Active_O": Active_O,
                 "RFQ_A": RFQ_Active,"EOI_A": EOI_Active,
+                'fullname': name,
             }
         except Exception as e:
             print(e)

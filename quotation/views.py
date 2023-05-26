@@ -14,6 +14,7 @@ from django.contrib import messages
 def requestQuote(request):
     session = requests.Session()
     session.auth = config.AUTHS
+    name=request.session['FullName']
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
@@ -43,5 +44,5 @@ def requestQuote(request):
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     ctx = {"today": todays_date, "res": OpenRFQ,
            "count": count, "counter": counter,
-           "sub": Submitted}
+           'fullname': name,"sub": Submitted}
     return render(request, 'requestQuote.html', ctx)

@@ -8,13 +8,30 @@ from django.views import View
 # Create your views here.
 
 
+class Profile(UserObjectMixin, View):
+    def get(self, request):
+        UserId = request.session['UserId']
+        name = request.session['FullName']
+        states = request.session['state']
+        email=request.session['Email']
+        ctx = {
+            'UserId': UserId,
+            'fullname': name,
+            'email':email,
+        }
+        return render(request, 'profile.html', ctx)
+
+
 def profile_request(request):
     return render(request, 'profile.html')
 
 
 class login_request(UserObjectMixin, View):
     def get(self, request):
-        ctx = {}
+
+        ctx = {
+
+        }
         return render(request, 'login.html', ctx)
 
     def post(self, request):
@@ -31,10 +48,13 @@ class login_request(UserObjectMixin, View):
                         print("Vendor")
                         if self.pass_decrypt(vendor['Password']) == password:
                             request.session['UserId'] = vendor['No']
+                            request.session['FullName'] = vendor['Name']
+                            request.session['Email'] = vendor['EMail']
+                            print(request.session['Email'])
                             request.session['state'] = "Vendor"
                             return redirect('dashboard')
                         messages.success(request, 'Logged in Succesfully')
-                        
+
                         messages.error(
                             request, "Invalid Credentials. Please reset your password else create a new account")
                         return redirect('login')
@@ -47,6 +67,9 @@ class login_request(UserObjectMixin, View):
                         print("Prospect")
                         if self.pass_decrypt(prospect['Password']) == password:
                             request.session['UserId'] = prospect['No']
+                            request.session['FullName'] = prospect['Name']
+                            request.session['Email'] = prospect['Email']
+                            print(request.session['Email'])
                             request.session['state'] = "Prospect"
                             return redirect('dashboard')
                         messages.error(

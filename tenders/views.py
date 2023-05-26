@@ -20,6 +20,7 @@ class OppenTenders(UserObjectMixin, View):
     def get(self, request):
         try:
             UserId = request.session['UserId']
+            name=request.session['FullName']
             todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
             states = request.session['state']
             vendor_status = ''
@@ -54,7 +55,7 @@ class OppenTenders(UserObjectMixin, View):
             messages.error(request, "Wrong UserID")
             return redirect('openTenders')
 
-        ctx = {"today": todays_date, "res": open,
+        ctx = {"today": todays_date, "res": open,'fullname': name,
                "count": count, "counter": counter, "sub": Submitted,
                "states": states, 'interestCount': interestCount, 'interest': interest}
         return render(request, 'openTenders.html', ctx)
@@ -63,6 +64,7 @@ class OppenTenders(UserObjectMixin, View):
 def Open_Details(request, pk):
     session = requests.Session()
     session.auth = config.AUTHS
+    name=request.session['FullName']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access2 = config.O_DATA.format("/ProcurementRequiredDocs")
     lines = config.O_DATA.format("/ProcurementMethodLines")
@@ -145,7 +147,7 @@ def Open_Details(request, pk):
     states = request.session['state']
     ctx = {"today": todays_date, "res": res,
            "docs": Doc, "state": State,
-           "line": Lines,
+           "line": Lines,'fullname': name,
            "instruct": instruct, "file": allFiles,
            "states": states}
     return render(request, "details/open.html", ctx)
@@ -154,6 +156,7 @@ def Open_Details(request, pk):
 class EvaluationDetails(UserObjectMixin, View):
     def get(self, request, pk):
         try:
+            name=request.session['FullName']
             UserId = request.session['UserId']
             todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
             states = request.session['state']
@@ -178,7 +181,7 @@ class EvaluationDetails(UserObjectMixin, View):
                 f"/QyProspectiveTenderLines?$filter=Response_No%20eq%20%27{UserId}%27%20and%20Tender_No_%20eq%20%27{pk}%27")
             ProcLines = self.get_object(lines)
             Lines = [x for x in ProcLines['value']]
-            print(Lines)
+            # print(Lines)
 
             Access_File = config.O_DATA.format(
                 f"/QyDocumentAttachments?$filter=No_%20eq%20%27{pk}%27")
@@ -202,7 +205,8 @@ class EvaluationDetails(UserObjectMixin, View):
             "line": Lines,
             'data': LinesData,
             "file": allFiles,
-            "states": states
+            'fullname': name,
+            "states": states,
         }
 
         return render(request, "details/evaluation.html", ctx)
@@ -367,22 +371,21 @@ def fnCreateprospectiveSupplierTender(request, pk):
 
             response = config.CLIENT.service.fnCreateprospectiveSupplierTender(
                 myAction, prospectNo, procurementMethod, tenderNo, vendorNo)
+            
             print(response)
+
             if response == True:
                 messages.success(
                     request, f'successful proceed to add your quoted amount')
-                return redirect('evaluation', pk=pk)
-            elif response == False:
-                messages.error(request, f'Something went wrong! Try again.')
-                return redirect('evaluation', pk=pk)
+                return redirect('evaluation', pk=pk)           
             else:
                 messages.error(request, f'Something went wrong! Try again.')
                 return redirect('evaluation', pk=pk)
+            
         except Exception as e:
-            messages.error(request, f'You have already chosen the option')
-            redirect('submit', pk=pk)
-
-    return redirect('evaluation', pk=pk)
+            messages.error(request, f'{e}')
+            redirect('evaluation', pk=pk)
+    return redirect('Odetails', pk=pk)
 
 
 def fnCreateProspectiveTenderLine(request, pk):
@@ -506,6 +509,7 @@ def fnInsertSuppliersToProcurementMethod(request, pk):
 def Restricted_tenders(request):
     session = requests.Session()
     session.auth = config.AUTHS
+    name=request.session['FullName']
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
@@ -531,10 +535,9 @@ def Restricted_tenders(request):
     counter = len(Submitted)
 
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
-    ctx = {"today": todays_date, "res": Restrict,
+    ctx = {"today": todays_date, "res": Restrict,'fullname': name,
            "count": count, "sub": Submitted, "counter": counter}
     return render(request, 'restrictedTenders.html', ctx)
-
 
 
 def FnUploadProspectiveLineAttachedDocument(request, pk):
@@ -569,6 +572,7 @@ def FnUploadProspectiveLineAttachedDocument(request, pk):
 def submitted(request, pk):
     session = requests.Session()
     session.auth = config.AUTHS
+    name=request.session['FullName']
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
     res = " "
     try:
@@ -580,6 +584,6 @@ def submitted(request, pk):
         print(e)
     todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
     states = request.session['state']
-    ctx = {"res": res,
+    ctx = {"res": res,'fullname': name,
            "today": todays_date, "states": states}
     return render(request, "details/submitted.html", ctx)
