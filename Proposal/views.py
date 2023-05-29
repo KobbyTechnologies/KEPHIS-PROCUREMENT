@@ -15,6 +15,7 @@ def proposal_request(request):
     session = requests.Session()
     session.auth = config.AUTHS
     name=request.session['FullName']
+    current_datetime = datetime.datetime.now()
 
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
@@ -26,8 +27,8 @@ def proposal_request(request):
         Submitted = []
         
         for tender in response['value']:
-            if tender['Process_Type'] == 'RFP' and tender['SubmittedToPortal'] == True and tender['Status'] == 'Approved':
-                output_json = json.dumps(tender)
+            if tender['Process_Type'] == 'RFP' and tender['SubmittedToPortal'] == True and tender['Status'] == 'Approved' and datetime.datetime.strptime(tender['TenderDeadline'], '%Y-%m-%d') >= current_datetime:
+                output_json = json.dumps(tender) 
                 OpenRFP.append(json.loads(output_json))
 
         for tender in res['value']:

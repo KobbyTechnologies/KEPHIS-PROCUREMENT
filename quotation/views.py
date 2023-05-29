@@ -15,6 +15,7 @@ def requestQuote(request):
     session = requests.Session()
     session.auth = config.AUTHS
     name=request.session['FullName']
+    current_datetime = datetime.datetime.now()
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
@@ -25,7 +26,7 @@ def requestQuote(request):
         Submitted = []
 
         for tender in response['value']:
-            if tender['Process_Type'] == 'RFQ' and tender['SubmittedToPortal'] == True and tender['Status'] == 'Approved':
+            if tender['Process_Type'] == 'RFQ' and tender['SubmittedToPortal'] == True and tender['Status'] == 'Approved' and datetime.datetime.strptime(tender['TenderDeadline'], '%Y-%m-%d') >= current_datetime:
                 output_json = json.dumps(tender)
                 OpenRFQ.append(json.loads(output_json))
 

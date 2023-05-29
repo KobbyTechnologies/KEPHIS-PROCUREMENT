@@ -17,13 +17,14 @@ def interest_request(request):
     name=request.session['FullName']
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
+    current_datetime = datetime.datetime.now()
     try:
         response = session.get(Access_Point, timeout=10).json()
         responses = session.get(Access, timeout=10).json()
         OpenEOI = []
         Submitted = []
         for tender in response['value']:
-            if tender['Process_Type'] == 'EOI' and tender['SubmittedToPortal'] == True and tender['Status'] == 'Approved':
+            if tender['Process_Type'] == 'EOI' and tender['SubmittedToPortal'] == True and tender['Status'] == 'Approved'  and datetime.datetime.strptime(tender['TenderDeadline'], '%Y-%m-%d') >= current_datetime:
                 output_json = json.dumps(tender)
                 OpenEOI.append(json.loads(output_json))
 
