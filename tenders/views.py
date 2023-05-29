@@ -514,6 +514,7 @@ def Restricted_tenders(request):
     session = requests.Session()
     session.auth = config.AUTHS
     name=request.session['FullName']
+    current_datetime = datetime.datetime.now()
 
     Access_Point = config.O_DATA.format("/ProcurementMethods")
     Access = config.O_DATA.format("/QyProspectiveSupplierTender")
@@ -525,7 +526,7 @@ def Restricted_tenders(request):
         Restrict = []
         Submitted = []
         for tender in response['value']:
-            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender" and tender['Status'] == 'Approved':
+            if tender['Process_Type'] == 'Tender' and tender['TenderType'] == "Restricted Tender" and tender['Status'] == 'Approved' and datetime.datetime.strptime(tender['TenderDeadline'], '%Y-%m-%d') >= current_datetime:
                 output_json = json.dumps(tender)
                 Restrict.append(json.loads(output_json))
         for tender in responses['value']:
