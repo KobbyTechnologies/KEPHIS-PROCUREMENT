@@ -16,21 +16,25 @@ from django.views import View
 # Create your views here.
 
 
-class OppenTenders(UserObjectMixin, View):
+class OpenTenders(UserObjectMixin, View):
     def get(self, request):
         try:
             UserId = request.session['UserId']
             name=request.session['FullName']
             todays_date = datetime.datetime.now().strftime("%b. %d, %Y %A")
             states = request.session['state']
+            current_datetime = datetime.datetime.now()
             vendor_status = ''
-            print(UserId)
-            print(states)
+            # print(UserId)
+            # print(states)
 
             Access_Point = config.O_DATA.format(
-                f"/ProcurementMethods?$filter=Process_Type%20eq%20%27Tender%27%20and%20SubmittedToPortal%20eq%20true%20and%20Status%20eq%20%27Approved%27%20and%20TenderType%20eq%20%27Open%20Tender%27")
+                f"/ProcurementMethods?$filter=Process_Type%20eq%20%27Tender%27")
             openTender = self.get_object(Access_Point)
-            open = [x for x in openTender['value']]
+            open = [x for x in openTender['value'] 
+                    if x['SubmittedToPortal'] == True and x['TenderType'] != "Open Tender"
+                    and datetime.datetime.strptime(x['TenderDeadline'], '%Y-%m-%d') >= current_datetime
+                    ]
 
             Access = config.O_DATA.format(
                 f"/QyProspectiveSupplierTender?$filter=Type%20eq%20%27Tender%27")
